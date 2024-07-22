@@ -25,11 +25,12 @@ function Hero() {
             icon={<FaGithub size={24} />}
             text="GitHub"
           />
-          <SocialLink
+          <a
             href="#CONTACT"
-            icon={<IoIosMail size={24} />}
-            text="Kontakt"
-          />
+            className="flex items-center justify-center gap-2 border-2 border-gray-300 rounded-full w-36 font-medium p-3 hover:bg-gray-200 transition duration-300"
+          >
+            <IoIosMail size={24} /> Kontakt
+          </a>
         </div>
       </div>
     </section>
