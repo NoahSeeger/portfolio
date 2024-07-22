@@ -9,7 +9,7 @@ const projects = [
     title: "FocusForge",
     image: FocusForge,
     description:
-      "A productivity app to help users manage their time and tasks effectively.",
+      "Eine Produktivitäts-Erweiterung, die Benutzern hilft, ihre Zeit und Aufgaben effektiv zu verwalten.",
     technologies: ["HTML", "CSS", "Javascript"],
     github: "https://github.com/NoahSeeger/FocusForge",
     liveDemo: "https://github.com/NoahSeeger/FocusForge",
@@ -18,10 +18,10 @@ const projects = [
     title: "Zinsrechner",
     image: Zinsrechner,
     description:
-      "A productivity app to help users manage their time and tasks effectively.",
+      "Zinsen und Zinseszinsen berechnen. Einfach und schnell mit dem Zinsrechner.",
     technologies: ["React", "TailwindCSS", "Javascript"],
     github: "https://github.com/NoahSeeger/zinsrechner",
-    liveDemo: "https://zinsenrechner.netlify.app/rechner",
+    liveDemo: "https://zinsenrechner.netlify.app",
   },
 ];
 
