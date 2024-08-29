@@ -29,7 +29,7 @@ function Projects() {
   return (
     <section id="PROJECTS" className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
-        <SectionTitle title={"Explore My"} subtitle={"Projects"} />
+        <SectionTitle title={"Erkunde meine"} subtitle={"Projekte"} />
         <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {projects.map((project, index) => (
             <ProjectCard key={index} project={project} />
