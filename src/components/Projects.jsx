@@ -1,6 +1,7 @@
 import React from "react";
 import FocusForge from "../assets/projects/FocusForge.png";
 import Zinsrechner from "../assets/projects/Zinsrechner.png";
+import LifeCircles from "../assets/projects/LifeCircles.png";
 import SectionTitle from "./SectionTitle";
 import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 
@@ -22,6 +23,15 @@ const projects = [
     technologies: ["React", "TailwindCSS", "Javascript"],
     github: "https://github.com/NoahSeeger/zinsrechner",
     liveDemo: "https://zinsenrechner.netlify.app",
+  },
+  {
+    title: "LifeCircles",
+    image: LifeCircles,
+    description:
+      "Gewohnheiten visualisieren. Behalte den Überblick über dein Lebensverlauf.",
+    technologies: ["React", "TailwindCSS", "Javascript", "Shadcn"],
+    github: "https://github.com/NoahSeeger/LifeCircles",
+    liveDemo: "https://LifeCircles.netlify.app",
   },
 ];
 
