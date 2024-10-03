@@ -9,8 +9,8 @@ function Contact() {
       className="h-[50vh] flex flex-col justify-center items-center gap-12"
     >
       <SectionTitle title={"Treten wir in"} subtitle={"Kontakt"} />
-      <section className="flex justify-center content-center">
-        <div className="flex border-2 w-fit p-4 rounded-2xl gap-4">
+      <section className="flex flex-col justify-center items-center gap-4">
+        <div className="flex flex-col md:flex-row border-2 w-fit p-4 rounded-2xl gap-4">
           <div className="flex items-center gap-2">
             <IoIosMail size={24} />
             <a href="mailto:noahseeger@outlook.de" className="link">
@@ -19,7 +19,11 @@ function Contact() {
           </div>
           <div className="flex items-center gap-2">
             <FaLinkedin size={24} />
-            <a href="#" className="link ">
+            <a
+              href="https://www.linkedin.com/in/noahseeger/"
+              target="_blank"
+              className="link "
+            >
               LinkedIn
             </a>
           </div>

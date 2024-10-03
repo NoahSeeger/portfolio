@@ -45,7 +45,7 @@ function About() {
             </p>
             <a
               href="#CONTACT"
-              className="flex gap-3 w-56 bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition duration-300"
+              className="flex items-center justify-center w-56 bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition duration-300"
             >
               Kontakt aufnehmen
               <MdOutlineArrowForwardIos size={22} />
