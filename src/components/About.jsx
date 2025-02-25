@@ -3,25 +3,49 @@ import about from "../assets/personal/about.png";
 import { PiStudent, PiGraduationCap } from "react-icons/pi";
 import SectionTitle from "./SectionTitle";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 function About() {
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseMove = (e) => {
+    if (!isHovered) return;
+    const { clientX, clientY } = e;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((clientX - rect.left) / rect.width) * 20 - 10;
+    const y = ((clientY - rect.top) / rect.height) * 20 - 10;
+    setTilt({ x, y });
+  };
+
   return (
     <section id="ABOUT" className="min-h-screen py-16 bg-gray-50">
       <div className="container mx-auto px-4">
         <SectionTitle title={"Erfahre mehr"} subtitle={"Über mich"} />
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12 mt-12">
           <div className="lg:w-1/2">
-            <img
+            <motion.img
               src={about}
               alt="Über mich"
               className="rounded-3xl shadow-lg w-full max-w-md mx-auto"
+              style={{
+                transform: `perspective(500px) rotateY(${tilt.x}deg) rotateX(${tilt.y}deg)`,
+              }}
+              transition={{ type: "spring", stiffness: 300 }}
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => {
+                setIsHovered(false);
+                setTilt({ x: 0, y: 0 });
+              }}
+              onMouseMove={handleMouseMove}
             />
           </div>
           <div className="lg:w-1/2 space-y-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <InfoCard
                 icon={<PiStudent className="text-4xl text-blue-600" />}
-                title="Programmiererfahrung"
+                title="Programmierung"
                 details={["2+ Jahre", "Selbststudium"]}
               />
               <InfoCard
@@ -45,10 +69,10 @@ function About() {
             </p>
             <a
               href="#CONTACT"
-              className="flex items-center justify-center w-56 bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition duration-300"
+              className="flex items-center justify-center bg-blue-600 text-white px-6 py-4 rounded-full hover:bg-blue-700 transition duration-300 whitespace-nowrap w-fit"
             >
               Kontakt aufnehmen
-              <MdOutlineArrowForwardIos size={22} />
+              <MdOutlineArrowForwardIos size={22} className="ml-4" />
             </a>
           </div>
         </div>

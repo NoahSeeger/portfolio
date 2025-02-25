@@ -2,6 +2,10 @@ import React from "react";
 import FocusForge from "../assets/projects/FocusForge.png";
 import Zinsrechner from "../assets/projects/Zinsrechner.png";
 import LifeCircles from "../assets/projects/LifeCircles.png";
+import CleanCord from "../assets/projects/CleanCord.png";
+import FullPage from "../assets/projects/FullPage.png";
+import Feedbacker from "../assets/projects/Feedbacker.png";
+
 import SectionTitle from "./SectionTitle";
 import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 
@@ -32,6 +36,33 @@ const projects = [
     technologies: ["React", "TailwindCSS", "Javascript", "Shadcn"],
     github: "https://github.com/NoahSeeger/LifeCircles",
     liveDemo: "https://LifeCircles.netlify.app",
+  },
+  {
+    title: "CleanCord",
+    image: CleanCord,
+    description:
+      "Dieses Tool wurde mit der OAuth2-API von Discord entwickelt und hilft Nutzern bei der Organisation und Verwaltung ihrer Discord-Server-Mitgliedschaften.",
+    technologies: ["OAuth", "TailwindCSS", "Javascript"],
+    github: "https://github.com/NoahSeeger/CleanCord",
+    liveDemo: "https://Cleancord.netlify.app",
+  },
+  {
+    title: "FullPage",
+    image: FullPage,
+    description:
+      "Eine Chrome-Extension zum Erstellen von vollständigen Screenshots ganzer Webseiten.",
+    technologies: ["HTML", "CSS", "Javascript"],
+    github: "https://github.com/NoahSeeger/FullPage-Extension",
+    liveDemo: "https://github.com/NoahSeeger/FullPage-Extension",
+  },
+  {
+    title: "Feedbacker",
+    image: Feedbacker,
+    description:
+      "Mit Feedbacker können Sie ganz einfach anonymes Feedback sammeln. Erstellen Sie ein Board, teilen Sie den Link und lassen Sie die Community die besten Ideen finden.",
+    technologies: ["React", "TailwindCSS", "Supabase"],
+    github: "https://github.com/NoahSeeger/feedbacker",
+    liveDemo: "https://feedbackersite.netlify.app",
   },
 ];
 

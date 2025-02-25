@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -7,15 +8,30 @@ function Header() {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
-    <header className="sticky top-0 z-50 bg-white shadow-md">
+    <motion.header
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ type: "spring", stiffness: 100 }}
+      className="sticky top-0 z-50 bg-white/80 backdrop-blur-sm shadow-md"
+    >
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
-          <span className="text-xl font-bold">Noah Seeger</span>
+          <motion.span
+            whileHover={{ scale: 1.05 }}
+            className="text-xl font-bold text-gray-800"
+          >
+            Noah Seeger
+          </motion.span>
 
           {/* Mobile menu button */}
-          <button className="md:hidden" onClick={toggleMenu}>
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            className="md:hidden p-2"
+            onClick={toggleMenu}
+          >
             {isMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
-          </button>
+          </motion.button>
 
           {/* Desktop menu */}
           <nav className="hidden md:flex gap-6">
@@ -28,26 +44,38 @@ function Header() {
 
         {/* Mobile menu */}
         {isMenuOpen && (
-          <nav className="md:hidden py-4">
+          <motion.nav
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="md:hidden py-4 space-y-2"
+          >
             <NavLink href="#ABOUT" text="Über mich" mobile />
             <NavLink href="#EXPERIENCE" text="Erfahrung" mobile />
             <NavLink href="#PROJECTS" text="Projekte" mobile />
             <NavLink href="#CONTACT" text="Kontakt" mobile />
-          </nav>
+          </motion.nav>
         )}
       </div>
-    </header>
+    </motion.header>
   );
 }
 
 function NavLink({ href, text, mobile }) {
-  const baseClasses = "transition duration-300 hover:text-blue-600";
-  const mobileClasses = mobile ? "block py-2" : "";
-
   return (
-    <a href={href} className={`${baseClasses} ${mobileClasses}`}>
+    <motion.a
+      whileHover={{
+        scale: 1.05,
+        color: "#3b82f6",
+      }}
+      whileTap={{ scale: 0.95 }}
+      href={href}
+      className={`${
+        mobile ? "block py-2 px-4 hover:bg-gray-100 rounded-lg" : ""
+      } transition duration-300 text-gray-700 hover:text-blue-600 font-medium`}
+    >
       {text}
-    </a>
+    </motion.a>
   );
 }
 
