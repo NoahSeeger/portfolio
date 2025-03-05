@@ -5,11 +5,21 @@ import LifeCircles from "../assets/projects/LifeCircles.png";
 import CleanCord from "../assets/projects/CleanCord.png";
 import FullPage from "../assets/projects/FullPage.png";
 import Feedbacker from "../assets/projects/Feedbacker.png";
+import PicSwipe from "../assets/projects/PicSwipe.png";
 
 import SectionTitle from "./SectionTitle";
 import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 
 const projects = [
+  {
+    title: "PicSwipe",
+    image: PicSwipe,
+    description:
+      "Einfaches Tool, welches beim sortieren und ausmisten der Gallerie hilft.",
+    technologies: ["React Native", "Expo"],
+    github: "https://github.com/NoahSeeger/PicSwipe",
+    liveDemo: "https://picswipe.netlify.app/",
+  },
   {
     title: "FocusForge",
     image: FocusForge,
