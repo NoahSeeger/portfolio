@@ -7,6 +7,7 @@ import CleanCord from "../assets/projects/CleanCord.png";
 import FullPage from "../assets/projects/FullPage.png";
 import Feedbacker from "../assets/projects/Feedbacker.png";
 import PicSwipe from "../assets/projects/PicSwipe.png";
+import Bruno from "../assets/projects/Bruno.png";
 
 import SectionTitle from "./SectionTitle";
 import {
@@ -17,6 +18,15 @@ import {
 } from "react-icons/fa";
 
 const projects = [
+  {
+    title: "Bruno",
+    image: Bruno,
+    description:
+      "Body Transformation Tracker mit Vergleichs und Progress Funktion.",
+    technologies: ["SwiftUI"],
+    github: "https://github.com/NoahSeeger/Pincode",
+    liveDemo: "https://github.com/NoahSeeger/Pincode",
+  },
   {
     title: "PicSwipe",
     image: PicSwipe,
