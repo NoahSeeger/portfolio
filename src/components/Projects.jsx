@@ -8,6 +8,7 @@ import FullPage from "../assets/projects/FullPage.png";
 import Feedbacker from "../assets/projects/Feedbacker.png";
 import PicSwipe from "../assets/projects/PicSwipe.png";
 import Bruno from "../assets/projects/Bruno.png";
+import Livo from "../assets/projects/Livo.png";
 
 import SectionTitle from "./SectionTitle";
 import {
@@ -18,6 +19,15 @@ import {
 } from "react-icons/fa";
 
 const projects = [
+  {
+    title: "Livo",
+    image: Livo,
+    description:
+      "Livo ist eine Progressive Web App, die es ermöglicht, seine Ziele und Länder zu verfolgen, die man bereist hat oder gerne besuchen will.",
+    technologies: ["Nextjs", "react-simple-maps", "Supabase"],
+    github: "https://github.com/NoahSeeger/livo",
+    liveDemo: "https://livoapp.netlify.app",
+  },
   {
     title: "Bruno",
     image: Bruno,
@@ -92,16 +102,25 @@ const projects = [
   },
 ];
 
+const mainProjects = [
+  projects.find((p) => p.title === "Livo"),
+  projects.find((p) => p.title === "Bruno"),
+  projects.find((p) => p.title === "PicSwipe"),
+  projects.find((p) => p.title === "CleanCord"),
+].filter(Boolean);
+
+const otherProjects = projects.filter((p) => !mainProjects.includes(p));
+
 function Projects() {
   const [active, setActive] = useState(0);
   const [autoplay, setAutoplay] = useState(true);
 
   const handleNext = () => {
-    setActive((prev) => (prev + 1) % projects.length);
+    setActive((prev) => (prev + 1) % mainProjects.length);
   };
 
   const handlePrev = () => {
-    setActive((prev) => (prev - 1 + projects.length) % projects.length);
+    setActive((prev) => (prev - 1 + mainProjects.length) % mainProjects.length);
   };
 
   const isActive = (index) => {
@@ -130,7 +149,7 @@ function Projects() {
             <div className="md:col-span-2">
               <div className="relative aspect-[16/9] w-full overflow-hidden rounded-lg shadow-lg">
                 <AnimatePresence>
-                  {projects.map((project, index) => (
+                  {mainProjects.map((project, index) => (
                     <motion.div
                       key={project.title}
                       initial={{
@@ -146,7 +165,7 @@ function Projects() {
                         rotate: isActive(index) ? 0 : randomRotateY(),
                         zIndex: isActive(index)
                           ? 999
-                          : projects.length + 2 - index,
+                          : mainProjects.length + 2 - index,
                         y: isActive(index) ? [0, -40, 0] : 0,
                       }}
                       exit={{
@@ -197,11 +216,11 @@ function Projects() {
                   className="bg-white p-6 rounded-lg shadow-lg"
                 >
                   <h3 className="text-2xl font-bold mb-2">
-                    {projects[active].title}
+                    {mainProjects[active].title}
                   </h3>
 
                   <div className="flex flex-wrap gap-2 mb-4">
-                    {projects[active].technologies.map((tech, index) => (
+                    {mainProjects[active].technologies.map((tech, index) => (
                       <span
                         key={index}
                         className="bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700"
@@ -217,7 +236,7 @@ function Projects() {
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.2 }}
                   >
-                    {projects[active].description
+                    {mainProjects[active].description
                       .split(" ")
                       .map((word, index) => (
                         <motion.span
@@ -246,7 +265,7 @@ function Projects() {
 
                   <div className="flex justify-between mt-4">
                     <a
-                      href={projects[active].github}
+                      href={mainProjects[active].github}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center text-blue-600 hover:text-blue-800 transition duration-300"
@@ -254,7 +273,7 @@ function Projects() {
                       <FaGithub className="mr-2" /> GitHub
                     </a>
                     <a
-                      href={projects[active].liveDemo}
+                      href={mainProjects[active].liveDemo}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center text-green-600 hover:text-green-800 transition duration-300"
@@ -266,7 +285,7 @@ function Projects() {
               </AnimatePresence>
 
               <div className="flex items-center justify-center mt-6 gap-2">
-                {projects.map((_, index) => (
+                {mainProjects.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => {
@@ -301,6 +320,82 @@ function Projects() {
             </div>
           </div>
         </div>
+        {/* Weitere Projekte Grid */}
+        {otherProjects.length > 0 && (
+          <div className="mt-16">
+            <h4 className="text-xl font-semibold mb-6 text-center">
+              Weitere Projekte
+            </h4>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+              {otherProjects.map((project) => (
+                <div
+                  key={project.title}
+                  className="bg-white rounded-lg shadow p-4 flex flex-col h-full"
+                >
+                  <div className="flex items-center gap-3 mb-2">
+                    {project.image && (
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="w-10 h-10 object-contain rounded"
+                      />
+                    )}
+                    <span className="font-bold text-lg">{project.title}</span>
+                  </div>
+                  <div className="flex flex-wrap gap-1 mb-2">
+                    {project.technologies.map((tech, idx) => (
+                      <span
+                        key={idx}
+                        className="bg-gray-100 rounded px-2 py-0.5 text-xs text-gray-600"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                  <p className="text-gray-600 text-sm mb-3 line-clamp-2">
+                    {project.description}
+                  </p>
+                  <div className="mt-auto flex gap-3">
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 hover:underline text-sm flex items-center gap-1"
+                    >
+                      <FaGithub /> GitHub
+                    </a>
+                    {project.liveDemo && (
+                      <a
+                        href={project.liveDemo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-green-600 hover:underline text-sm flex items-center gap-1"
+                      >
+                        <FaExternalLinkAlt /> Live
+                      </a>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        {/* Hinweis auf noch mehr Projekte auf GitHub
+        <div className="mt-12 text-center">
+          <p className="text-lg text-gray-700">
+            Das war noch nicht alles! Viele weitere Projekte findest du auf
+            meinem{" "}
+            <a
+              href="https://github.com/NoahSeeger"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:underline font-semibold"
+            >
+              GitHub-Profil
+            </a>
+            .
+          </p>
+        </div> */}
       </div>
     </section>
   );
