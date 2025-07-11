@@ -1,14 +1,19 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import SectionTitle from "./SectionTitle";
 import { IoIosMail } from "react-icons/io";
 import { FaLinkedin } from "react-icons/fa";
 function Contact() {
+  const { t } = useTranslation();
   return (
     <section
       id="CONTACT"
       className="h-[50vh] flex flex-col justify-center items-center gap-12"
     >
-      <SectionTitle title={"Treten wir in"} subtitle={"Kontakt"} />
+      <SectionTitle
+        title={t("contact_section_title", "Treten wir in")}
+        subtitle={t("contact_section_subtitle", "Kontakt")}
+      />
       <section className="flex flex-col justify-center items-center gap-4">
         <div className="flex flex-col md:flex-row border-2 w-fit p-4 rounded-2xl gap-4">
           <div className="flex items-center gap-2">
@@ -24,7 +29,7 @@ function Contact() {
               target="_blank"
               className="link "
             >
-              LinkedIn
+              {t("contact_linkedin", "LinkedIn")}
             </a>
           </div>
         </div>

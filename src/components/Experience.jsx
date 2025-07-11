@@ -1,37 +1,81 @@
 import React from "react";
 import { FaCheckCircle } from "react-icons/fa";
 import SectionTitle from "./SectionTitle";
+import { useTranslation } from "react-i18next";
 
 function Experience() {
+  const { t } = useTranslation();
   return (
     <section id="EXPERIENCE" className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
-        <SectionTitle title={"Meine"} subtitle={"Fähigkeiten"} />
+        <SectionTitle
+          title={t("experience_title", "Erfahrung")}
+          subtitle={t("experience_subtitle", "Fähigkeiten")}
+        />
         <div className="grid md:grid-cols-2 gap-8 mt-12">
-          <SkillCard title="Web-Entwicklung" skills={webDevelopmentSkills} />
-          <SkillCard title="Weitere Kompetenzen" skills={additionalSkills} />
+          <SkillCard
+            title={t("experience_skill_web_development", "Web-Entwicklung")}
+            skills={webDevelopmentSkills(t)}
+          />
+          <SkillCard
+            title={t("experience_skill_additional", "Weitere Kompetenzen")}
+            skills={additionalSkills(t)}
+          />
         </div>
       </div>
     </section>
   );
 }
 
-const webDevelopmentSkills = [
-  { name: "HTML", level: "Fortgeschritten" },
-  { name: "CSS", level: "Fortgeschritten" },
-  { name: "JavaScript", level: "Mittel" },
-  { name: "React", level: "Grundkenntnisse" },
-  { name: "Responsive Design", level: "Grundkenntnisse" },
-  { name: "Git", level: "Grundkenntnisse" },
+const webDevelopmentSkills = (t) => [
+  {
+    name: t("skill_html", "HTML"),
+    level: t("level_advanced", "Fortgeschritten"),
+  },
+  {
+    name: t("skill_css", "CSS"),
+    level: t("level_advanced", "Fortgeschritten"),
+  },
+  {
+    name: t("skill_js", "JavaScript"),
+    level: t("level_intermediate", "Mittel"),
+  },
+  {
+    name: t("skill_react", "React"),
+    level: t("level_basic", "Grundkenntnisse"),
+  },
+  {
+    name: t("skill_responsive", "Responsive Design"),
+    level: t("level_basic", "Grundkenntnisse"),
+  },
+  { name: t("skill_git", "Git"), level: t("level_basic", "Grundkenntnisse") },
 ];
 
-const additionalSkills = [
-  { name: "Problemlösung", level: "Fortgeschritten" },
-  { name: "Selbstständiges Lernen", level: "Fortgeschritten" },
-  { name: "Teamarbeit", level: "Mittel" },
-  { name: "Englisch", level: "Fließend" },
-  { name: "Projektmanagement", level: "Grundkenntnisse" },
-  { name: "Agile Methoden", level: "Grundkenntnisse" },
+const additionalSkills = (t) => [
+  {
+    name: t("skill_problem_solving", "Problemlösung"),
+    level: t("level_advanced", "Fortgeschritten"),
+  },
+  {
+    name: t("skill_self_learning", "Selbstständiges Lernen"),
+    level: t("level_advanced", "Fortgeschritten"),
+  },
+  {
+    name: t("skill_teamwork", "Teamarbeit"),
+    level: t("level_intermediate", "Mittel"),
+  },
+  {
+    name: t("skill_english", "Englisch"),
+    level: t("level_fluent", "Fließend"),
+  },
+  {
+    name: t("skill_project_management", "Projektmanagement"),
+    level: t("level_basic", "Grundkenntnisse"),
+  },
+  {
+    name: t("skill_agile", "Agile Methoden"),
+    level: t("level_basic", "Grundkenntnisse"),
+  },
 ];
 
 function SkillCard({ title, skills }) {

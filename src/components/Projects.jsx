@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import FocusForge from "../assets/projects/FocusForge.png";
 import Zinsrechner from "../assets/projects/Zinsrechner.png";
 import LifeCircles from "../assets/projects/LifeCircles.png";
@@ -112,6 +113,7 @@ const mainProjects = [
 const otherProjects = projects.filter((p) => !mainProjects.includes(p));
 
 function Projects() {
+  const { t, i18n } = useTranslation();
   const [active, setActive] = useState(0);
   const [autoplay, setAutoplay] = useState(true);
 
@@ -141,7 +143,30 @@ function Projects() {
   return (
     <section id="PROJECTS" className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
-        <SectionTitle title={"Erkunde meine"} subtitle={"Projekte"} />
+        {/* Sprachumschalter */}
+        <div className="flex justify-end mb-4">
+          <button
+            className={`px-3 py-1 rounded-l border border-gray-300 ${
+              i18n.language === "de"
+                ? "bg-blue-600 text-white"
+                : "bg-white text-gray-700"
+            }`}
+            onClick={() => i18n.changeLanguage("de")}
+          >
+            DE
+          </button>
+          <button
+            className={`px-3 py-1 rounded-r border border-gray-300 ${
+              i18n.language === "en"
+                ? "bg-blue-600 text-white"
+                : "bg-white text-gray-700"
+            }`}
+            onClick={() => i18n.changeLanguage("en")}
+          >
+            EN
+          </button>
+        </div>
+        <SectionTitle title={t("explore_my")} subtitle={t("projects")} />
 
         <div className="mt-12">
           <div className="relative grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
@@ -270,7 +295,7 @@ function Projects() {
                       rel="noopener noreferrer"
                       className="flex items-center text-blue-600 hover:text-blue-800 transition duration-300"
                     >
-                      <FaGithub className="mr-2" /> GitHub
+                      <FaGithub className="mr-2" /> {t("github")}
                     </a>
                     <a
                       href={mainProjects[active].liveDemo}
@@ -278,7 +303,7 @@ function Projects() {
                       rel="noopener noreferrer"
                       className="flex items-center text-green-600 hover:text-green-800 transition duration-300"
                     >
-                      <FaExternalLinkAlt className="mr-2" /> Live Demo
+                      <FaExternalLinkAlt className="mr-2" /> {t("live_demo")}
                     </a>
                   </div>
                 </motion.div>
@@ -324,7 +349,7 @@ function Projects() {
         {otherProjects.length > 0 && (
           <div className="mt-16">
             <h4 className="text-xl font-semibold mb-6 text-center">
-              Weitere Projekte
+              {t("more_projects")}
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {otherProjects.map((project) => (
@@ -362,7 +387,7 @@ function Projects() {
                       rel="noopener noreferrer"
                       className="text-blue-600 hover:underline text-sm flex items-center gap-1"
                     >
-                      <FaGithub /> GitHub
+                      <FaGithub /> {t("github")}
                     </a>
                     {project.liveDemo && (
                       <a
@@ -371,7 +396,7 @@ function Projects() {
                         rel="noopener noreferrer"
                         className="text-green-600 hover:underline text-sm flex items-center gap-1"
                       >
-                        <FaExternalLinkAlt /> Live
+                        <FaExternalLinkAlt /> {t("live_demo")}
                       </a>
                     )}
                   </div>
@@ -380,22 +405,21 @@ function Projects() {
             </div>
           </div>
         )}
-        {/* Hinweis auf noch mehr Projekte auf GitHub
+        {/* Hinweis auf noch mehr Projekte auf GitHub */}
         <div className="mt-12 text-center">
           <p className="text-lg text-gray-700">
-            Das war noch nicht alles! Viele weitere Projekte findest du auf
-            meinem{" "}
+            {t("not_all")}{" "}
             <a
               href="https://github.com/NoahSeeger"
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-600 hover:underline font-semibold"
             >
-              GitHub-Profil
+              GitHub
             </a>
             .
           </p>
-        </div> */}
+        </div>
       </div>
     </section>
   );

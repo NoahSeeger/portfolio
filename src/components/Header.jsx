@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { t, i18n } = useTranslation();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -20,8 +22,34 @@ function Header() {
             whileHover={{ scale: 1.05 }}
             className="text-xl font-bold text-gray-800"
           >
-            Noah Seeger
+            {t("header_name", "Noah Seeger")}
           </motion.span>
+
+          {/* Language Switcher */}
+          <div className="flex gap-2">
+            <button
+              className={`px-2 py-1 rounded-l border border-gray-300 ${
+                i18n.language === "de"
+                  ? "bg-blue-600 text-white"
+                  : "bg-white text-gray-700"
+              }`}
+              onClick={() => i18n.changeLanguage("de")}
+              aria-label={t("lang_switch_de", "Sprache Deutsch")}
+            >
+              🇩🇪
+            </button>
+            <button
+              className={`px-2 py-1 rounded-r border border-gray-300 ${
+                i18n.language === "en"
+                  ? "bg-blue-600 text-white"
+                  : "bg-white text-gray-700"
+              }`}
+              onClick={() => i18n.changeLanguage("en")}
+              aria-label={t("lang_switch_en", "Sprache Englisch")}
+            >
+              🇺🇸
+            </button>
+          </div>
 
           {/* Mobile menu button */}
           <motion.button
@@ -29,16 +57,24 @@ function Header() {
             whileTap={{ scale: 0.9 }}
             className="md:hidden p-2"
             onClick={toggleMenu}
+            aria-label={
+              isMenuOpen
+                ? t("nav_close", "Menü schließen")
+                : t("nav_open", "Menü öffnen")
+            }
           >
             {isMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
           </motion.button>
 
           {/* Desktop menu */}
           <nav className="hidden md:flex gap-6">
-            <NavLink href="#ABOUT" text="Über mich" />
-            <NavLink href="#EXPERIENCE" text="Erfahrung" />
-            <NavLink href="#PROJECTS" text="Projekte" />
-            <NavLink href="#CONTACT" text="Kontakt" />
+            <NavLink href="#ABOUT" text={t("nav_about", "Über mich")} />
+            <NavLink
+              href="#EXPERIENCE"
+              text={t("nav_experience", "Erfahrung")}
+            />
+            <NavLink href="#PROJECTS" text={t("nav_projects", "Projekte")} />
+            <NavLink href="#CONTACT" text={t("nav_contact", "Kontakt")} />
           </nav>
         </div>
 
@@ -50,10 +86,22 @@ function Header() {
             transition={{ duration: 0.3 }}
             className="md:hidden py-4 space-y-2"
           >
-            <NavLink href="#ABOUT" text="Über mich" mobile />
-            <NavLink href="#EXPERIENCE" text="Erfahrung" mobile />
-            <NavLink href="#PROJECTS" text="Projekte" mobile />
-            <NavLink href="#CONTACT" text="Kontakt" mobile />
+            <NavLink href="#ABOUT" text={t("nav_about", "Über mich")} mobile />
+            <NavLink
+              href="#EXPERIENCE"
+              text={t("nav_experience", "Erfahrung")}
+              mobile
+            />
+            <NavLink
+              href="#PROJECTS"
+              text={t("nav_projects", "Projekte")}
+              mobile
+            />
+            <NavLink
+              href="#CONTACT"
+              text={t("nav_contact", "Kontakt")}
+              mobile
+            />
           </motion.nav>
         )}
       </div>

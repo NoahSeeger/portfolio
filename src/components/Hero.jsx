@@ -4,8 +4,10 @@ import { FaGithub } from "react-icons/fa6";
 import { IoIosMail } from "react-icons/io";
 import { TextShimmer } from "./utils/text-shimmer";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 function Hero() {
+  const { t } = useTranslation();
   return (
     <motion.section
       initial={{ opacity: 0 }}
@@ -27,7 +29,7 @@ function Hero() {
       >
         <img
           src={me}
-          alt="Noah Seeger"
+          alt={t("hero_img_alt", "Noah Seeger")}
           className="rounded-full w-full h-full object-cover shadow-lg"
         />
       </motion.div>
@@ -43,7 +45,7 @@ function Hero() {
           transition={{ delay: 0.5, duration: 0.8 }}
           className="text-xl text-gray-600"
         >
-          Hallo, Ich bin
+          {t("hero_greeting", "Hallo, Ich bin")}
         </motion.span>
         <motion.h1
           initial={{ y: 20, opacity: 0 }}
@@ -51,14 +53,14 @@ function Hero() {
           transition={{ delay: 0.7, duration: 0.8 }}
           className="text-4xl md:text-5xl font-bold my-2"
         >
-          Noah Seeger
+          {t("header_name", "Noah Seeger")}
         </motion.h1>
 
         <TextShimmer
           duration={2.5}
           className="text-2xl md:text-3xl mb-4 font-medium [--base-color:theme(colors.blue.600)] [--base-gradient-color:theme(colors.blue.200)] dark:[--base-color:theme(colors.blue.700)] dark:[--base-gradient-color:theme(colors.blue.400)]"
         >
-          Angehender Entwickler
+          {t("hero_job", "Angehender Entwickler")}
         </TextShimmer>
 
         <motion.div
@@ -70,7 +72,7 @@ function Hero() {
           <SocialLink
             href="https://github.com/NoahSeeger"
             icon={<FaGithub size={24} />}
-            text="GitHub"
+            text={t("hero_github", "GitHub")}
           />
           <motion.a
             whileHover={{
@@ -81,7 +83,7 @@ function Hero() {
             href="#CONTACT"
             className="flex items-center justify-center gap-2 border-2 border-gray-300 rounded-full w-36 font-medium p-3 hover:bg-gray-200 transition duration-300"
           >
-            <IoIosMail size={24} /> Kontakt
+            <IoIosMail size={24} /> {t("hero_contact", "Kontakt")}
           </motion.a>
         </motion.div>
       </motion.div>
