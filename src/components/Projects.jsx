@@ -21,99 +21,131 @@ import {
 
 const projects = [
   {
-    title: "Livo",
+    title: { de: "Livo", en: "Livo" },
     image: Livo,
-    description:
-      "Livo ist eine Progressive Web App, die es ermöglicht, seine Ziele und Länder zu verfolgen, die man bereist hat oder gerne besuchen will.",
-    technologies: ["Nextjs", "react-simple-maps", "Supabase"],
+    description: {
+      de: "Livo ist eine Progressive Web App, die es ermöglicht, seine Ziele und Länder zu verfolgen, die man bereist hat oder gerne besuchen will.",
+      en: "Livo is a progressive web app that lets you track your goals and countries you have visited or want to visit.",
+    },
+    technologies: {
+      de: ["Nextjs", "react-simple-maps", "Supabase"],
+      en: ["Nextjs", "react-simple-maps", "Supabase"],
+    },
     github: "https://github.com/NoahSeeger/livo",
     liveDemo: "https://livoapp.netlify.app",
   },
   {
-    title: "Bruno",
+    title: { de: "Bruno", en: "Bruno" },
     image: Bruno,
-    description:
-      "Body Transformation Tracker mit Vergleichs und Progress Funktion.",
-    technologies: ["SwiftUI"],
+    description: {
+      de: "Body Transformation Tracker mit Vergleichs und Progress Funktion.",
+      en: "Body transformation tracker with comparison and progress features.",
+    },
+    technologies: {
+      de: ["SwiftUI"],
+      en: ["SwiftUI"],
+    },
     github: "https://github.com/NoahSeeger/Pincode",
     liveDemo: "https://github.com/NoahSeeger/Pincode",
   },
   {
-    title: "PicSwipe",
+    title: { de: "PicSwipe", en: "PicSwipe" },
     image: PicSwipe,
-    description:
-      "Einfaches Tool, welches beim sortieren und ausmisten der Gallerie hilft.",
-    technologies: ["React Native", "Expo"],
+    description: {
+      de: "Einfaches Tool, welches beim sortieren und ausmisten der Gallerie hilft.",
+      en: "A simple tool that helps you sort and clean up your gallery.",
+    },
+    technologies: {
+      de: ["React Native", "Expo"],
+      en: ["React Native", "Expo"],
+    },
     github: "https://github.com/NoahSeeger/PicSwipe",
     liveDemo: "https://picswipe.netlify.app/",
   },
   {
-    title: "FocusForge",
-    image: FocusForge,
-    description:
-      "Eine Produktivitäts-Erweiterung, die Benutzern hilft, ihre Zeit und Aufgaben effektiv zu verwalten.",
-    technologies: ["HTML", "CSS", "Javascript"],
-    github: "https://github.com/NoahSeeger/FocusForge",
-    liveDemo: "https://github.com/NoahSeeger/FocusForge",
-  },
-  {
-    title: "Zinsrechner",
-    image: Zinsrechner,
-    description:
-      "Zinsen und Zinseszinsen berechnen. Einfach und schnell mit dem Zinsrechner.",
-    technologies: ["React", "TailwindCSS", "Javascript"],
-    github: "https://github.com/NoahSeeger/zinsrechner",
-    liveDemo: "https://zinsenrechner.netlify.app",
-  },
-  {
-    title: "LifeCircles",
-    image: LifeCircles,
-    description:
-      "Gewohnheiten visualisieren. Behalte den Überblick über dein Lebensverlauf.",
-    technologies: ["React", "TailwindCSS", "Javascript", "Shadcn"],
-    github: "https://github.com/NoahSeeger/LifeCircles",
-    liveDemo: "https://LifeCircles.netlify.app",
-  },
-  {
-    title: "CleanCord",
+    title: { de: "CleanCord", en: "CleanCord" },
     image: CleanCord,
-    description:
-      "Dieses Tool wurde mit der OAuth2-API von Discord entwickelt und hilft Nutzern bei der Organisation und Verwaltung ihrer Discord-Server-Mitgliedschaften.",
-    technologies: ["OAuth", "TailwindCSS", "Javascript"],
+    description: {
+      de: "Dieses Tool wurde mit der OAuth2-API von Discord entwickelt und hilft Nutzern bei der Organisation und Verwaltung ihrer Discord-Server-Mitgliedschaften.",
+      en: "This tool was developed with Discord's OAuth2 API and helps users organize and manage their Discord server memberships.",
+    },
+    technologies: {
+      de: ["OAuth", "TailwindCSS", "Javascript"],
+      en: ["OAuth", "TailwindCSS", "Javascript"],
+    },
     github: "https://github.com/NoahSeeger/CleanCord",
     liveDemo: "https://Cleancord.netlify.app",
   },
   {
-    title: "FullPage",
-    image: FullPage,
-    description:
-      "Eine Chrome-Extension zum Erstellen von vollständigen Screenshots ganzer Webseiten.",
-    technologies: ["HTML", "CSS", "Javascript"],
-    github: "https://github.com/NoahSeeger/FullPage-Extension",
-    liveDemo: "https://github.com/NoahSeeger/FullPage-Extension",
-  },
-  {
-    title: "Feedbacker",
+    title: { de: "Feedbacker", en: "Feedbacker" },
     image: Feedbacker,
-    description:
-      "Mit Feedbacker können Sie ganz einfach anonymes Feedback sammeln. Erstellen Sie ein Board, teilen Sie den Link und lassen Sie die Community die besten Ideen finden.",
-    technologies: ["React", "TailwindCSS", "Supabase"],
+    description: {
+      de: "Mit Feedbacker können Sie ganz einfach anonymes Feedback sammeln. Erstellen Sie ein Board, teilen Sie den Link und lassen Sie die Community die besten Ideen finden.",
+      en: "With Feedbacker you can easily collect anonymous feedback. Create a board, share the link and let the community find the best ideas.",
+    },
+    technologies: {
+      de: ["React", "TailwindCSS", "Supabase"],
+      en: ["React", "TailwindCSS", "Supabase"],
+    },
     github: "https://github.com/NoahSeeger/feedbacker",
     liveDemo: "https://feedbackersite.netlify.app",
+  },
+  {
+    title: { de: "LifeCircles", en: "LifeCircles" },
+    image: LifeCircles,
+    description: {
+      de: "Gewohnheiten visualisieren. Behalte den Überblick über dein Lebensverlauf.",
+      en: "Visualize habits. Keep track of your life journey.",
+    },
+    technologies: {
+      de: ["React", "TailwindCSS", "Javascript", "Shadcn"],
+      en: ["React", "TailwindCSS", "Javascript", "Shadcn"],
+    },
+    github: "https://github.com/NoahSeeger/LifeCircles",
+    liveDemo: "https://LifeCircles.netlify.app",
+  },
+  {
+    title: { de: "Zinsrechner", en: "Zinsrechner" },
+    image: Zinsrechner,
+    description: {
+      de: "Zinsen und Zinseszinsen berechnen. Einfach und schnell mit dem Zinsrechner.",
+      en: "Calculate interest and compound interest. Simple and fast with the interest calculator.",
+    },
+    technologies: {
+      de: ["React", "TailwindCSS", "Javascript"],
+      en: ["React", "TailwindCSS", "Javascript"],
+    },
+    github: "https://github.com/NoahSeeger/zinsrechner",
+    liveDemo: "https://zinsenrechner.netlify.app",
+  },
+  {
+    title: { de: "FullPage", en: "FullPage" },
+    image: FullPage,
+    description: {
+      de: "Eine Chrome-Extension zum Erstellen von vollständigen Screenshots ganzer Webseiten.",
+      en: "A Chrome extension for creating full-page screenshots of entire websites.",
+    },
+    technologies: {
+      de: ["HTML", "CSS", "Javascript"],
+      en: ["HTML", "CSS", "Javascript"],
+    },
+    github: "https://github.com/NoahSeeger/FullPage-Extension",
+    liveDemo: "https://github.com/NoahSeeger/FullPage-Extension",
   },
 ];
 
 const mainProjects = [
-  projects.find((p) => p.title === "Livo"),
-  projects.find((p) => p.title === "Bruno"),
-  projects.find((p) => p.title === "PicSwipe"),
-  projects.find((p) => p.title === "CleanCord"),
+  projects.find((p) => p.title.de === "Livo"),
+  projects.find((p) => p.title.de === "Bruno"),
+  projects.find((p) => p.title.de === "PicSwipe"),
+  projects.find((p) => p.title.de === "CleanCord"),
 ].filter(Boolean);
 
 const otherProjects = projects.filter((p) => !mainProjects.includes(p));
 
 function Projects() {
   const { t, i18n } = useTranslation();
+  const lang = i18n.language === "en" ? "en" : "de";
   const [active, setActive] = useState(0);
   const [autoplay, setAutoplay] = useState(true);
 
@@ -143,29 +175,6 @@ function Projects() {
   return (
     <section id="PROJECTS" className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
-        {/* Sprachumschalter */}
-        <div className="flex justify-end mb-4">
-          <button
-            className={`px-3 py-1 rounded-l border border-gray-300 ${
-              i18n.language === "de"
-                ? "bg-blue-600 text-white"
-                : "bg-white text-gray-700"
-            }`}
-            onClick={() => i18n.changeLanguage("de")}
-          >
-            DE
-          </button>
-          <button
-            className={`px-3 py-1 rounded-r border border-gray-300 ${
-              i18n.language === "en"
-                ? "bg-blue-600 text-white"
-                : "bg-white text-gray-700"
-            }`}
-            onClick={() => i18n.changeLanguage("en")}
-          >
-            EN
-          </button>
-        </div>
         <SectionTitle title={t("explore_my")} subtitle={t("projects")} />
 
         <div className="mt-12">
@@ -176,7 +185,7 @@ function Projects() {
                 <AnimatePresence>
                   {mainProjects.map((project, index) => (
                     <motion.div
-                      key={project.title}
+                      key={project.title[lang]}
                       initial={{
                         opacity: 0,
                         scale: 0.9,
@@ -207,7 +216,7 @@ function Projects() {
                     >
                       <img
                         src={project.image}
-                        alt={project.title}
+                        alt={project.title[lang]}
                         className="h-full w-full rounded-lg object-fit object-center bg-white"
                         draggable={false}
                       />
@@ -241,18 +250,20 @@ function Projects() {
                   className="bg-white p-6 rounded-lg shadow-lg"
                 >
                   <h3 className="text-2xl font-bold mb-2">
-                    {mainProjects[active].title}
+                    {mainProjects[active].title[lang]}
                   </h3>
 
                   <div className="flex flex-wrap gap-2 mb-4">
-                    {mainProjects[active].technologies.map((tech, index) => (
-                      <span
-                        key={index}
-                        className="bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700"
-                      >
-                        {tech}
-                      </span>
-                    ))}
+                    {mainProjects[active].technologies[lang].map(
+                      (tech, index) => (
+                        <span
+                          key={index}
+                          className="bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700"
+                        >
+                          {tech}
+                        </span>
+                      )
+                    )}
                   </div>
 
                   <motion.p
@@ -261,7 +272,7 @@ function Projects() {
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.2 }}
                   >
-                    {mainProjects[active].description
+                    {mainProjects[active].description[lang]
                       .split(" ")
                       .map((word, index) => (
                         <motion.span
@@ -354,21 +365,23 @@ function Projects() {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {otherProjects.map((project) => (
                 <div
-                  key={project.title}
+                  key={project.title[lang]}
                   className="bg-white rounded-lg shadow p-4 flex flex-col h-full"
                 >
                   <div className="flex items-center gap-3 mb-2">
                     {project.image && (
                       <img
                         src={project.image}
-                        alt={project.title}
+                        alt={project.title[lang]}
                         className="w-10 h-10 object-contain rounded"
                       />
                     )}
-                    <span className="font-bold text-lg">{project.title}</span>
+                    <span className="font-bold text-lg">
+                      {project.title[lang]}
+                    </span>
                   </div>
                   <div className="flex flex-wrap gap-1 mb-2">
-                    {project.technologies.map((tech, idx) => (
+                    {project.technologies[lang].map((tech, idx) => (
                       <span
                         key={idx}
                         className="bg-gray-100 rounded px-2 py-0.5 text-xs text-gray-600"
@@ -378,7 +391,7 @@ function Projects() {
                     ))}
                   </div>
                   <p className="text-gray-600 text-sm mb-3 line-clamp-2">
-                    {project.description}
+                    {project.description[lang]}
                   </p>
                   <div className="mt-auto flex gap-3">
                     <a

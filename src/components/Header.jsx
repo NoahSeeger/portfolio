@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
@@ -7,7 +7,27 @@ function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { t, i18n } = useTranslation();
 
+  // Sprache aus localStorage beim Mount setzen
+  useEffect(() => {
+    const savedLang = localStorage.getItem("lang");
+    if (savedLang && savedLang !== i18n.language) {
+      i18n.changeLanguage(savedLang);
+    }
+  }, []);
+
+  // Sprache in localStorage speichern, wenn sie sich ändert
+  useEffect(() => {
+    localStorage.setItem("lang", i18n.language);
+  }, [i18n.language]);
+
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
+  // Simpler Toggle-Button
+  const handleLangToggle = () => {
+    const newLang = i18n.language === "de" ? "en" : "de";
+    i18n.changeLanguage(newLang);
+    localStorage.setItem("lang", newLang);
+  };
 
   return (
     <motion.header
@@ -25,31 +45,25 @@ function Header() {
             {t("header_name", "Noah Seeger")}
           </motion.span>
 
-          {/* Language Switcher */}
-          <div className="flex gap-2">
-            <button
-              className={`px-2 py-1 rounded-l border border-gray-300 ${
-                i18n.language === "de"
-                  ? "bg-blue-600 text-white"
-                  : "bg-white text-gray-700"
-              }`}
-              onClick={() => i18n.changeLanguage("de")}
-              aria-label={t("lang_switch_de", "Sprache Deutsch")}
-            >
-              🇩🇪
-            </button>
-            <button
-              className={`px-2 py-1 rounded-r border border-gray-300 ${
-                i18n.language === "en"
-                  ? "bg-blue-600 text-white"
-                  : "bg-white text-gray-700"
-              }`}
-              onClick={() => i18n.changeLanguage("en")}
-              aria-label={t("lang_switch_en", "Sprache Englisch")}
-            >
-              🇺🇸
-            </button>
-          </div>
+          {/* Desktop menu */}
+          <nav className="hidden md:flex gap-6">
+            <NavLink href="#ABOUT" text={t("nav_about", "Über mich")} />
+            <NavLink
+              href="#EXPERIENCE"
+              text={t("nav_experience", "Erfahrung")}
+            />
+            <NavLink href="#PROJECTS" text={t("nav_projects", "Projekte")} />
+            <NavLink href="#CONTACT" text={t("nav_contact", "Kontakt")} />
+          </nav>
+
+          {/* Simpler Language Toggle ganz rechts */}
+          <button
+            onClick={handleLangToggle}
+            className="ml-4 px-3 py-1 rounded border border-gray-300 bg-white text-gray-700 hover:bg-blue-100 transition"
+            aria-label={t("lang_toggle", "Sprache wechseln")}
+          >
+            {i18n.language === "de" ? "DE" : "EN"}
+          </button>
 
           {/* Mobile menu button */}
           <motion.button
@@ -65,17 +79,6 @@ function Header() {
           >
             {isMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
           </motion.button>
-
-          {/* Desktop menu */}
-          <nav className="hidden md:flex gap-6">
-            <NavLink href="#ABOUT" text={t("nav_about", "Über mich")} />
-            <NavLink
-              href="#EXPERIENCE"
-              text={t("nav_experience", "Erfahrung")}
-            />
-            <NavLink href="#PROJECTS" text={t("nav_projects", "Projekte")} />
-            <NavLink href="#CONTACT" text={t("nav_contact", "Kontakt")} />
-          </nav>
         </div>
 
         {/* Mobile menu */}
@@ -102,6 +105,14 @@ function Header() {
               text={t("nav_contact", "Kontakt")}
               mobile
             />
+            {/* Language Toggle auch im Mobile Menu */}
+            <button
+              onClick={handleLangToggle}
+              className="mt-4 px-3 py-1 rounded border border-gray-300 bg-white text-gray-700 w-full hover:bg-blue-100 transition"
+              aria-label={t("lang_toggle", "Sprache wechseln")}
+            >
+              {i18n.language === "de" ? "DE" : "EN"}
+            </button>
           </motion.nav>
         )}
       </div>

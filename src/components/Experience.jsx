@@ -79,13 +79,25 @@ const additionalSkills = (t) => [
 ];
 
 function SkillCard({ title, skills }) {
+  // Teile die Skills in zwei Spalten auf
+  const mid = Math.ceil(skills.length / 2);
+  const col1 = skills.slice(0, mid);
+  const col2 = skills.slice(mid);
+
   return (
     <div className="bg-white p-6 rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold mb-4 text-gray-800">{title}</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {skills.map((skill, index) => (
-          <SkillItem key={index} name={skill.name} level={skill.level} />
-        ))}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2">
+        <ul className="flex flex-col gap-3">
+          {col1.map((skill, index) => (
+            <SkillItem key={index} name={skill.name} level={skill.level} />
+          ))}
+        </ul>
+        <ul className="flex flex-col gap-3">
+          {col2.map((skill, index) => (
+            <SkillItem key={index} name={skill.name} level={skill.level} />
+          ))}
+        </ul>
       </div>
     </div>
   );
@@ -93,13 +105,13 @@ function SkillCard({ title, skills }) {
 
 function SkillItem({ name, level }) {
   return (
-    <div className="flex items-center">
-      <FaCheckCircle className="text-green-500 mr-2" />
-      <div>
-        <h3 className="font-semibold">{name}</h3>
-        <p className="text-sm text-gray-600">{level}</p>
+    <li className="flex items-center gap-3 min-h-[40px]">
+      <FaCheckCircle className="text-green-500 flex-shrink-0" size={20} />
+      <div className="flex flex-col">
+        <span className="font-semibold leading-tight">{name}</span>
+        <span className="text-sm text-gray-600 leading-tight">{level}</span>
       </div>
-    </div>
+    </li>
   );
 }
 
