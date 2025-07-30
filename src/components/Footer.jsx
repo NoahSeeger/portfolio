@@ -1,5 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { DatenschutzLink } from "./DSGVO";
 
 function Footer() {
   const { t } = useTranslation();
@@ -17,6 +18,7 @@ function Footer() {
             text={t("footer_projects", "Projekte")}
           />
           <FooterLink href="#CONTACT" text={t("footer_contact", "Kontakt")} />
+          <DatenschutzLink />
         </div>
         <div className="text-center md:text-right text-gray-400">
           {t("footer_copyright", "© 2024 Noah Seeger. All Rights Reserved")}

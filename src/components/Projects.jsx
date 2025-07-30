@@ -181,7 +181,7 @@ function Projects() {
           <div className="relative grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
             {/* Project Images - 2/3 width on desktop */}
             <div className="md:col-span-2">
-              <div className="relative aspect-[16/9] w-full overflow-hidden rounded-lg shadow-lg">
+              <div className="relative aspect-[16/9] w-full overflow-hidden rounded-lg shadow-lg z-0">
                 <AnimatePresence>
                   {mainProjects.map((project, index) => (
                     <motion.div
