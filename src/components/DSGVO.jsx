@@ -67,14 +67,14 @@ function DatenschutzModal({ isOpen, onClose }) {
       title: "Verantwortlicher",
       content: (
         <div>
-          <p className="font-semibold text-[#422B67] text-lg mb-2">
+          <p className="font-semibold text-purple-accent text-lg mb-2">
             Noah Seeger
           </p>
           <p className="text-gray-600">
             E-Mail:{" "}
             <a
               href="mailto:noahseeger@outlook.de"
-              className="text-[#422B67] hover:underline font-medium"
+              className="text-purple-accent hover:underline font-medium"
             >
               noahseeger@outlook.de
             </a>
@@ -89,7 +89,7 @@ function DatenschutzModal({ isOpen, onClose }) {
       content: (
         <p className="text-gray-700 leading-relaxed">
           Diese Website wird bei{" "}
-          <span className="font-semibold text-[#422B67]">Netlify</span>{" "}
+          <span className="font-semibold text-purple-accent">Netlify</span>{" "}
           gehostet. Beim Aufruf der Seite speichert der Hosting-Anbieter
           automatisch Daten (z. B. IP-Adresse, Browsertyp, Uhrzeit), um einen
           sicheren Betrieb der Website zu gewährleisten. Diese Daten werden in
@@ -117,7 +117,7 @@ function DatenschutzModal({ isOpen, onClose }) {
       content: (
         <p className="text-gray-700 leading-relaxed">
           Auf dieser Website werden Schriftarten von{" "}
-          <span className="font-semibold text-[#422B67]">Google Fonts</span>{" "}
+          <span className="font-semibold text-purple-accent">Google Fonts</span>{" "}
           eingebunden. Beim Laden der Seite wird dafür eine Verbindung zu
           Servern von Google hergestellt. Dabei kann deine IP-Adresse übertragen
           werden. Die Nutzung erfolgt auf Grundlage meines berechtigten
@@ -185,7 +185,7 @@ function DatenschutzModal({ isOpen, onClose }) {
             }}
           >
             {/* Header */}
-            <div className="sticky top-0 bg-gradient-to-r from-[#422B67] to-[#422B67]/90 text-white p-6 flex items-center justify-between z-10">
+            <div className="sticky top-0 bg-gradient-to-r from-purple-accent to-purple-accent/90 text-white p-6 flex items-center justify-between z-10">
               <div className="flex items-center gap-4">
                 <div className="flex items-center justify-center w-12 h-12 rounded-full bg-white/20">
                   <FaShieldAlt className="text-xl" />
@@ -234,13 +234,13 @@ function DatenschutzModal({ isOpen, onClose }) {
                     >
                       <div className="flex items-start gap-4">
                         <div className="flex-shrink-0">
-                          <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-r from-[#422B67]/10 to-[#422B67]/5 text-[#422B67]">
+                          <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-r from-purple-accent/10 to-purple-accent/5 text-purple-accent">
                             <section.icon className="text-lg" />
                           </div>
                         </div>
                         <div className="flex-1">
                           <h2 className="text-xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-                            <span className="text-[#422B67] text-base font-normal">
+                            <span className="text-purple-accent text-base font-normal">
                               {index + 1}.
                             </span>
                             {section.title}
@@ -290,7 +290,7 @@ function DatenschutzModal({ isOpen, onClose }) {
                   className="mt-8 text-center"
                   variants={itemVariants}
                 >
-                  <div className="bg-gradient-to-r from-[#422B67]/5 to-[#422B67]/10 rounded-xl p-6">
+                  <div className="bg-gradient-to-r from-purple-accent/5 to-purple-accent/10 rounded-xl p-6">
                     <h3 className="text-xl font-bold text-gray-900 mb-3">
                       Fragen zur Datenschutzerklärung?
                     </h3>
@@ -300,7 +300,7 @@ function DatenschutzModal({ isOpen, onClose }) {
                     </p>
                     <a
                       href="mailto:noahseeger@outlook.de"
-                      className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#422B67] to-[#422B67]/90 text-white font-semibold rounded-full hover:from-[#422B67]/90 hover:to-[#422B67]/80 transition-all duration-300 shadow-lg hover:shadow-xl text-sm"
+                      className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-accent to-purple-accent/90 text-white font-semibold rounded-full hover:from-purple-accent/90 hover:to-purple-accent/80 transition-all duration-300 shadow-lg hover:shadow-xl text-sm"
                     >
                       <FaEnvelope className="text-xs" />
                       Kontakt aufnehmen

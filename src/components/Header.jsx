@@ -154,24 +154,18 @@ function Header() {
   return (
     <header className="sticky top-6 z-50 mx-4 md:mx-0 flex justify-center">
       <div
-        className={`w-full max-w-4xl px-4 transition-all duration-300 ease-out ${
+        className={`w-full max-w-4xl px-4 transition-all ${
           isCompact
             ? "border-0 bg-transparent"
-            : "border-2 border-border/30 backdrop-blur-xl bg-background/75 rounded-full"
+            : "border-2 border-purple-accent/30 backdrop-blur-xl bg-[#e6e6e630] rounded-full"
         }`}
-        style={{
-          backgroundColor: isCompact
-            ? "transparent"
-            : "rgba(224, 224, 224, 0.314)",
-          borderColor: isCompact ? "transparent" : "rgba(66, 43, 103, 0.3)",
-        }}
       >
         <div className="flex h-14 items-center justify-between">
           {/* Logo */}
           <a
             href="/"
             className={`flex items-center gap-3 shrink-0 transition-transform duration-300 ease-out ${
-              isCompact ? "-translate-x-5" : "translate-x-0"
+              isCompact ? "-translate-x-[5rem]" : "translate-x-0"
             }`}
           >
             <img alt="Logo" className="h-10 w-auto object-contain" src={Logo} />
@@ -186,13 +180,13 @@ function Header() {
                 onClick={(e) => handleNavClick(e, link.id)}
                 className={`relative inline-block text-sm font-medium transition-all duration-300 ease-out ${
                   activeSection === link.id
-                    ? "text-[#422B67] scale-105"
-                    : "text-primary hover:text-[#422B67] scale-100"
+                    ? "text-purple-accent scale-105"
+                    : "text-primary hover:text-purple-accent scale-100"
                 }`}
               >
                 {/* Active background with smooth transition */}
                 <div
-                  className={`absolute -inset-x-3 -inset-y-1.5 backdrop-blur-sm border border-[#422B67]/30 rounded-full -z-10 transition-all duration-300 ease-out ${
+                  className={`absolute -inset-x-3 -inset-y-1.5 backdrop-blur-sm border border-purple-accent/30 rounded-full -z-10 transition-all duration-300 ease-out ${
                     activeSection === link.id
                       ? "opacity-100 scale-100"
                       : "opacity-0 scale-95"
@@ -209,8 +203,8 @@ function Header() {
             {/* Language Toggle */}
             <button
               onClick={handleLangToggle}
-              className={`hidden md:inline-flex items-center px-4 h-9 text-sm font-semibold rounded-full text-white bg-gradient-to-t from-[#422B67] to-[#422B67] hover:to-[#422B67]/90 border border-[#422B67]/80 shadow-lg transition-transform duration-300 ease-out ${
-                isCompact ? "translate-x-5" : "translate-x-0"
+              className={`hidden md:inline-flex items-center px-4 h-9 text-sm font-semibold rounded-full text-white bg-gradient-to-t from-purple-accent to-purple-accent hover:to-purple-accent/90 border border-purple-accent/80 shadow-lg transition-transform duration-300 ease-out ${
+                isCompact ? "translate-x-[5rem]" : "translate-x-0"
               }`}
             >
               {i18n.language === "de" ? "DE" : "EN"}
@@ -223,10 +217,10 @@ function Header() {
               onClick={toggleMenu}
               className={`md:hidden flex items-center justify-center size-10 rounded-full transition-all duration-300 ease-out ${
                 isMenuOpen
-                  ? "bg-[#422B67] text-white shadow-lg scale-110"
+                  ? "bg-purple-accent text-white shadow-lg scale-110"
                   : isCompact
-                  ? "bg-white/80 backdrop-blur-sm border-2 border-[#422B67]/20 text-[#422B67] shadow-md hover:shadow-lg hover:scale-105"
-                  : "bg-white/60 backdrop-blur-sm border border-[#422B67]/30 text-[#422B67] hover:bg-white/80 hover:scale-105"
+                  ? "bg-white/80 backdrop-blur-sm border-2 border-purple-accent/20 text-purple-accent shadow-md hover:shadow-lg hover:scale-105"
+                  : "bg-white/60 backdrop-blur-sm border border-purple-accent/30 text-purple-accent hover:bg-white/80 hover:scale-105"
               } ${isCompact ? "translate-x-5" : "translate-x-0"}`}
             >
               <motion.div
@@ -265,7 +259,7 @@ function Header() {
 
             {/* Modal Content */}
             <motion.div
-              className="absolute top-20 left-4 right-4 bg-white/95 backdrop-blur-xl border-2 border-[#422B67]/20 rounded-2xl shadow-2xl overflow-hidden"
+              className="absolute top-20 left-4 right-4 bg-white/95 backdrop-blur-xl border-2 border-purple-accent/20 rounded-2xl shadow-2xl overflow-hidden"
               initial={{
                 opacity: 0,
                 scale: 0.95,
@@ -289,7 +283,7 @@ function Header() {
               }}
             >
               {/* Header with gradient */}
-              <div className="bg-gradient-to-r from-[#422B67] to-[#422B67]/80 px-6 py-4">
+              <div className="bg-gradient-to-r from-purple-accent to-purple-accent/80 px-6 py-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <img
@@ -319,8 +313,8 @@ function Header() {
                       onClick={(e) => handleNavClick(e, link.id)}
                       className={`w-full text-left px-4 py-4 rounded-xl transition-all duration-300 group ${
                         activeSection === link.id
-                          ? "bg-gradient-to-r from-[#422B67]/10 to-[#422B67]/5 text-[#422B67] border-2 border-[#422B67]/20"
-                          : "text-gray-700 hover:bg-gray-50 hover:text-[#422B67] border-2 border-transparent hover:border-[#422B67]/10"
+                          ? "bg-gradient-to-r from-purple-accent/10 to-purple-accent/5 text-purple-accent border-2 border-purple-accent/20"
+                          : "text-gray-700 hover:bg-gray-50 hover:text-purple-accent border-2 border-transparent hover:border-purple-accent/10"
                       }`}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
@@ -333,13 +327,15 @@ function Header() {
                         <motion.div
                           className={`w-2 h-2 rounded-full transition-all duration-300 ${
                             activeSection === link.id
-                              ? "bg-[#422B67] scale-100"
-                              : "bg-gray-300 scale-75 group-hover:bg-[#422B67] group-hover:scale-100"
+                              ? "bg-purple-accent scale-100"
+                              : "bg-gray-300 scale-75 group-hover:bg-purple-accent group-hover:scale-100"
                           }`}
                           animate={{
                             scale: activeSection === link.id ? 1 : 0.75,
                             backgroundColor:
-                              activeSection === link.id ? "#422B67" : "#d1d5db",
+                              activeSection === link.id
+                                ? "purple-accent"
+                                : "#d1d5db",
                           }}
                         />
                       </div>
@@ -356,7 +352,7 @@ function Header() {
                 >
                   <button
                     onClick={handleLangToggle}
-                    className="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-gradient-to-r from-[#422B67] to-[#422B67]/90 text-white hover:from-[#422B67]/90 hover:to-[#422B67]/80 transition-all duration-300 shadow-lg hover:shadow-xl"
+                    className="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-gradient-to-r from-purple-accent to-purple-accent/90 text-white hover:from-purple-accent/90 hover:to-purple-accent/80 transition-all duration-300 shadow-lg hover:shadow-xl"
                   >
                     <span className="font-semibold">
                       {i18n.language === "de"
