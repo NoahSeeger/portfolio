@@ -21,8 +21,6 @@ function Hero() {
           rotate: [0, -2, 2, -2, 0],
           transition: {
             duration: 0.5,
-            type: "spring",
-            stiffness: 300,
           },
         }}
         className="w-64 h-64 md:w-80 md:h-80"

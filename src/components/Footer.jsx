@@ -1,6 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { DatenschutzLink } from "./DSGVO";
+import { Link } from "react-router-dom";
 
 function Footer() {
   const { t } = useTranslation();
@@ -12,6 +13,11 @@ function Footer() {
           <FooterLink
             href="#EXPERIENCE"
             text={t("footer_experience", "Erfahrung")}
+          />
+          <FooterLink
+            href="/blog"
+            text={t("footer_blog", "Blog")}
+            isLink
           />
           <FooterLink
             href="#PROJECTS"
@@ -28,7 +34,14 @@ function Footer() {
   );
 }
 
-function FooterLink({ href, text }) {
+function FooterLink({ href, text, isLink = false }) {
+  if (isLink) {
+    return (
+      <Link to={href} className="hover:text-gray-400 transition duration-300">
+        {text}
+      </Link>
+    );
+  }
   return (
     <a href={href} className="hover:text-gray-400 transition duration-300">
       {text}
