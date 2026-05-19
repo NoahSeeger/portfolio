@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import { getAllPosts, formatDateShort, calculateReadTime, groupPostsByYearMonth } from "../lib/blog";
 import { useTranslation } from "react-i18next";
@@ -93,6 +93,19 @@ export function BlogPost({ post }) {
   const { t, i18n } = useTranslation();
   const locale = i18n.language;
   const readTime = post ? calculateReadTime(post.content) : 0;
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      setProgress(scrollPercent);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   if (!post) {
     return (
@@ -104,6 +117,8 @@ export function BlogPost({ post }) {
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
+      <div className="fixed top-0 left-0 h-1 bg-blue-600 z-50 transition-all duration-100" style={{ width: `${progress}%` }} />
+
       <article className="flex-1 max-w-2xl mx-auto px-6 py-16 w-full">
         <header className="mb-12">
           <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-4">{post.title}</h1>
