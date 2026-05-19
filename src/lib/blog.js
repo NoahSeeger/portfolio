@@ -64,3 +64,34 @@ export function formatDate(dateString, locale = "de") {
     day: "numeric",
   });
 }
+
+export function formatDateShort(dateString, locale = "en") {
+  const date = new Date(dateString);
+  const month = date.toLocaleDateString(locale, { month: "short" });
+  const day = date.getDate();
+  const year = date.getFullYear();
+  return `${day} ${month}, ${year}`;
+}
+
+export function calculateReadTime(content) {
+  const wordsPerMinute = 200;
+  const words = content.trim().split(/\s+/).length;
+  const minutes = Math.ceil(words / wordsPerMinute);
+  return minutes;
+}
+
+export function groupPostsByYearMonth(posts) {
+  const grouped = {};
+
+  for (const post of posts) {
+    const date = new Date(post.pubDatetime);
+    const year = date.getFullYear();
+    const month = date.getMonth();
+
+    if (!grouped[year]) grouped[year] = {};
+    if (!grouped[year][month]) grouped[year][month] = [];
+    grouped[year][month].push(post);
+  }
+
+  return grouped;
+}

@@ -1,10 +1,9 @@
 import React from "react";
 import SectionTitle from "./SectionTitle";
-import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { getAllPosts, formatDate } from "../lib/blog";
+import { getAllPosts, formatDate, calculateReadTime } from "../lib/blog";
 
 function Posts() {
   const { t, i18n } = useTranslation();
@@ -41,9 +40,11 @@ function Posts() {
                   </time>
                   <h3 className="text-xl font-semibold mt-2 mb-3">{post.title}</h3>
                   <p className="text-gray-600 flex-grow line-clamp-3">{post.description}</p>
-                  <div className="flex items-center text-blue-600 mt-4">
-                    <span>{t("posts_read_more", "Weiterlesen")}</span>
-                    <MdOutlineArrowForwardIos size={16} className="ml-2" />
+                  <div className="flex items-center text-blue-600 mt-4 text-sm">
+                    <span>{calculateReadTime(post.content)} min {t("posts_read", "read")}</span>
+                    <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
                   </div>
                 </motion.article>
               </Link>
@@ -83,7 +84,9 @@ function Posts() {
             className="flex items-center justify-center bg-blue-600 text-white px-6 py-4 rounded-full hover:bg-blue-700 transition duration-300 whitespace-nowrap w-fit"
           >
             {t("posts_read_all", "Alle Beiträge lesen")}
-            <MdOutlineArrowForwardIos size={22} className="ml-4" />
+            <svg className="ml-4 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
           </Link>
         </div>
       </div>

@@ -17,6 +17,167 @@ When I started exploring AI, my goal was to have fun and inspire people. And her
 Yes, I could totally see how OpenClaw could become a huge company. And no, it's not really exciting for me. I'm a builder at heart. I did the whole creating-a-company game already, poured 13 years of my life into it and learned a lot. What I want is to change the world, not build a large company and teaming up with OpenAI is the fastest way to bring this to everyone.
 
 I spent last week in San Francisco talking with the major labs, getting access to people and unreleased research, and it's been inspiring on all fronts. I want to thank all the folks I talked to this week and am thankful for the opportunities.
+Saying it's overwhelming is an understatement.
+
+When I started exploring AI, my goal was to have fun and inspire people. And here we are, the lobster is taking over the world. My next mission is to build an agent that even my mum can use. That'll need a much broader change, a lot more thought on how to do it safely, and access to the very latest models and research.
+
+Yes, I could totally see how OpenClaw could become a huge company. And no, it's not really exciting for me. I'm a builder at heart. I did the whole creating-a-company game already, poured 13 years of my life into it and learned a lot. What I want is to change the world, not build a large company and teaming up with OpenAI is the fastest way to bring this to everyone.
+
+I spent last week in San Francisco talking with the major labs, getting access to people and unreleased research, and it's been inspiring on all fronts. I want to thank all the folks I talked to this week and am thankful for the opportunities.
+Saying it's overwhelming is an understatement.
+
+When I started exploring AI, my goal was to have fun and inspire people. And here we are, the lobster is taking over the world. My next mission is to build an agent that even my mum can use. That'll need a much broader change, a lot more thought on how to do it safely, and access to the very latest models and research.
+
+Yes, I could totally see how OpenClaw could become a huge company. And no, it's not really exciting for me. I'm a builder at heart. I did the whole creating-a-company game already, poured 13 years of my life into it and learned a lot. What I want is to change the world, not build a large company and teaming up with OpenAI is the fastest way to bring this to everyone.
+
+I spent last week in San Francisco talking with the major labs, getting access to people and unreleased research, and it's been inspiring on all fronts. I want to thank all the folks I talked to this week and am thankful for the opportunities.
+Saying it's overwhelming is an understatement.
+
+When I started exploring AI, my goal was to have fun and inspire people. And here we are, the lobster is taking over the world. My next mission is to build an agent that even my mum can use. That'll need a much broader change, a lot more thought on how to do it safely, and access to the very latest models and research.
+
+Yes, I could totally see how OpenClaw could become a huge company. And no, it's not really exciting for me. I'm a builder at heart. I did the whole creating-a-company game already, poured 13 years of my life into it and learned a lot. What I want is to change the world, not build a large company and teaming up with OpenAI is the fastest way to bring this to everyone.
+
+I spent last week in San Francisco talking with the major labs, getting access to people and unreleased research, and it's been inspiring on all fronts. I want to thank all the folks I talked to this week and am thankful for the opportunities.
+Saying it's overwhelming is an understatement.
+
+When I started exploring AI, my goal was to have fun and inspire people. And here we are, the lobster is taking over the world. My next mission is to build an agent that even my mum can use. That'll need a much broader change, a lot more thought on how to do it safely, and access to the very latest models and research.
+
+Yes, I could totally see how OpenClaw could become a huge company. And no, it's not really exciting for me. I'm a builder at heart. I did the whole creating-a-company game already, poured 13 years of my life into it and learned a lot. What I want is to change the world, not build a large company and teaming up with OpenAI is the fastest way to bring this to everyone.
+
+I spent last week in San Francisco talking with the major labs, getting access to people and unreleased research, and it's been inspiring on all fronts. I want to thank all the folks I talked to this week and am thankful for the opportunities.
+Saying it's overwhelming is an understatement.
+
+When I started exploring AI, my goal was to have fun and inspire people. And here we are, the lobster is taking over the world. My next mission is to build an agent that even my mum can use. That'll need a much broader change, a lot more thought on how to do it safely, and access to the very latest models and research.
+
+Yes, I could totally see how OpenClaw could become a huge company. And no, it's not really exciting for me. I'm a builder at heart. I did the whole creating-a-company game already, poured 13 years of my life into it and learned a lot. What I want is to change the world, not build a large company and teaming up with OpenAI is the fastest way to bring this to everyone.
+
+I spent last week in San Francisco talking with the major labs, getting access to people and unreleased research, and it's been inspiring on all fronts. I want to thank all the folks I talked to this week and am thankful for the opportunities.
+Saying it's overwhelming is an understatement.
+
+When I started exploring AI, my goal was to have fun and inspire people. And here we are, the lobster is taking over the world. My next mission is to build an agent that even my mum can use. That'll need a much broader change, a lot more thought on how to do it safely, and access to the very latest models and research.
+
+Yes, I could totally see how OpenClaw could become a huge company. And no, it's not really exciting for me. I'm a builder at heart. I did the whole creating-a-company game already, poured 13 years of my life into it and learned a lot. What I want is to change the world, not build a large company and teaming up with OpenAI is the fastest way to bring this to everyone.
+
+I spent last week in San Francisco talking with the major labs, getting access to people and unreleased research, and it's been inspiring on all fronts. I want to thank all the folks I talked to this week and am thankful for the opportunities.
+Saying it's overwhelming is an understatement.
+
+When I started exploring AI, my goal was to have fun and inspire people. And here we are, the lobster is taking over the world. My next mission is to build an agent that even my mum can use. That'll need a much broader change, a lot more thought on how to do it safely, and access to the very latest models and research.
+
+Yes, I could totally see how OpenClaw could become a huge company. And no, it's not really exciting for me. I'm a builder at heart. I did the whole creating-a-company game already, poured 13 years of my life into it and learned a lot. What I want is to change the world, not build a large company and teaming up with OpenAI is the fastest way to bring this to everyone.
+
+I spent last week in San Francisco talking with the major labs, getting access to people and unreleased research, and it's been inspiring on all fronts. I want to thank all the folks I talked to this week and am thankful for the opportunities.
+Saying it's overwhelming is an understatement.
+
+When I started exploring AI, my goal was to have fun and inspire people. And here we are, the lobster is taking over the world. My next mission is to build an agent that even my mum can use. That'll need a much broader change, a lot more thought on how to do it safely, and access to the very latest models and research.
+
+Yes, I could totally see how OpenClaw could become a huge company. And no, it's not really exciting for me. I'm a builder at heart. I did the whole creating-a-company game already, poured 13 years of my life into it and learned a lot. What I want is to change the world, not build a large company and teaming up with OpenAI is the fastest way to bring this to everyone.
+
+I spent last week in San Francisco talking with the major labs, getting access to people and unreleased research, and it's been inspiring on all fronts. I want to thank all the folks I talked to this week and am thankful for the opportunities.
+Saying it's overwhelming is an understatement.
+
+When I started exploring AI, my goal was to have fun and inspire people. And here we are, the lobster is taking over the world. My next mission is to build an agent that even my mum can use. That'll need a much broader change, a lot more thought on how to do it safely, and access to the very latest models and research.
+
+Yes, I could totally see how OpenClaw could become a huge company. And no, it's not really exciting for me. I'm a builder at heart. I did the whole creating-a-company game already, poured 13 years of my life into it and learned a lot. What I want is to change the world, not build a large company and teaming up with OpenAI is the fastest way to bring this to everyone.
+
+I spent last week in San Francisco talking with the major labs, getting access to people and unreleased research, and it's been inspiring on all fronts. I want to thank all the folks I talked to this week and am thankful for the opportunities.
+Saying it's overwhelming is an understatement.
+
+When I started exploring AI, my goal was to have fun and inspire people. And here we are, the lobster is taking over the world. My next mission is to build an agent that even my mum can use. That'll need a much broader change, a lot more thought on how to do it safely, and access to the very latest models and research.
+
+Yes, I could totally see how OpenClaw could become a huge company. And no, it's not really exciting for me. I'm a builder at heart. I did the whole creating-a-company game already, poured 13 years of my life into it and learned a lot. What I want is to change the world, not build a large company and teaming up with OpenAI is the fastest way to bring this to everyone.
+
+I spent last week in San Francisco talking with the major labs, getting access to people and unreleased research, and it's been inspiring on all fronts. I want to thank all the folks I talked to this week and am thankful for the opportunities.
+Saying it's overwhelming is an understatement.
+
+When I started exploring AI, my goal was to have fun and inspire people. And here we are, the lobster is taking over the world. My next mission is to build an agent that even my mum can use. That'll need a much broader change, a lot more thought on how to do it safely, and access to the very latest models and research.
+
+Yes, I could toSaying it's overwhelming is an understatement.
+
+When I started exploring AI, my goal was to have fun and inspire people. And here we are, the lobster is taking over the world. My next mission is to build an agent that even my mum can use. That'll need a much broader change, a lot more thought on how to do it safely, and access to the very latest models and research.
+
+Yes, I could totally see how OpenClaw could become a huge company. And no, it's not really exciting for me. I'm a builder at heart. I did the whole creating-a-company game already, poured 13 years of my life into it and learned a lot. What I want is to change the world, not build a large company and teaming up with OpenAI is the fastest way to bring this to everyone.
+
+I spent last week in San Francisco talking with the major labs, getting access to people and unreleased research, and it's been inspiring on all fronts. I want to thank all the folks I talked to this week and am thankful for the opportunities.
+Saying it's overwhelming is an understatement.
+
+When I started exploring AI, my goal was to have fun and inspire people. And here we are, the lobster is taking over the world. My next mission is to build an agent that even my mum can use. That'll need a much broader change, a lot more thought on how to do it safely, and access to the very latest models and research.
+
+Yes, I could totally see how OpenClaw could become a huge company. And no, it's not really exciting for me. I'm a builder at heart. I did the whole creating-a-company game already, poured 13 years of my life into it and learned a lot. What I want is to change the world, not build a large company and teaming up with OpenAI is the fastest way to bring this to everyone.
+
+I spent last week in San Francisco talking with the major labs, getting access to people and unreleased research, and it's been inspiring on all fronts. I want to thank all the folks I talked to this week and am thankful for the opportunities.
+Saying it's overwhelming is an understatement.
+
+When I started exploring AI, my goal was to have fun and inspire people. And here we are, the lobster is taking over the world. My next mission is to build an agent that even my mum can use. That'll need a much broader change, a lot more thought on how to do it safely, and access to the very latest models and research.
+
+Yes, I could totally see how OpenClaw could become a huge company. And no, it's not really exciting for me. I'm a builder at heart. I did the whole creating-a-company game already, poured 13 years of my life into it and learned a lot. What I want is to change the world, not build a large company and teaming up with OpenAI is the fastest way to bring this to everyone.
+
+I spent last week in San Francisco talking with the major labs, getting access to people and unreleased research, and it's been inspiring on all fronts. I want to thank all the folks I talked to this week and am thankful for the opportunities.
+Saying it's overwhelming is an understatement.
+
+When I started exploring AI, my goal was to have fun and inspire people. And here we are, the lobster is taking over the world. My next mission is to build an agent that even my mum can use. That'll need a much broader change, a lot more thought on how to do it safely, and access to the very latest models and research.
+
+Yes, I could totally see how OpenClaw could become a huge company. And no, it's not really exciting for me. I'm a builder at heart. I did the whole creating-a-company game already, poured 13 years of my life into it and learned a lot. What I want is to change the world, not build a large company and teaming up with OpenAI is the fastest way to bring this to everyone.
+
+I spent last week in San Francisco talking with the major labs, getting access to people and unreleased research, and it's been inspiring on all fronts. I want to thank all the folks I talked to this week and am thankful for the opportunities.
+Saying it's overwhelming is an understatement.
+
+When I started exploring AI, my goal was to have fun and inspire people. And here we are, the lobster is taking over the world. My next mission is to build an agent that even my mum can use. That'll need a much broader change, a lot more thought on how to do it safely, and access to the very latest models and research.
+
+Yes, I could totally see how OpenClaw could become a huge company. And no, it's not really exciting for me. I'm a builder at heart. I did the whole creating-a-company game already, poured 13 years of my life into it and learned a lot. What I want is to change the world, not build a large company and teaming up with OpenAI is the fastest way to bring this to everyone.
+
+I spent last week in San Francisco talking with the major labs, getting access to people and unreleased research, and it's been inspiring on all fronts. I want to thank all the folks I talked to this week and am thankful for the opportunities.
+Saying it's overwhelming is an understatement.
+
+When I started exploring AI, my goal was to have fun and inspire people. And here we are, the lobster is taking over the world. My next mission is to build an agent that even my mum can use. That'll need a much broader change, a lot more thought on how to do it safely, and access to the very latest models and research.
+
+Yes, I could totally see how OpenClaw could become a huge company. And no, it's not really exciting for me. I'm a builder at heart. I did the whole creating-a-company game already, poured 13 years of my life into it and learned a lot. What I want is to change the world, not build a large company and teaming up with OpenAI is the fastest way to bring this to everyone.
+
+I spent last week in San Francisco talking with the major labs, getting access to people and unreleased research, and it's been inspiring on all fronts. I want to thank all the folks I talked to this week and am thankful for the opportunities.
+Saying it's overwhelming is an understatement.
+
+When I started exploring AI, my goal was to have fun and inspire people. And here we are, the lobster is taking over the world. My next mission is to build an agent that even my mum can use. That'll need a much broader change, a lot more thought on how to do it safely, and access to the very latest models and research.
+
+Yes, I could totally see how OpenClaw could become a huge company. And no, it's not really exciting for me. I'm a builder at heart. I did the whole creating-a-company game already, poured 13 years of my life into it and learned a lot. What I want is to change the world, not build a large company and teaming up with OpenAI is the fastest way to bring this to everyone.
+
+I spent last week in San Francisco talking with the major labs, getting access to people and unreleased research, and it's been inspiring on all fronts. I want to thank all the folks I talked to this week and am thankful for the opportunities.
+Saying it's overwhelming is an understatement.
+
+When I started exploring AI, my goal was to have fun and inspire people. And here we are, the lobster is taking over the world. My next mission is to build an agent that even my mum can use. That'll need a much broader change, a lot more thought on how to do it safely, and access to the very latest models and research.
+
+Yes, I could totally see how OpenClaw could become a huge company. And no, it's not really exciting for me. I'm a builder at heart. I did the whole creating-a-company game already, poured 13 years of my life into it and learned a lot. What I want is to change the world, not build a large company and teaming up with OpenAI is the fastest way to bring this to everyone.
+
+I spent last week in San Francisco talking with the major labs, getting access to people and unreleased research, and it's been inspiring on all fronts. I want to thank all the folks I talked to this week and am thankful for the opportunities.
+Saying it's overwhelming is an understatement.
+
+When I started exploring AI, my goal was to have fun and inspire people. And here we are, the lobster is taking over the world. My next mission is to build an agent that even my mum can use. That'll need a much broader change, a lot more thought on how to do it safely, and access to the very latest models and research.
+
+Yes, I could totally see how OpenClaw could become a huge company. And no, it's not really exciting for me. I'm a builder at heart. I did the whole creating-a-company game already, poured 13 years of my life into it and learned a lot. What I want is to change the world, not build a large company and teaming up with OpenAI is the fastest way to bring this to everyone.
+
+I spent last week in San Francisco talking with the major labs, getting access to people and unreleased research, and it's been inspiring on all fronts. I want to thank all the folks I talked to this week and am thankful for the opportunities.
+Saying it's overwhelming is an understatement.
+
+When I started exploring AI, my goal was to have fun and inspire people. And here we are, the lobster is taking over the world. My next mission is to build an agent that even my mum can use. That'll need a much broader change, a lot more thought on how to do it safely, and access to the very latest models and research.
+
+Yes, I could totally see how OpenClaw could become a huge company. And no, it's not really exciting for me. I'm a builder at heart. I did the whole creating-a-company game already, poured 13 years of my life into it and learned a lot. What I want is to change the world, not build a large company and teaming up with OpenAI is the fastest way to bring this to everyone.
+
+I spent last week in San Francisco talking with the major labs, getting access to people and unreleased research, and it's been inspiring on all fronts. I want to thank all the folks I talked to this week and am thankful for the opportunities.
+Saying it's overwhelming is an understatement.
+
+When I started exploring AI, my goal was to have fun and inspire people. And here we are, the lobster is taking over the world. My next mission is to build an agent that even my mum can use. That'll need a much broader change, a lot more thought on how to do it safely, and access to the very latest models and research.
+
+Yes, I could totally see how OpenClaw could become a huge company. And no, it's not really exciting for me. I'm a builder at heart. I did the whole creating-a-company game already, poured 13 years of my life into it and learned a lot. What I want is to change the world, not build a large company and teaming up with OpenAI is the fastest way to bring this to everyone.
+
+I spent last week in San Francisco talking with the major labs, getting access to people and unreleased research, and it's been inspiring on all fronts. I want to thank all the folks I talked to this week and am thankful for the opportunities.
+tally see how OpenClaw could become a huge company. And no, it's not really exciting for me. I'm a builder at heart. I did the whole creating-a-company game already, poured 13 years of my life into it and learned a lot. What I want is to change the world, not build a large company and teaming up with OpenAI is the fastest way to bring this to everyone.
+
+I spent last week in San Francisco talking with the major labs, getting access to people and unreleased research, and it's been inspiring on all fronts. I want to thank all the folks I talked to this week and am thankful for the opportunities.
+Saying it's overwhelming is an understatement.
+
+When I started exploring AI, my goal was to have fun and inspire people. And here we are, the lobster is taking over the world. My next mission is to build an agent that even my mum can use. That'll need a much broader change, a lot more thought on how to do it safely, and access to the very latest models and research.
+
+Yes, I could totally see how OpenClaw could become a huge company. And no, it's not really exciting for me. I'm a builder at heart. I did the whole creating-a-company game already, poured 13 years of my life into it and learned a lot. What I want is to change the world, not build a large company and teaming up with OpenAI is the fastest way to bring this to everyone.
+
+I spent last week in San Francisco talking with the major labs, getting access to people and unreleased research, and it's been inspiring on all fronts. I want to thank all the folks I talked to this week and am thankful for the opportunities.
 
 It's always been important to me that OpenClaw stays open source and given the freedom to flourish. Ultimately, I felt OpenAI was the best place to continue pushing on my vision and expand its reach. The more I talked with the people there, the clearer it became that we both share the same vision.
 
