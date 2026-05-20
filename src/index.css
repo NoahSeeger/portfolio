@@ -46,9 +46,36 @@
   font-display: swap;
 }
 
+:root {
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+}
+
 * {
   font-family: "Poppins", sans-serif;
   scroll-behavior: smooth;
+}
+
+body {
+  font-size: var(--text-base);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .button {
@@ -56,7 +83,7 @@
 }
 
 h1 {
-  @apply text-5xl font-bold;
+  @apply text-4xl font-bold;
 }
 
 h2 {
@@ -73,4 +100,33 @@ h3 {
 
 .link {
   @apply relative text-xl w-fit block after:block after:content-[''] after:absolute after:h-[1.5px] after:bg-black after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-left;
+}
+
+/* Unified section spacing */
+section {
+  padding-top: var(--space-3xl);
+  padding-bottom: var(--space-3xl);
+}
+
+@media (min-width: 768px) {
+  section {
+    padding-top: var(--space-4xl);
+    padding-bottom: var(--space-4xl);
+  }
+}
+
+/* Global content constraint */
+.content-container {
+  max-width: 80ch;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-lg);
+  padding-right: var(--space-lg);
+}
+
+@media (min-width: 768px) {
+  .content-container {
+    padding-left: var(--space-xl);
+    padding-right: var(--space-xl);
+  }
 }

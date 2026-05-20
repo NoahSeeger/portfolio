@@ -66,11 +66,13 @@ function BlogRoutes() {
     <>
       {!isBlog && <Header />}
       <FloatingBackButton />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/blog" element={<BlogIndex />} />
-        <Route path="/blog/:slug" element={<BlogPostWrapper />} />
-      </Routes>
+      <main className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/blog" element={<BlogIndex />} />
+          <Route path="/blog/:slug" element={<BlogPostWrapper />} />
+        </Routes>
+      </main>
       {!isBlog && <Footer />}
     </>
   );
