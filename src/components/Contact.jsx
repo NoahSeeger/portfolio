@@ -1,7 +1,10 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import SectionTitle from "./SectionTitle";
-import { FaEnvelope, FaLinkedin } from "react-icons/fa6";
+import { FaLinkedin, FaXTwitter, FaDiscord } from "react-icons/fa6";
+import SocialIcon from "./SocialIcon";
+import EmailBubble from "./EmailBubble";
+
 function Contact() {
   const { t } = useTranslation();
   return (
@@ -14,23 +17,17 @@ function Contact() {
         subtitle={t("contact_section_subtitle", "Kontakt")}
       />
       <section className="flex flex-col justify-center items-center gap-4">
-        <div className="flex flex-col md:flex-row border-2 w-fit p-4 rounded-2xl gap-4">
-          <div className="flex items-center gap-2">
-            <FaEnvelope size={24} />
-            <a href="mailto:noahseeger@outlook.de" className="link">
-              noahseeger@outlook.de
-            </a>
-          </div>
-          <div className="flex items-center gap-2">
+        <div className="flex flex-wrap justify-center border-2 w-fit p-4 rounded-2xl gap-4">
+          <EmailBubble />
+          <SocialIcon href="https://www.linkedin.com/in/noahseeger/" label="LinkedIn">
             <FaLinkedin size={24} />
-            <a
-              href="https://www.linkedin.com/in/noahseeger/"
-              target="_blank"
-              className="link "
-            >
-              {t("contact_linkedin", "LinkedIn")}
-            </a>
-          </div>
+          </SocialIcon>
+          <SocialIcon href="https://x.com/thenoahsee" label="X">
+            <FaXTwitter size={24} />
+          </SocialIcon>
+          <SocialIcon href="https://discord.com/users/noahsee" label="Discord">
+            <FaDiscord size={24} />
+          </SocialIcon>
         </div>
       </section>
     </section>

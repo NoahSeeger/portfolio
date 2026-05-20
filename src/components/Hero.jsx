@@ -1,9 +1,11 @@
 import React from "react";
 import me from "../assets/personal/me.png";
-import { FaGithub, FaEnvelope } from "react-icons/fa6";
+import { FaGithub, FaLinkedin, FaXTwitter, FaDiscord } from "react-icons/fa6";
 import { TextShimmer } from "./utils/text-shimmer";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import SocialIcon from "./SocialIcon";
+import EmailBubble from "./EmailBubble";
 
 function Hero() {
   const { t } = useTranslation();
@@ -66,44 +68,22 @@ function Hero() {
           transition={{ delay: 0.9, duration: 0.8 }}
           className="mt-6 flex flex-row gap-4 justify-center md:justify-start"
         >
-          <SocialLink
-            href="https://github.com/NoahSeeger"
-            icon={<FaGithub size={24} />}
-            text={t("hero_github", "GitHub")}
-          />
-          <motion.a
-            whileHover={{
-              scale: 1.05,
-              backgroundColor: "#f3f4f6",
-            }}
-            whileTap={{ scale: 0.95 }}
-            href="#CONTACT"
-            className="flex items-center justify-center gap-2 border-2 border-gray-300 rounded-full w-36 font-medium p-3 hover:bg-gray-200 transition duration-300"
-          >
-            <FaEnvelope size={24} /> {t("hero_contact", "Kontakt")}
-          </motion.a>
+          <SocialIcon href="https://github.com/NoahSeeger" label="GitHub">
+            <FaGithub size={24} />
+          </SocialIcon>
+          <SocialIcon href="https://www.linkedin.com/in/noahseeger/" label="LinkedIn">
+            <FaLinkedin size={24} />
+          </SocialIcon>
+          <SocialIcon href="https://x.com/thenoahsee" label="X">
+            <FaXTwitter size={24} />
+          </SocialIcon>
+          <SocialIcon href="https://discord.com/users/noahsee" label="Discord">
+            <FaDiscord size={24} />
+          </SocialIcon>
+          <EmailBubble />
         </motion.div>
       </motion.div>
     </motion.section>
-  );
-}
-
-function SocialLink({ href, icon, text }) {
-  return (
-    <motion.a
-      whileHover={{
-        scale: 1.05,
-        backgroundColor: "#f3f4f6",
-      }}
-      whileTap={{ scale: 0.95 }}
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="flex items-center justify-center gap-2 border-2 border-gray-300 rounded-full w-36 font-medium p-3 hover:bg-gray-200 transition duration-300"
-    >
-      {icon}
-      <span>{text}</span>
-    </motion.a>
   );
 }
 
