@@ -85,8 +85,7 @@ export function SearchPage() {
   };
 
   return (
-    <div className="min-h-screen py-16" style={{ backgroundColor: "var(--bg-primary)" }}>
-      <div className="max-w-3xl mx-auto px-4">
+    <div className="min-h-screen w-full" style={{ backgroundColor: "var(--bg-primary)" }}>
         <h1 className="text-4xl font-bold mb-2" style={{ color: "var(--text-primary)" }}>
           {t("search_title", "Search")}
         </h1>
@@ -190,7 +189,6 @@ export function SearchPage() {
             ))}
           </div>
         )}
-      </div>
     </div>
   );
 }

@@ -11,8 +11,8 @@ function Posts() {
   const locale = i18n.language;
 
   return (
-    <section id="POSTS" className="py-16">
-      <div className="container mx-auto px-4">
+    <section id="POSTS" className="w-full">
+      <div className="w-full">
         <SectionTitle
           title={t("posts_section_title", "Erkunde meine")}
           subtitle={t("posts_section_subtitle", "Beiträge")}

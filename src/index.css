@@ -13,6 +13,7 @@
   --bg-tertiary: #f3f4f6;
   --bg-glass: rgba(255, 255, 255, 0.7);
   --bg-overlay: rgba(0, 0, 0, 0.5);
+  --bg-code: #1e1e1e;
 
   /* 30% - Text Colors */
   --text-primary: #282728;
@@ -58,6 +59,7 @@
   --accent: #FE6B02;
   --accent-hover: #E55A00;
   --accent-muted: rgba(254, 107, 2, 0.15);
+  --bg-code: #1e1e1e;
 
   /* Borders */
   --border: #3a4251;

@@ -6,8 +6,8 @@ import { useTranslation } from "react-i18next";
 function Experience() {
   const { t } = useTranslation();
   return (
-    <section id="EXPERIENCE" className="py-16">>
-      <div className="container mx-auto px-4">
+    <section id="EXPERIENCE" className="w-full">
+      <div className="w-full">
         <SectionTitle
           title={t("experience_title", "Erfahrung")}
           subtitle={t("experience_subtitle", "Fähigkeiten")}

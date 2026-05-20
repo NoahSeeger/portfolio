@@ -33,8 +33,7 @@ export function BlogIndex() {
     : t("posts_all_title", "Alle Beiträge");
 
   return (
-    <div className="min-h-screen py-16" style={{ backgroundColor: "var(--bg-primary)" }}>
-      <div className="max-w-3xl mx-auto px-4">
+    <div className="min-h-screen w-full" style={{ backgroundColor: "var(--bg-primary)" }}>
         <div className="flex items-center gap-4 mb-12">
           <h1 className="text-4xl font-bold" style={{ color: "var(--text-primary)" }}>{title}</h1>
           {!category && (
@@ -123,7 +122,6 @@ export function BlogIndex() {
             {t("posts_no_posts", "Noch keine Beiträge vorhanden.")}
           </p>
         )}
-      </div>
     </div>
   );
 }
@@ -178,7 +176,7 @@ export function BlogPost({ post }) {
         style={{ width: `${progress}%`, backgroundColor: "var(--accent)" }}
       />
 
-      <article className="flex-1 max-w-3xl mx-auto px-4 py-16 w-full">
+      <article className="flex-1 max-w-3xl mx-auto w-full">
         <header className="mb-8">
           <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-4 break-words" style={{ color: "var(--text-primary)" }}>{post.title}</h1>
 
@@ -217,6 +215,17 @@ export function BlogPost({ post }) {
           prose-table:table prose-table:border-collapse prose-table:w-full
           prose-th:border prose-th:px-4 prose-th:py-2 prose-th:text-left prose-th:font-semibold
           prose-td:border prose-td:px-4 prose-td:py-2
+          prose-headings:text-[var(--text-primary)]
+          prose-p:text-[var(--text-primary)]
+          prose-li:text-[var(--text-primary)]
+          prose-a:text-[var(--accent)]
+          prose-blockquote:text-[var(--text-secondary)] prose-blockquote:border-[var(--accent)]
+          prose-code:text-[var(--text-primary)] prose-code:bg-[var(--bg-tertiary)]
+          prose-pre:text-[var(--text-primary)]
+          prose-th:text-[var(--text-primary)] prose-th:border-[var(--border)] prose-th:bg-[var(--bg-secondary)]
+          prose-td:text-[var(--text-primary)] prose-td:border-[var(--border)]
+          prose-strong:text-[var(--text-primary)]
+          prose-em:text-[var(--text-primary)]
         ">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
@@ -234,40 +243,28 @@ export function BlogPost({ post }) {
 
               if (!inline && match) {
                 return (
-                  <div className="not-prose relative my-6 rounded-lg overflow-hidden bg-[#1e1e1e]">
-                    <div className="flex items-center justify-between px-4 py-2 text-xs border-b" style={{ borderColor: "#374151", color: "#9ca3af" }}>
+                  <div className="not-prose relative my-6 rounded-lg overflow-hidden" style={{ backgroundColor: "var(--bg-code, #1e1e1e)" }}>
+                    <div className="flex items-center justify-between px-4 py-2 text-xs border-b" style={{ borderColor: "var(--border)", color: "var(--text-muted)" }}>
                       <span className="font-mono">{match[1]}</span>
                       <button
                         onClick={handleCopy}
                         className="flex items-center gap-1.5 px-2 py-1 rounded transition-colors"
-                        style={{ backgroundColor: "transparent", color: "#9ca3af" }}
-                        onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = "#374151"; e.currentTarget.style.color = "#fff"; }}
-                        onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "transparent"; e.currentTarget.style.color = "#9ca3af"; }}
+                        style={{ backgroundColor: "transparent", color: "var(--text-muted)" }}
+                        onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = "var(--bg-tertiary)"; }}
+                        onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "transparent"; e.currentTarget.style.color = "var(--text-muted)"; }}
                       >
                         {copied ? <FaCheck size={12} /> : <FaCopy size={12} />}
                         <span>{copied ? "Copied!" : "Copy"}</span>
                       </button>
                     </div>
                     <SyntaxHighlighter
-                      style={{
-                        ...vscDarkPlus,
-                        'pre[class*="language-"]': {
-                          ...vscDarkPlus['pre[class*="language-"]'],
-                          background: '#1e1e1e',
-                          color: '#d4d4d4',
-                        },
-                        'code[class*="language-"]': {
-                          ...vscDarkPlus['code[class*="language-"]'],
-                          background: '#1e1e1e',
-                          color: '#d4d4d4',
-                        },
-                      }}
+                      style={vscDarkPlus}
                       language={match[1]}
                       PreTag="pre"
                       customStyle={{
                         margin: 0,
                         padding: '1rem',
-                        background: '#1e1e1e',
+                        background: 'transparent',
                         fontSize: '0.875rem',
                         lineHeight: '1.5',
                       }}
@@ -290,7 +287,7 @@ export function BlogPost({ post }) {
         </div>
       </article>
 
-      <footer className="border-t py-8 px-4 mt-auto" style={{ borderColor: "var(--border)" }}>
+      <footer className="border-t py-8 mt-auto" style={{ borderColor: "var(--border)" }}>
         <div className="max-w-3xl mx-auto">
           <div className="flex items-center justify-between text-sm">
             <Link

@@ -8,14 +8,14 @@ function About() {
   const { t } = useTranslation();
 
   return (
-    <section id="ABOUT" className="py-16">
-      <div className="container mx-auto px-4">
+    <section id="ABOUT" className="w-full">
+      <div className="w-full">
         <SectionTitle
           title={t("about_section_title", "Erfahre mehr")}
           subtitle={t("about_section_subtitle", "Über mich")}
         />
 
-        <div className="mt-10 max-w-3xl mx-auto">
+        <div className="mt-10">
           <div className="flex flex-col lg:flex-row gap-10 items-start">
             {/* Photo */}
             <motion.div

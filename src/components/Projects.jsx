@@ -96,14 +96,14 @@ function Projects() {
   const projects = getFeaturedProjects();
 
   return (
-    <section id="PROJECTS" className="py-16">
-      <div className="container mx-auto px-4">
+    <section id="PROJECTS" className="w-full">
+      <div className="w-full">
         <SectionTitle
           title={t("explore_my")}
           subtitle={t("projects")}
         />
 
-        <div className="mt-10 max-w-4xl mx-auto">
+        <div className="mt-10">
           {projects.map((project, index) => (
             <ProjectItem key={project.slug} project={project} index={index} />
           ))}

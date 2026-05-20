@@ -50,7 +50,7 @@ function BlogRoutes() {
   const isBlog = location.pathname.startsWith("/blog");
 
   return (
-    <>
+    <div className="relative w-full">
       <FloatingNav />
       <main className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12">
         <Routes>
@@ -61,7 +61,7 @@ function BlogRoutes() {
         </Routes>
       </main>
       {!isBlog && <Footer />}
-    </>
+    </div>
   );
 }
 
