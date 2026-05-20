@@ -85,7 +85,7 @@ let user = User(
 )
 ```
 
-SQL:
+SQLDDDDDD
 
 ```sql
 SELECT

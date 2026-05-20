@@ -1,7 +1,6 @@
 import React from "react";
 import me from "../assets/personal/me.png";
-import { FaGithub } from "react-icons/fa6";
-import { IoIosMail } from "react-icons/io";
+import { FaGithub, FaEnvelope } from "react-icons/fa6";
 import { TextShimmer } from "./utils/text-shimmer";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
@@ -81,7 +80,7 @@ function Hero() {
             href="#CONTACT"
             className="flex items-center justify-center gap-2 border-2 border-gray-300 rounded-full w-36 font-medium p-3 hover:bg-gray-200 transition duration-300"
           >
-            <IoIosMail size={24} /> {t("hero_contact", "Kontakt")}
+            <FaEnvelope size={24} /> {t("hero_contact", "Kontakt")}
           </motion.a>
         </motion.div>
       </motion.div>

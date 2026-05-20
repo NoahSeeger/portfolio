@@ -1,8 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import SectionTitle from "./SectionTitle";
-import { IoIosMail } from "react-icons/io";
-import { FaLinkedin } from "react-icons/fa";
+import { FaEnvelope, FaLinkedin } from "react-icons/fa6";
 function Contact() {
   const { t } = useTranslation();
   return (
@@ -17,7 +16,7 @@ function Contact() {
       <section className="flex flex-col justify-center items-center gap-4">
         <div className="flex flex-col md:flex-row border-2 w-fit p-4 rounded-2xl gap-4">
           <div className="flex items-center gap-2">
-            <IoIosMail size={24} />
+            <FaEnvelope size={24} />
             <a href="mailto:noahseeger@outlook.de" className="link">
               noahseeger@outlook.de
             </a>

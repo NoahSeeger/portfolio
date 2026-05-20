@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaXmark } from "react-icons/fa6";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import Logo from "../assets/personal/icon.png";
@@ -229,7 +229,7 @@ function Header() {
                 transition={{ duration: 0.3, ease: "easeInOut" }}
               >
                 {isMenuOpen ? (
-                  <FaTimes className="size-5" />
+                  <FaXmark className="size-5" />
                 ) : (
                   <FaBars className="size-5" />
                 )}
@@ -300,7 +300,7 @@ function Header() {
                     onClick={() => setIsMenuOpen(false)}
                     className="flex items-center justify-center size-8 rounded-full bg-white/20 hover:bg-white/30 text-white transition-all duration-200"
                   >
-                    <FaTimes className="size-4" />
+                    <FaXmark className="size-4" />
                   </button>
                 </div>
               </div>
@@ -326,18 +326,15 @@ function Header() {
                           {link.label}
                         </span>
                         <motion.div
-                          className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                          className={`w-2 h-2 rounded-full ${
                             activeSection === link.id
                               ? "bg-purple-accent scale-100"
                               : "bg-gray-300 scale-75 group-hover:bg-purple-accent group-hover:scale-100"
                           }`}
                           animate={{
                             scale: activeSection === link.id ? 1 : 0.75,
-                            backgroundColor:
-                              activeSection === link.id
-                                ? "purple-accent"
-                                : "#d1d5db",
                           }}
+                          transition={{ duration: 0.3, ease: "easeInOut" }}
                         />
                       </div>
                     </motion.button>

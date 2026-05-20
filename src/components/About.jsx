@@ -1,11 +1,10 @@
 import React from "react";
 import about from "../assets/personal/about.png";
-import { PiStudent, PiGraduationCap } from "react-icons/pi";
-import SectionTitle from "./SectionTitle";
-import { MdOutlineArrowForwardIos } from "react-icons/md";
+import { FaUserGraduate, FaGraduationCap, FaArrowRight } from "react-icons/fa6";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import SectionTitle from "./SectionTitle";
 
 function About() {
   const { t } = useTranslation();
@@ -49,7 +48,7 @@ function About() {
           <div className="lg:w-1/2 space-y-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <InfoCard
-                icon={<PiStudent className="text-4xl text-blue-600" />}
+                icon={<FaUserGraduate className="text-4xl text-blue-600" />}
                 title={t("about_card_programming_title", "Programmierung")}
                 details={[
                   t("about_card_programming_years", "2+ Jahre"),
@@ -57,7 +56,7 @@ function About() {
                 ]}
               />
               <InfoCard
-                icon={<PiGraduationCap className="text-4xl text-green-600" />}
+                icon={<FaGraduationCap className="text-4xl text-green-600" />}
                 title={t("about_card_education_title", "Ausbildung")}
                 details={[
                   t("about_card_education_degree", "Abitur"),
@@ -76,7 +75,7 @@ function About() {
               className="flex items-center justify-center bg-blue-600 text-white px-6 py-4 rounded-full hover:bg-blue-700 transition duration-300 whitespace-nowrap w-fit"
             >
               {t("about_contact_button", "Kontakt aufnehmen")}
-              <MdOutlineArrowForwardIos size={22} className="ml-4" />
+              <FaArrowRight size={22} className="ml-4" />
             </a>
           </div>
         </div>

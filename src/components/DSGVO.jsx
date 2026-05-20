@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  FaTimes,
-  FaShieldAlt,
+  FaXmark,
+  FaShieldHalved,
   FaUserShield,
   FaServer,
   FaEnvelope,
   FaFont,
-  FaShareAlt,
-  FaBalanceScale,
-} from "react-icons/fa";
+  FaShare,
+  FaScaleBalanced,
+} from "react-icons/fa6";
 
 function DatenschutzModal({ isOpen, onClose }) {
   // Prevent body scroll when modal is open
@@ -127,7 +127,7 @@ function DatenschutzModal({ isOpen, onClose }) {
     },
     {
       id: "social",
-      icon: FaShareAlt,
+      icon: FaShare,
       title: "Social Media Links",
       content: (
         <p className="text-gray-700 leading-relaxed">
@@ -140,7 +140,7 @@ function DatenschutzModal({ isOpen, onClose }) {
     },
     {
       id: "rechte",
-      icon: FaBalanceScale,
+      icon: FaScaleBalanced,
       title: "Deine Rechte",
       content: (
         <p className="text-gray-700 leading-relaxed">
@@ -188,7 +188,7 @@ function DatenschutzModal({ isOpen, onClose }) {
             <div className="sticky top-0 bg-gradient-to-r from-purple-accent to-purple-accent/90 text-white p-6 flex items-center justify-between z-10">
               <div className="flex items-center gap-4">
                 <div className="flex items-center justify-center w-12 h-12 rounded-full bg-white/20">
-                  <FaShieldAlt className="text-xl" />
+                  <FaShieldHalved className="text-xl" />
                 </div>
                 <div>
                   <h1 className="text-lg font-bold md:text-lg">
@@ -203,7 +203,7 @@ function DatenschutzModal({ isOpen, onClose }) {
                 onClick={onClose}
                 className="flex items-center justify-center w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 transition-colors group"
               >
-                <FaTimes className="text-lg group-hover:scale-110 transition-transform" />
+                <FaXmark className="text-lg group-hover:scale-110 transition-transform" />
               </button>
             </div>
 

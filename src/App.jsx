@@ -10,7 +10,7 @@ import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import { BlogIndex, BlogPost } from "./pages/Blog";
 import { getAllPosts } from "./lib/blog";
-import { MdOutlineArrowBack } from "react-icons/md";
+import { FaArrowLeft } from "react-icons/fa6";
 
 function Home() {
   return (
@@ -43,7 +43,7 @@ function FloatingBackButton() {
       to={isBlogPost ? "/blog" : "/"}
       className="fixed top-6 left-6 z-50 flex items-center justify-center w-12 h-12 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition duration-300"
     >
-      <MdOutlineArrowBack size={24} />
+      <FaArrowLeft size={24} />
     </Link>
   );
 }

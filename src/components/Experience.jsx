@@ -1,5 +1,5 @@
 import React from "react";
-import { FaCheckCircle } from "react-icons/fa";
+import { FaCircleCheck } from "react-icons/fa6";
 import SectionTitle from "./SectionTitle";
 import { useTranslation } from "react-i18next";
 
@@ -106,7 +106,7 @@ function SkillCard({ title, skills }) {
 function SkillItem({ name, level }) {
   return (
     <li className="flex items-center gap-3 min-h-[40px]">
-      <FaCheckCircle className="text-green-500 flex-shrink-0" size={20} />
+      <FaCircleCheck className="text-green-500 flex-shrink-0" size={20} />
       <div className="flex flex-col">
         <span className="font-semibold leading-tight">{name}</span>
         <span className="text-sm text-gray-600 leading-tight">{level}</span>

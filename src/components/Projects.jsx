@@ -14,10 +14,10 @@ import Livo from "../assets/projects/Livo.png";
 import SectionTitle from "./SectionTitle";
 import {
   FaGithub,
-  FaExternalLinkAlt,
-  FaArrowLeft,
   FaArrowRight,
-} from "react-icons/fa";
+  FaArrowLeft,
+  FaArrowUpRightFromSquare,
+} from "react-icons/fa6";
 
 const projects = [
   {
@@ -314,7 +314,7 @@ function Projects() {
                       rel="noopener noreferrer"
                       className="flex items-center text-green-600 hover:text-green-800 transition duration-300"
                     >
-                      <FaExternalLinkAlt className="mr-2" /> {t("live_demo")}
+                      <FaArrowUpRightFromSquare className="mr-2" /> {t("live_demo")}
                     </a>
                   </div>
                 </motion.div>
@@ -409,7 +409,7 @@ function Projects() {
                         rel="noopener noreferrer"
                         className="text-green-600 hover:underline text-sm flex items-center gap-1"
                       >
-                        <FaExternalLinkAlt /> {t("live_demo")}
+                        <FaArrowUpRightFromSquare /> {t("live_demo")}
                       </a>
                     )}
                   </div>
