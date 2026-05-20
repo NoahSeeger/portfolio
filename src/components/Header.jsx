@@ -61,7 +61,7 @@ function Header() {
       }
 
       // Normal active section detection
-      const sections = ["ABOUT", "EXPERIENCE", "PROJECTS", "CONTACT"];
+      const sections = ["ABOUT", "POSTS", "EXPERIENCE", "PROJECTS", "CONTACT"];
       const scrollPosition = scrollY + window.innerHeight / 2;
 
       let closestSection = "ABOUT";
@@ -145,8 +145,8 @@ function Header() {
 
   // Memoized navigation links
   const navLinks = [
-    { id: "ABOUT", label: t("nav_about", "Über mich") },
     { id: "POSTS", label: t("nav_posts", "Beiträge") },
+    { id: "ABOUT", label: t("nav_about", "Über mich") },
     { id: "EXPERIENCE", label: t("nav_experience", "Erfahrung") },
     { id: "PROJECTS", label: t("nav_projects", "Projekte") },
     { id: "CONTACT", label: t("nav_contact", "Kontakt") },

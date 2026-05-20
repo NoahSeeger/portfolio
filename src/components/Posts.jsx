@@ -25,21 +25,34 @@ function Posts() {
                   whileHover={{ y: -5 }}
                   className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 h-full flex flex-col"
                 >
-                  <div className="flex flex-wrap gap-2 mb-3">
-                    {post.tags?.slice(0, 2).map((tag) => (
-                      <span
-                        key={tag}
-                        className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  <time className="text-sm text-gray-500">
-                    {formatDate(post.pubDatetime, locale)}
-                  </time>
-                  <h3 className="text-xl font-semibold mt-2 mb-3">{post.title}</h3>
-                  <p className="text-gray-600 flex-grow line-clamp-3">{post.description}</p>
+                  {post.heroImage ? (
+                    <div className="flex gap-3 mb-3 items-start">
+                      <img
+                        src={post.heroImage}
+                        alt={post.title}
+                        className="w-20 h-16 object-cover rounded-lg flex-shrink-0"
+                      />
+                      <div className="min-w-0 flex-1">
+                        <time className="text-xs text-gray-500">
+                          {formatDate(post.pubDatetime, locale)}
+                        </time>
+                        <h3 className="text-base font-semibold mt-1 break-words leading-tight">{post.title}</h3>
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      <time className="text-sm text-gray-500">
+                        {formatDate(post.pubDatetime, locale)}
+                      </time>
+                      <h3 className="text-xl font-semibold mt-2 mb-3">{post.title}</h3>
+                      <p className="text-gray-600 flex-grow line-clamp-3 text-sm">{post.description}</p>
+                    </>
+                  )}
+
+                  {!post.heroImage && (
+                    <p className="text-gray-600 flex-grow line-clamp-3 text-sm">{post.description}</p>
+                  )}
+
                   <div className="flex items-center text-blue-600 mt-4 text-sm">
                     <span>{calculateReadTime(post.content)} min {t("posts_read", "read")}</span>
                     <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

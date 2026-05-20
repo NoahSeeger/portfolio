@@ -18,7 +18,7 @@ export function BlogIndex() {
 
   return (
     <div className="min-h-screen bg-white py-16">
-      <div className="max-w-3xl mx-auto px-4">
+      <div className="max-w-4xl mx-auto px-4">
         <h1 className="text-4xl font-bold mb-12">{t("posts_all_title", "Alle Beiträge")}</h1>
 
         {years.map((year) => {
@@ -55,19 +55,28 @@ export function BlogIndex() {
                             className="block group"
                           >
                             <article className="py-4">
-                              <h3 className="text-xl font-bold text-blue-600 group-hover:underline">
-                                {post.title}
-                              </h3>
-                              <div className="flex items-center gap-2 text-sm text-gray-500 mt-1">
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                </svg>
-                                <time>{formatDateShort(post.pubDatetime, locale)}</time>
-                                <span>·</span>
-                                <span>{readTime} min {t("posts_read", "read")}</span>
-                              </div>
-                              <p className="text-gray-600 mt-2 line-clamp-2">{post.description}</p>
-                            </article>
+                                <h3 className="text-xl font-bold text-blue-600 group-hover:underline break-words">
+                                  {post.title}
+                                </h3>
+                                <div className="flex items-center gap-2 text-sm text-gray-500 mt-1 flex-wrap">
+                                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                  </svg>
+                                  <time>{formatDateShort(post.pubDatetime, locale)}</time>
+                                  <span>·</span>
+                                  <span>{readTime} min {t("posts_read", "read")}</span>
+                                </div>
+                                <div className="flex gap-4 mt-3 items-start">
+                                  {post.heroImage && (
+                                    <img
+                                      src={post.heroImage}
+                                      alt={post.title}
+                                      className="w-32 object-cover rounded-lg flex-shrink-0 order-first"
+                                    />
+                                  )}
+                                  <p className="flex-1 text-gray-600 line-clamp-2">{post.description}</p>
+                                </div>
+                              </article>
                           </Link>
                         );
                       })}
@@ -117,13 +126,16 @@ export function BlogPost({ post }) {
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
-      <div className="fixed top-0 left-0 h-1 bg-blue-600 z-50 transition-all duration-100" style={{ width: `${progress}%` }} />
+      <div
+        className="fixed top-0 left-0 h-[5px] bg-blue-600 z-50 transition-all duration-150"
+        style={{ width: `${progress}%` }}
+      />
 
-      <article className="flex-1 max-w-2xl mx-auto px-6 py-16 w-full">
-        <header className="mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-4">{post.title}</h1>
+      <article className="flex-1 max-w-4xl mx-auto px-6 py-16 w-full">
+        <header className="mb-8">
+          <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-4 break-words">{post.title}</h1>
 
-          <div className="flex items-center gap-3 text-sm text-gray-500">
+          <div className="flex items-center gap-3 text-sm text-gray-500 flex-wrap">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
@@ -133,12 +145,20 @@ export function BlogPost({ post }) {
           </div>
         </header>
 
+        {post.heroImage && (
+          <img
+            src={post.heroImage}
+            alt={post.title}
+            className="w-full max-h-96 object-cover rounded-lg mb-8"
+          />
+        )}
+
         <div className="prose prose-lg max-w-none
           prose-headings:font-bold prose-headings:tracking-tight
           prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl prose-h4:text-lg
           prose-p:text-gray-700 prose-p:leading-relaxed prose-p:text-[17px]
           prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline
-          prose-img:rounded-lg prose-img:shadow-lg prose-img:my-8
+          prose-img:rounded-lg prose-img:shadow-lg prose-img:my-8 prose-img:w-full
           prose-blockquote:border-l-4 prose-blockquote:border-gray-200 prose-blockquote:pl-6 prose-blockquote:not-italic prose-blockquote:text-gray-700 prose-blockquote:font-semibold
           prose-code:bg-gray-100 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm
           prose-pre:bg-gray-900 prose-pre:text-gray-100 prose-pre:rounded-lg
@@ -151,20 +171,7 @@ export function BlogPost({ post }) {
       </article>
 
       <footer className="border-t border-gray-200 py-8 px-6 mt-auto">
-        <div className="max-w-2xl mx-auto">
-          {post.tags && post.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2 mb-8">
-              {post.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="text-sm font-medium text-gray-600"
-                >
-                  #{tag}
-                </span>
-              ))}
-            </div>
-          )}
-
+        <div className="max-w-4xl mx-auto">
           <div className="flex items-center justify-between text-sm">
             <Link
               to="/blog"

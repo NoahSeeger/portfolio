@@ -38,7 +38,7 @@ function parseFrontmatter(raw) {
 }
 
 export function getAllPosts() {
-  const posts = import.meta.glob("/src/content/blog/*.md", { eager: true, query: "?raw", import: "default" });
+  const posts = import.meta.glob("/src/content/blog/**/*.md", { eager: true, query: "?raw", import: "default" });
 
   return Object.entries(posts)
     .map(([path, post]) => {
