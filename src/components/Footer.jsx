@@ -1,51 +1,25 @@
 import React from "react";
-import { useTranslation } from "react-i18next";
-import { DatenschutzLink } from "./DSGVO";
 import { Link } from "react-router-dom";
+import { FaHeart } from "react-icons/fa6";
 
 function Footer() {
-  const { t } = useTranslation();
   return (
-    <footer className="py-6 bg-gray-50 text-black">
-      <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
-        <div className="flex flex-wrap justify-center md:justify-start text-lg gap-6 mb-4 md:mb-0">
-          <FooterLink href="#ABOUT" text={t("footer_about", "Über mich")} />
-          <FooterLink
-            href="#EXPERIENCE"
-            text={t("footer_experience", "Erfahrung")}
-          />
-          <FooterLink
-            href="/blog"
-            text={t("footer_blog", "Blog")}
-            isLink
-          />
-          <FooterLink
-            href="#PROJECTS"
-            text={t("footer_projects", "Projekte")}
-          />
-          <FooterLink href="#CONTACT" text={t("footer_contact", "Kontakt")} />
-          <DatenschutzLink />
-        </div>
-        <div className="text-center md:text-right text-gray-400">
-          {t("footer_copyright", "© 2024 Noah Seeger. All Rights Reserved")}
+    <footer className="py-6 bg-white border-t border-gray-100">
+      <div className="text-center">
+        <p className="text-gray-500 text-sm mb-3">
+          Made with <FaHeart className="inline text-xl text-red-500 mx-1" /> by Noah Seeger
+        </p>
+        <div className="flex justify-center gap-4 text-sm">
+          <Link to="/privacy" className="text-gray-400 hover:text-purple-accent transition-colors">
+            Datenschutz
+          </Link>
+          <span className="text-gray-300">·</span>
+          <Link to="/impressum" className="text-gray-400 hover:text-purple-accent transition-colors">
+            Impressum
+          </Link>
         </div>
       </div>
     </footer>
-  );
-}
-
-function FooterLink({ href, text, isLink = false }) {
-  if (isLink) {
-    return (
-      <Link to={href} className="hover:text-gray-400 transition duration-300">
-        {text}
-      </Link>
-    );
-  }
-  return (
-    <a href={href} className="hover:text-gray-400 transition duration-300">
-      {text}
-    </a>
   );
 }
 

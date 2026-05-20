@@ -139,11 +139,24 @@ function Header() {
   return (
     <header className="sticky top-6 z-50 mx-4 md:mx-0 flex justify-center">
       <div
-        className={`w-full max-w-4xl px-4 transition-all duration-300 ${
-          isCompact
-            ? "border-0 bg-transparent"
-            : "border-2 border-purple-accent/30 backdrop-blur-xl bg-white/30 rounded-full"
+        className={`w-full max-w-4xl px-5 py-2 transition-all duration-300 ease-out rounded-2xl backdrop-blur-2xl border border-white/0 ${
+          isCompact ? "bg-transparent" : "bg-white/20"
         }`}
+        style={
+          isCompact
+            ? {
+                borderColor: "transparent",
+                background: "transparent",
+                boxShadow: "none",
+              }
+            : {
+                borderColor: "rgba(255,255,255,0.4)",
+                background:
+                  "linear-gradient(135deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.2) 40%, rgba(255,255,255,0.1) 100%)",
+                boxShadow:
+                  "0 8px 32px rgba(124, 58, 237, 0.08), inset 0 1px 0 rgba(255,255,255,0.6), inset 0 -1px 0 rgba(255,255,255,0.1)",
+              }
+        }
       >
         <div className="flex h-14 items-center justify-between">
           <a
@@ -167,7 +180,7 @@ function Header() {
                   className={`relative z-10 transition-colors duration-200 ${
                     activeSection === link.id
                       ? "text-white"
-                      : "text-gray-500 hover:text-gray-700"
+                      : "text-gray-700 hover:text-gray-900"
                   }`}
                 >
                   {link.label}

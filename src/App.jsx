@@ -11,6 +11,11 @@ import Footer from "./components/Footer";
 import { BlogIndex, BlogPost } from "./pages/Blog";
 import { getAllPosts } from "./lib/blog";
 import { FaArrowLeft } from "react-icons/fa6";
+import LegalPage from "./pages/Legal";
+
+function LegalPageWrapper({ page }) {
+  return <LegalPage page={page} />;
+}
 
 function Home() {
   return (
@@ -61,17 +66,20 @@ function App() {
 function BlogRoutes() {
   const location = useLocation();
   const isBlog = location.pathname.startsWith("/blog");
+  const isLegal = ["/privacy", "/impressum", "/terms"].includes(location.pathname);
 
   return (
     <>
-      {!isBlog && <Header />}
+      {!isBlog && !isLegal && <Header />}
       <FloatingBackButton />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/blog" element={<BlogIndex />} />
         <Route path="/blog/:slug" element={<BlogPostWrapper />} />
+        <Route path="/privacy" element={<LegalPageWrapper page="privacy" />} />
+        <Route path="/impressum" element={<LegalPageWrapper page="impressum" />} />
       </Routes>
-      {!isBlog && <Footer />}
+      {!isBlog && !isLegal && <Footer />}
     </>
   );
 }
