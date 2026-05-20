@@ -8,14 +8,14 @@ function About() {
   const { t } = useTranslation();
 
   return (
-    <section id="ABOUT" className="py-20 bg-white">
-      <div className="container mx-auto px-6">
+    <section id="ABOUT" className="py-16">
+      <div className="container mx-auto px-4">
         <SectionTitle
           title={t("about_section_title", "Erfahre mehr")}
           subtitle={t("about_section_subtitle", "Über mich")}
         />
 
-        <div className="mt-12 max-w-3xl mx-auto">
+        <div className="mt-10 max-w-3xl mx-auto">
           <div className="flex flex-col lg:flex-row gap-10 items-start">
             {/* Photo */}
             <motion.div
@@ -38,19 +38,19 @@ function About() {
               transition={{ duration: 0.6, delay: 0.15 }}
               className="flex-1 space-y-4"
             >
-              <p className="text-lg text-gray-800 leading-relaxed">
+              <p className="text-lg leading-relaxed" style={{ color: "var(--text-primary)" }}>
                 {t("about_line1", "Currently: Student @ HMD Stuttgart, Mobile Media.")}
               </p>
-              <p className="text-lg text-gray-800 leading-relaxed">
+              <p className="text-lg leading-relaxed" style={{ color: "var(--text-primary)" }}>
                 {t("about_line2", "Exploring everything in tech and engineering.")}
               </p>
-              <p className="text-lg text-gray-800 leading-relaxed">
+              <p className="text-lg leading-relaxed" style={{ color: "var(--text-primary)" }}>
                 {t("about_line3", "Building iOS apps in my free time. PicSwipe, Quanta, Birthday calendar.")}
               </p>
-              <p className="text-lg text-gray-800 leading-relaxed">
+              <p className="text-lg leading-relaxed" style={{ color: "var(--text-primary)" }}>
                 {t("about_line4", "Recently got into 3D printing (A1 Mini) and homelabbing with Proxmox on my Raspi + T480s.")}
               </p>
-              <p className="text-lg text-gray-800 leading-relaxed">
+              <p className="text-lg leading-relaxed" style={{ color: "var(--text-primary)" }}>
                 {t("about_line5", "Always looking for interesting people to work with.")}
               </p>
 
@@ -59,7 +59,8 @@ function About() {
                   href="https://github.com/NoahSeeger"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-600 hover:text-gray-900 transition-colors font-medium"
+                  className="font-medium transition-colors"
+                  style={{ color: "var(--text-secondary)" }}
                 >
                   {t("about_github_link", "github.com/NoahSeeger →")}
                 </a>
@@ -68,9 +69,10 @@ function About() {
               {/* GitHub Activity */}
               <div className="pt-6">
                 <img
-                  src="https://ghchart.rshah.org/NoahSeeger"
+                  src="https://ghchart.rshah.org/7c3aed/NoahSeeger"
                   alt="GitHub contributions"
                   className="w-full rounded-lg"
+                  style={{ filter: "brightness(0.9)" }}
                 />
               </div>
             </motion.div>

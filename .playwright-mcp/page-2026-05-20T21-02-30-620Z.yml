@@ -1,0 +1,193 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - generic [ref=e5]:
+      - link "Noah Seeger" [ref=e7] [cursor=pointer]:
+        - /url: /
+        - text: Noah Seeger
+      - navigation [ref=e8]:
+        - link "nav.blog" [ref=e9] [cursor=pointer]:
+          - /url: /blog
+          - text: nav.blog
+        - button "Search" [ref=e11] [cursor=pointer]:
+          - img [ref=e12]
+        - button "Switch to dark mode" [ref=e15] [cursor=pointer]:
+          - img [ref=e17]
+        - button "DE" [ref=e20] [cursor=pointer]
+  - main [ref=e21]:
+    - generic [ref=e22]:
+      - img "Noah Seeger" [ref=e24]
+      - generic [ref=e25]:
+        - generic [ref=e26]: Hallo, Ich bin
+        - heading "Noah Seeger" [level=1] [ref=e27]
+        - paragraph [ref=e29]: iOS apps, homelab, web dev.
+        - generic [ref=e30]:
+          - link "GitHub" [ref=e32] [cursor=pointer]:
+            - /url: https://github.com/NoahSeeger
+            - img [ref=e33]
+          - link "LinkedIn" [ref=e36] [cursor=pointer]:
+            - /url: https://www.linkedin.com/in/noahseeger/
+            - img [ref=e37]
+          - link "X" [ref=e40] [cursor=pointer]:
+            - /url: https://x.com/thenoahsee
+            - img [ref=e41]
+          - link "Discord" [ref=e44] [cursor=pointer]:
+            - /url: https://discord.com/users/noahsee
+            - img [ref=e45]
+          - link "Email" [ref=e48] [cursor=pointer]:
+            - /url: mailto:noahseeger@outlook.de
+            - img [ref=e50]
+            - generic [ref=e53]: noahseeger@outlook.de
+    - generic [ref=e55]:
+      - generic [ref=e56]:
+        - generic [ref=e57]: Erkunde meine
+        - heading "Beiträge" [level=2] [ref=e58]
+      - generic [ref=e59]:
+        - link [ref=e60] [cursor=pointer]:
+          - /url: /blog/markdown-feature-showcase
+          - article [ref=e61]:
+            - time [ref=e62]: 20. Mai 2026
+            - heading "Markdown Featues shown in prakix" [level=3] [ref=e63]
+            - generic [ref=e64]:
+              - paragraph [ref=e65]: A comprehensive test post demonstrating all available Markdown features, styling options, and blog system capabilities including headings, code blocks, images, tables, and more.
+              - img "Markdown Featues shown in prakix" [ref=e66]
+            - generic [ref=e67]:
+              - generic [ref=e68]: 3 min Lesezeit
+              - img [ref=e69]
+        - link [ref=e71] [cursor=pointer]:
+          - /url: /blog/bruno
+          - article [ref=e72]:
+            - time [ref=e73]: 10. März 2026
+            - heading "Bruno - Body Transformation Tracker" [level=3] [ref=e74]
+            - generic [ref=e75]:
+              - paragraph [ref=e76]: SwiftUI iOS app for tracking body transformation with progress photos and comparison view.
+              - img "Bruno - Body Transformation Tracker" [ref=e77]
+            - generic [ref=e78]:
+              - generic [ref=e79]: 1 min Lesezeit
+              - img [ref=e80]
+        - link [ref=e82] [cursor=pointer]:
+          - /url: /blog/livo
+          - article [ref=e83]:
+            - time [ref=e84]: 20. Februar 2026
+            - heading "Livo - Travel & Goals Tracker" [level=3] [ref=e85]
+            - generic [ref=e86]:
+              - paragraph [ref=e87]: A progressive web app for tracking countries visited and personal goals. Features an interactive map and Supabase backend.
+              - img "Livo - Travel & Goals Tracker" [ref=e88]
+            - generic [ref=e89]:
+              - generic [ref=e90]: 1 min Lesezeit
+              - img [ref=e91]
+      - link "Alle Beiträge lesen" [ref=e94] [cursor=pointer]:
+        - /url: /blog
+        - text: Alle Beiträge lesen
+        - img [ref=e95]
+    - generic [ref=e98]:
+      - generic [ref=e99]:
+        - generic [ref=e100]: Erfahre mehr
+        - heading "Über mich" [level=2] [ref=e101]
+      - generic [ref=e103]:
+        - img "Über mich" [ref=e105]
+        - generic [ref=e106]:
+          - paragraph [ref=e107]: "Aktuell: Student @ HMD Stuttgart, Mobile Media."
+          - paragraph [ref=e108]: Exploring everything in tech and engineering.
+          - paragraph [ref=e109]: Building iOS apps in my free time. PicSwipe, Quanta, Birthday calendar.
+          - paragraph [ref=e110]: Recently got into 3D printing (A1 Mini) and homelabbing with Proxmox on my Raspi + T480s.
+          - paragraph [ref=e111]: Always looking for interesting people to work with.
+          - link "github.com/NoahSeeger →" [ref=e113] [cursor=pointer]:
+            - /url: https://github.com/NoahSeeger
+          - generic [ref=e114]:
+            - img "GitHub contributions"
+    - generic [ref=e116]:
+      - generic [ref=e117]:
+        - generic [ref=e118]: Erkunde meine
+        - heading "Projekte" [level=2] [ref=e119]
+      - generic [ref=e120]:
+        - article [ref=e121]:
+          - img "Bruno - Body Transformation Tracker" [ref=e123]
+          - generic [ref=e124]:
+            - generic [ref=e125]:
+              - link "Bruno - Body Transformation Tracker" [ref=e126] [cursor=pointer]:
+                - /url: /blog/bruno
+                - heading "Bruno - Body Transformation Tracker" [level=3] [ref=e127]
+              - link "→" [ref=e128] [cursor=pointer]:
+                - /url: /blog/bruno
+            - paragraph [ref=e129]: SwiftUI iOS app for tracking body transformation with progress photos and comparison view.
+            - generic [ref=e130]:
+              - generic [ref=e131]: Swift
+              - generic [ref=e132]: SwiftUI
+              - generic [ref=e133]: SwiftData
+            - link "GitHub" [ref=e135] [cursor=pointer]:
+              - /url: https://github.com/NoahSeeger/Pincode
+              - img [ref=e136]
+              - generic [ref=e138]: GitHub
+        - article [ref=e139]:
+          - img "Livo - Travel & Goals Tracker" [ref=e141]
+          - generic [ref=e142]:
+            - generic [ref=e143]:
+              - link "Livo - Travel & Goals Tracker" [ref=e144] [cursor=pointer]:
+                - /url: /blog/livo
+                - heading "Livo - Travel & Goals Tracker" [level=3] [ref=e145]
+              - link "→" [ref=e146] [cursor=pointer]:
+                - /url: /blog/livo
+            - paragraph [ref=e147]: A progressive web app for tracking countries visited and personal goals. Features an interactive map and Supabase backend.
+            - generic [ref=e148]:
+              - generic [ref=e149]: Next.js
+              - generic [ref=e150]: React
+              - generic [ref=e151]: Supabase
+              - generic [ref=e152]: TailwindCSS
+              - generic [ref=e153]: react-simple-maps
+            - generic [ref=e154]:
+              - link "GitHub" [ref=e155] [cursor=pointer]:
+                - /url: https://github.com/NoahSeeger/livo
+                - img [ref=e156]
+                - generic [ref=e158]: GitHub
+              - link "Demo" [ref=e159] [cursor=pointer]:
+                - /url: https://livoapp.netlify.app
+                - img [ref=e160]
+                - generic [ref=e162]: Demo
+        - article [ref=e163]:
+          - img "PicSwipe - iOS Gallery Sorter" [ref=e165]
+          - generic [ref=e166]:
+            - generic [ref=e167]:
+              - link "PicSwipe - iOS Gallery Sorter" [ref=e168] [cursor=pointer]:
+                - /url: /blog/picswipe
+                - heading "PicSwipe - iOS Gallery Sorter" [level=3] [ref=e169]
+              - link "→" [ref=e170] [cursor=pointer]:
+                - /url: /blog/picswipe
+            - paragraph [ref=e171]: Tinder-style gallery sorter that helps you clean up your photo library by swiping left to delete and right to keep.
+            - generic [ref=e172]:
+              - generic [ref=e173]: Swift
+              - generic [ref=e174]: SwiftUI
+              - generic [ref=e175]: PhotosUI
+            - generic [ref=e176]:
+              - link "GitHub" [ref=e177] [cursor=pointer]:
+                - /url: https://github.com/NoahSeeger/PicSwipe
+                - img [ref=e178]
+                - generic [ref=e180]: GitHub
+              - link "Demo" [ref=e181] [cursor=pointer]:
+                - /url: https://picswipe.netlify.app/
+                - img [ref=e182]
+                - generic [ref=e184]: Demo
+        - link "Alle Projekte →" [ref=e186] [cursor=pointer]:
+          - /url: /blog?category=project
+    - generic [ref=e187]:
+      - generic [ref=e188]:
+        - generic [ref=e189]: Treten wir in
+        - heading "Kontakt" [level=2] [ref=e190]
+      - generic [ref=e191]:
+        - link "Email" [ref=e192] [cursor=pointer]:
+          - /url: mailto:noahseeger@outlook.de
+          - img [ref=e194]
+          - generic [ref=e197]: noahseeger@outlook.de
+        - link "LinkedIn" [ref=e198] [cursor=pointer]:
+          - /url: https://www.linkedin.com/in/noahseeger/
+          - img [ref=e199]
+        - link "X" [ref=e201] [cursor=pointer]:
+          - /url: https://x.com/thenoahsee
+          - img [ref=e202]
+        - link "Discord" [ref=e204] [cursor=pointer]:
+          - /url: https://discord.com/users/noahsee
+          - img [ref=e205]
+  - contentinfo [ref=e207]:
+    - paragraph [ref=e209]:
+      - text: Made with
+      - img [ref=e210]
+      - text: by Noah Seeger

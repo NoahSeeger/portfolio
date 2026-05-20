@@ -16,8 +16,15 @@ function EmailBubble() {
   return (
     <motion.a
       href="mailto:noahseeger@outlook.de"
-      className="relative flex items-center rounded-full border-2 border-gray-300 text-gray-600 hover:border-purple-accent hover:text-purple-accent transition-colors duration-300 overflow-hidden w-12 md:w-auto"
-      style={{ height: 48 }}
+      className="relative flex items-center rounded-full transition-colors duration-300 overflow-hidden w-12 md:w-auto"
+      style={{
+        height: 48,
+        borderWidth: "2px",
+        borderStyle: "solid",
+        borderColor: isHovered ? "var(--accent)" : "var(--border-strong)",
+        color: isHovered ? "var(--accent)" : "var(--text-secondary)",
+        backgroundColor: "var(--bg-secondary)",
+      }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       animate={{

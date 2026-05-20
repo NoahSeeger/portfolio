@@ -33,17 +33,18 @@ export function BlogIndex() {
     : t("posts_all_title", "Alle Beiträge");
 
   return (
-    <div className="min-h-screen bg-white py-16">
+    <div className="min-h-screen py-16" style={{ backgroundColor: "var(--bg-primary)" }}>
       <div className="max-w-3xl mx-auto px-4">
         <div className="flex items-center gap-4 mb-12">
-          <h1 className="text-4xl font-bold">{title}</h1>
+          <h1 className="text-4xl font-bold" style={{ color: "var(--text-primary)" }}>{title}</h1>
           {!category && (
             <a
               href="/rss.xml"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="RSS Feed"
-              className="text-blue-600 hover:text-blue-700 transition-colors"
+              className="transition-colors"
+              style={{ color: "var(--accent)" }}
             >
               <FaRss size={24} />
             </a>
@@ -58,10 +59,10 @@ export function BlogIndex() {
           return (
             <section key={year} className="mb-12">
               <div className="flex items-baseline gap-3 mb-6">
-                <h2 className="text-3xl font-bold">{year}</h2>
-                <span className="text-lg text-gray-400">{yearCount}</span>
+                <h2 className="text-3xl font-bold" style={{ color: "var(--text-primary)" }}>{year}</h2>
+                <span className="text-lg" style={{ color: "var(--text-muted)" }}>{yearCount}</span>
               </div>
-              <div className="h-px bg-gray-200 mb-8" />
+              <div className="h-px mb-8" style={{ backgroundColor: "var(--border)" }} />
 
               {months.map((monthIdx) => {
                 const monthPosts = yearPosts[monthIdx];
@@ -70,8 +71,8 @@ export function BlogIndex() {
                 return (
                   <div key={monthIdx} className="mb-8">
                     <div className="flex items-baseline gap-3 mb-4">
-                      <h3 className="text-xl font-semibold">{monthName}</h3>
-                      <span className="text-sm text-gray-400">{monthPosts.length}</span>
+                      <h3 className="text-xl font-semibold" style={{ color: "var(--text-primary)" }}>{monthName}</h3>
+                      <span className="text-sm" style={{ color: "var(--text-muted)" }}>{monthPosts.length}</span>
                     </div>
 
                     <div className="space-y-6">
@@ -84,10 +85,10 @@ export function BlogIndex() {
                             className="block group"
                           >
                             <article className="py-4">
-                              <h3 className="text-lg sm:text-xl font-semibold text-blue-600 group-hover:underline break-words">
+                              <h3 className="text-lg sm:text-xl font-semibold group-hover:underline break-words" style={{ color: "var(--accent)" }}>
                                 {post.title}
                               </h3>
-                              <div className="flex items-center gap-2 text-sm text-gray-500 mt-1 flex-wrap">
+                              <div className="flex items-center gap-2 text-sm mt-1 flex-wrap" style={{ color: "var(--text-muted)" }}>
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                 </svg>
@@ -103,7 +104,7 @@ export function BlogIndex() {
                                     className="w-28 sm:w-32 h-auto object-cover rounded-lg flex-shrink-0"
                                   />
                                 )}
-                                <p className="text-gray-600 text-sm sm:text-base line-clamp-2">{post.description}</p>
+                                <p className="text-sm sm:text-base line-clamp-2" style={{ color: "var(--text-secondary)" }}>{post.description}</p>
                               </div>
                             </article>
                           </Link>
@@ -118,7 +119,7 @@ export function BlogIndex() {
         })}
 
         {posts.length === 0 && (
-          <p className="text-center text-gray-500">
+          <p className="text-center" style={{ color: "var(--text-muted)" }}>
             {t("posts_no_posts", "Noch keine Beiträge vorhanden.")}
           </p>
         )}
@@ -155,14 +156,14 @@ export function BlogPost({ post }) {
 
   if (!post) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <h1 className="text-2xl">{t("posts_not_found", "Beitrag nicht gefunden")}</h1>
+      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: "var(--bg-primary)" }}>
+        <h1 className="text-2xl" style={{ color: "var(--text-primary)" }}>{t("posts_not_found", "Beitrag nicht gefunden")}</h1>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div className="min-h-screen flex flex-col" style={{ backgroundColor: "var(--bg-primary)" }}>
       {post && (
         <Helmet>
           <title>{post.title} - Noah Seeger</title>
@@ -173,26 +174,26 @@ export function BlogPost({ post }) {
         </Helmet>
       )}
       <div
-        className="fixed top-0 left-0 h-[5px] bg-blue-600 z-50"
-        style={{ width: `${progress}%` }}
+        className="fixed top-0 left-0 h-[5px] z-50"
+        style={{ width: `${progress}%`, backgroundColor: "var(--accent)" }}
       />
 
       <article className="flex-1 max-w-3xl mx-auto px-4 py-16 w-full">
         <header className="mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-4 break-words">{post.title}</h1>
+          <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-4 break-words" style={{ color: "var(--text-primary)" }}>{post.title}</h1>
 
-          <div className="flex items-center gap-3 text-sm text-gray-500 flex-wrap">
+          <div className="flex items-center gap-3 text-sm flex-wrap" style={{ color: "var(--text-muted)" }}>
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
             <time>{formatDateShort(post.pubDatetime, locale)}</time>
-            <span className="text-gray-300">·</span>
+            <span style={{ color: "var(--border)" }}>·</span>
             <span>{readTime} min {t("posts_read", "read")}</span>
           </div>
         </header>
 
         {post.heroImage && (
-          <div className="aspect-video bg-gray-200 rounded-lg mb-8 overflow-hidden">
+          <div className="aspect-video rounded-lg mb-8 overflow-hidden" style={{ backgroundColor: "var(--bg-tertiary)" }}>
             <img
               src={post.heroImage}
               alt={post.title}
@@ -205,18 +206,17 @@ export function BlogPost({ post }) {
         <div className="prose prose-lg max-w-none font-serif
           prose-headings:font-bold prose-headings:tracking-tight
           prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl prose-h4:text-lg
-          prose-p:text-gray-700 prose-p:leading-relaxed prose-p:text-[17px]
-          prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline
+          prose-p:text-[17px]
+          prose-a:no-underline hover:prose-a:underline
           prose-img:rounded-lg prose-img:shadow-lg prose-img:my-8 prose-img:w-full
-          prose-blockquote:border-l-4 prose-blockquote:border-gray-200 prose-blockquote:pl-6 prose-blockquote:not-italic prose-blockquote:text-gray-700 prose-blockquote:font-semibold
+          prose-blockquote:border-l-4 prose-blockquote:not-italic prose-blockquote:font-semibold
           prose-pre:m-0 prose-pre:p-0 prose-pre:bg-transparent prose-pre:rounded-lg
-          prose-code:bg-gray-100 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono
-          prose-ul:list-disc prose-ol:list-decimal prose-li:marker:text-gray-400
-          prose-strong:font-semibold prose-strong:text-gray-800
-          prose-em:not-italic
+          prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono
+          prose-ul:list-disc prose-ol:list-decimal
+          prose-strong:font-semibold
           prose-table:table prose-table:border-collapse prose-table:w-full
-          prose-th:border prose-th:border-gray-300 prose-th:bg-gray-100 prose-th:px-4 prose-th:py-2 prose-th:text-left prose-th:font-semibold
-          prose-td:border prose-td:border-gray-300 prose-td:px-4 prose-td:py-2
+          prose-th:border prose-th:px-4 prose-th:py-2 prose-th:text-left prose-th:font-semibold
+          prose-td:border prose-td:px-4 prose-td:py-2
         ">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
@@ -235,11 +235,14 @@ export function BlogPost({ post }) {
               if (!inline && match) {
                 return (
                   <div className="not-prose relative my-6 rounded-lg overflow-hidden bg-[#1e1e1e]">
-                    <div className="flex items-center justify-between px-4 py-2 text-xs text-gray-400 border-b border-gray-700">
+                    <div className="flex items-center justify-between px-4 py-2 text-xs border-b" style={{ borderColor: "#374151", color: "#9ca3af" }}>
                       <span className="font-mono">{match[1]}</span>
                       <button
                         onClick={handleCopy}
-                        className="flex items-center gap-1.5 px-2 py-1 rounded hover:bg-gray-700 transition-colors text-gray-400 hover:text-white"
+                        className="flex items-center gap-1.5 px-2 py-1 rounded transition-colors"
+                        style={{ backgroundColor: "transparent", color: "#9ca3af" }}
+                        onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = "#374151"; e.currentTarget.style.color = "#fff"; }}
+                        onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "transparent"; e.currentTarget.style.color = "#9ca3af"; }}
                       >
                         {copied ? <FaCheck size={12} /> : <FaCopy size={12} />}
                         <span>{copied ? "Copied!" : "Copy"}</span>
@@ -276,7 +279,7 @@ export function BlogPost({ post }) {
               }
 
               return (
-                <code className="bg-gray-100 px-1.5 py-0.5 rounded text-sm font-mono" {...props}>
+                <code className="px-1.5 py-0.5 rounded text-sm font-mono" style={{ backgroundColor: "var(--bg-tertiary)" }} {...props}>
                   {children}
                 </code>
               );
@@ -287,12 +290,13 @@ export function BlogPost({ post }) {
         </div>
       </article>
 
-      <footer className="border-t border-gray-200 py-8 px-4 mt-auto">
+      <footer className="border-t py-8 px-4 mt-auto" style={{ borderColor: "var(--border)" }}>
         <div className="max-w-3xl mx-auto">
           <div className="flex items-center justify-between text-sm">
             <Link
               to="/blog"
-              className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
+              className="flex items-center gap-2 transition-colors"
+              style={{ color: "var(--text-secondary)" }}
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -302,7 +306,8 @@ export function BlogPost({ post }) {
 
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors cursor-pointer"
+              className="flex items-center gap-2 transition-colors cursor-pointer"
+              style={{ color: "var(--text-secondary)" }}
             >
               {t("posts_back_to_top", "Back to top")}
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

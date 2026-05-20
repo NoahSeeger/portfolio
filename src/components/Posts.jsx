@@ -11,27 +11,28 @@ function Posts() {
   const locale = i18n.language;
 
   return (
-    <section id="POSTS" className="py-20 bg-white">
+    <section id="POSTS" className="py-16">
       <div className="container mx-auto px-4">
         <SectionTitle
           title={t("posts_section_title", "Erkunde meine")}
           subtitle={t("posts_section_subtitle", "Beiträge")}
         />
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full mt-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
           {posts.length > 0 ? (
             posts.map((post) => (
               <Link key={post.slug} to={`/blog/${post.slug}`}>
                 <motion.article
                   whileHover={{ y: -5 }}
-                  className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 h-full flex flex-col"
+                  className="p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 h-full flex flex-col"
+                  style={{ backgroundColor: "var(--bg-secondary)" }}
                 >
-                  <time className="text-sm text-gray-500">
+                  <time className="text-sm" style={{ color: "var(--text-muted)" }}>
                     {formatDate(post.pubDatetime, locale)}
                   </time>
-                  <h3 className="text-lg font-semibold mt-2 mb-3 break-words leading-tight line-clamp-2">{post.title}</h3>
+                  <h3 className="text-lg font-semibold mt-2 mb-3 break-words leading-tight line-clamp-2" style={{ color: "var(--text-primary)" }}>{post.title}</h3>
 
                   <div className="flex gap-3 mt-auto items-stretch">
-                    <p className="text-gray-600 line-clamp-3 text-sm flex-1">{post.description}</p>
+                    <p className="line-clamp-3 text-sm flex-1" style={{ color: "var(--text-secondary)" }}>{post.description}</p>
                     {post.heroImage && (
                       <img
                         src={post.heroImage}
@@ -41,7 +42,7 @@ function Posts() {
                     )}
                   </div>
 
-                  <div className="flex items-center text-blue-600 mt-4 text-sm">
+                  <div className="flex items-center mt-4 text-sm" style={{ color: "var(--accent)" }}>
                     <span>{calculateReadTime(post.content)} min {t("posts_read", "read")}</span>
                     <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -82,7 +83,8 @@ function Posts() {
         <div className="flex justify-center mt-12">
           <Link
             to="/blog"
-            className="flex items-center justify-center bg-blue-600 text-white px-6 py-4 rounded-full hover:bg-blue-700 transition duration-300 whitespace-nowrap w-fit"
+            className="flex items-center justify-center px-6 py-4 rounded-full hover:opacity-90 transition duration-300 whitespace-nowrap w-fit"
+            style={{ backgroundColor: "var(--accent)", color: "white" }}
           >
             {t("posts_read_all", "Alle Beiträge lesen")}
             <svg className="ml-4 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -99,11 +101,12 @@ function PostCard({ title, description, date }) {
   return (
     <motion.div
       whileHover={{ y: -5 }}
-      className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300"
+      className="p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300"
+      style={{ backgroundColor: "var(--bg-secondary)" }}
     >
-      <span className="text-sm text-gray-500">{date}</span>
-      <h3 className="text-xl font-semibold mt-2 mb-3">{title}</h3>
-      <p className="text-gray-600">{description}</p>
+      <span className="text-sm" style={{ color: "var(--text-muted)" }}>{date}</span>
+      <h3 className="text-xl font-semibold mt-2 mb-3" style={{ color: "var(--text-primary)" }}>{title}</h3>
+      <p style={{ color: "var(--text-secondary)" }}>{description}</p>
     </motion.div>
   );
 }

@@ -6,13 +6,13 @@ import { useTranslation } from "react-i18next";
 function Experience() {
   const { t } = useTranslation();
   return (
-    <section id="EXPERIENCE" className="py-20 bg-gray-50">
+    <section id="EXPERIENCE" className="py-16">>
       <div className="container mx-auto px-4">
         <SectionTitle
           title={t("experience_title", "Erfahrung")}
           subtitle={t("experience_subtitle", "Fähigkeiten")}
         />
-        <div className="grid md:grid-cols-2 gap-8 mt-12">
+        <div className="grid md:grid-cols-2 gap-6 mt-10">
           <SkillCard
             title={t("experience_skill_web_development", "Web-Entwicklung")}
             skills={webDevelopmentSkills(t)}
@@ -85,8 +85,8 @@ function SkillCard({ title, skills }) {
   const col2 = skills.slice(mid);
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-lg">
-      <h2 className="text-2xl font-bold mb-4 text-gray-800">{title}</h2>
+    <div className="p-6 rounded-lg shadow-lg" style={{ backgroundColor: "var(--bg-primary)" }}>
+      <h2 className="text-2xl font-bold mb-4" style={{ color: "var(--text-primary)" }}>{title}</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2">
         <ul className="flex flex-col gap-3">
           {col1.map((skill, index) => (
@@ -109,7 +109,7 @@ function SkillItem({ name, level }) {
       <FaCircleCheck className="text-green-500 flex-shrink-0" size={20} />
       <div className="flex flex-col">
         <span className="font-semibold leading-tight">{name}</span>
-        <span className="text-sm text-gray-600 leading-tight">{level}</span>
+        <span className="text-sm leading-tight" style={{ color: "var(--text-secondary)" }}>{level}</span>
       </div>
     </li>
   );

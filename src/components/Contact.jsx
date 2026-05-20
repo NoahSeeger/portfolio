@@ -10,26 +10,24 @@ function Contact() {
   return (
     <section
       id="CONTACT"
-      className="py-20 flex flex-col justify-center items-center gap-12"
+      className="py-16 flex flex-col justify-center items-center gap-8"
     >
       <SectionTitle
         title={t("contact_section_title", "Treten wir in")}
         subtitle={t("contact_section_subtitle", "Kontakt")}
       />
-      <section className="flex flex-col justify-center items-center gap-4">
-        <div className="flex flex-wrap justify-center border-2 w-fit p-4 rounded-2xl gap-4">
-          <EmailBubble />
-          <SocialIcon href="https://www.linkedin.com/in/noahseeger/" label="LinkedIn">
-            <FaLinkedin size={24} />
-          </SocialIcon>
-          <SocialIcon href="https://x.com/thenoahsee" label="X">
-            <FaXTwitter size={24} />
-          </SocialIcon>
-          <SocialIcon href="https://discord.com/users/noahsee" label="Discord">
-            <FaDiscord size={24} />
-          </SocialIcon>
-        </div>
-      </section>
+      <div className="flex flex-wrap justify-center border-2 p-3 rounded-xl gap-3" style={{ borderColor: "var(--border)" }}>
+        <EmailBubble />
+        <SocialIcon href="https://www.linkedin.com/in/noahseeger/" label="LinkedIn">
+          <FaLinkedin size={24} />
+        </SocialIcon>
+        <SocialIcon href="https://x.com/thenoahsee" label="X">
+          <FaXTwitter size={24} />
+        </SocialIcon>
+        <SocialIcon href="https://discord.com/users/noahsee" label="Discord">
+          <FaDiscord size={24} />
+        </SocialIcon>
+      </div>
     </section>
   );
 }

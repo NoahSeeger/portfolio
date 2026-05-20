@@ -22,7 +22,7 @@ function Hero() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="w-full flex flex-col md:flex-row justify-center items-center gap-12 md:gap-16 px-4 py-20"
+      className="w-full flex flex-col md:flex-row justify-start items-center gap-8 md:gap-16 px-4 pt-32 pb-4"
     >
       <motion.div
         whileHover={{
@@ -30,7 +30,8 @@ function Hero() {
           rotate: [0, -2, 2, -2, 0],
           transition: { duration: 0.5 },
         }}
-        className="w-56 h-56 md:w-72 md:h-72 flex-shrink-0"
+        className="w-56 h-56 md:w-72 md:h-72 flex-shrink-0 rounded-full"
+        style={{ boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)" }}
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
@@ -38,7 +39,7 @@ function Hero() {
         <img
           src={me}
           alt={t("hero_img_alt", "Noah Seeger")}
-          className="rounded-full w-full h-full object-cover shadow-lg"
+          className="rounded-full w-full h-full object-cover"
         />
       </motion.div>
 
@@ -52,7 +53,8 @@ function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.4 }}
-          className="text-lg text-gray-500 mb-3"
+          className="text-lg mb-3"
+          style={{ color: "var(--text-muted)" }}
         >
           {t("hero_greeting", "Hallo, Ich bin")}
         </motion.span>
@@ -61,7 +63,8 @@ function Hero() {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.4, duration: 0.5 }}
-          className="text-4xl md:text-5xl font-bold text-gray-900 mb-3"
+          className="text-4xl md:text-5xl font-bold mb-3"
+          style={{ color: "var(--text-primary)" }}
         >
           {t("header_name", "Noah Seeger")}
         </motion.h1>
@@ -74,9 +77,9 @@ function Hero() {
         >
           <TextShimmer
             duration={2.5}
-            className="text-xl md:text-2xl font-medium"
-            baseColor="#007bff"
-            gradientColor="#66b2ff"
+            className="text-xl md:text-2xl font-bold"
+            baseColor="var(--accent)"
+            gradientColor="rgba(255,255,255,0.35)"
           >
             {t("hero_job", "Angehender Entwickler")}
           </TextShimmer>

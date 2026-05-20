@@ -10,6 +10,7 @@
   "nav_open": "Open menu",
   "nav_close": "Close menu",
   "nav_home": "Home",
+  "nav_blog": "Blog",
   "nav_about": "About",
   "nav_posts": "Posts",
   "nav_experience": "Experience",
@@ -82,5 +83,12 @@
   "footer_experience": "Experience",
   "footer_projects": "Projects",
   "footer_contact": "Contact",
-  "footer_copyright": "© 2024 Noah Seeger. All rights reserved."
+  "footer_copyright": "© 2024 Noah Seeger. All rights reserved.",
+
+  "search_placeholder": "Search all posts...",
+  "search_hint": "Type to search posts",
+  "search_no_results": "No results found",
+  "search_nav": "navigate",
+  "search_open": "open",
+  "search_close": "close"
 }

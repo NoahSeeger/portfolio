@@ -9,9 +9,9 @@ function ProjectItem({ project, index }) {
   const { t } = useTranslation();
 
   return (
-    <article className="group grid md:grid-cols-[1fr_1.5fr] gap-6 md:gap-10 py-10 border-b border-gray-200 last:border-b-0">
+    <article className="group grid md:grid-cols-[1fr_1.5fr] gap-6 md:gap-10 py-10 last:border-b-0" style={{ borderBottom: "1px solid var(--border)" }}>
       {/* Image */}
-      <div className="relative overflow-hidden rounded-lg bg-gray-100 aspect-[4/3]">
+      <div className="relative overflow-hidden rounded-lg aspect-[4/3]" style={{ backgroundColor: "var(--bg-tertiary)" }}>
         {project.heroImage ? (
           <img
             src={project.heroImage}
@@ -19,7 +19,7 @@ function ProjectItem({ project, index }) {
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-gray-400 text-sm">
+          <div className="w-full h-full flex items-center justify-center text-sm" style={{ backgroundColor: "var(--bg-tertiary)", color: "var(--text-muted)" }}>
             No preview
           </div>
         )}
@@ -29,19 +29,20 @@ function ProjectItem({ project, index }) {
       <div className="flex flex-col justify-center">
         <div className="flex items-start justify-between gap-4 mb-2">
           <Link to={`/blog/${project.slug}`} className="group/title">
-            <h3 className="text-2xl md:text-3xl font-bold text-gray-900 group-hover/title:text-gray-600 transition-colors">
+            <h3 className="text-2xl md:text-3xl font-bold group-hover/title:opacity-80 transition-opacity" style={{ color: "var(--text-primary)" }}>
               {project.title}
             </h3>
           </Link>
           <Link
             to={`/blog/${project.slug}`}
-            className="shrink-0 text-gray-400 hover:text-gray-600 transition-colors mt-1"
+            className="shrink-0 transition-opacity mt-1"
+            style={{ color: "var(--text-muted)" }}
           >
             →
           </Link>
         </div>
 
-        <p className="text-gray-500 text-sm md:text-base mb-4 leading-relaxed">
+        <p className="text-sm md:text-base mb-4 leading-relaxed" style={{ color: "var(--text-secondary)" }}>
           {project.description}
         </p>
 
@@ -50,7 +51,8 @@ function ProjectItem({ project, index }) {
           {project.technologies?.map((tech) => (
             <span
               key={tech}
-              className="px-2 py-0.5 bg-gray-100 text-gray-600 rounded text-xs font-mono"
+              className="px-2 py-0.5 rounded text-xs font-mono"
+              style={{ backgroundColor: "var(--bg-tertiary)", color: "var(--text-secondary)" }}
             >
               {tech}
             </span>
@@ -64,7 +66,8 @@ function ProjectItem({ project, index }) {
               href={project.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-900 transition-colors"
+              className="flex items-center gap-1.5 text-sm transition-opacity"
+              style={{ color: "var(--text-secondary)" }}
             >
               <FaGithub size={16} />
               <span>GitHub</span>
@@ -75,7 +78,8 @@ function ProjectItem({ project, index }) {
               href={project.liveDemo}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-900 transition-colors"
+              className="flex items-center gap-1.5 text-sm transition-opacity"
+              style={{ color: "var(--text-secondary)" }}
             >
               <FaArrowUpRightFromSquare size={14} />
               <span>Demo</span>
@@ -92,14 +96,14 @@ function Projects() {
   const projects = getFeaturedProjects();
 
   return (
-    <section id="PROJECTS" className="py-20 bg-white">
-      <div className="container mx-auto px-6">
+    <section id="PROJECTS" className="py-16">
+      <div className="container mx-auto px-4">
         <SectionTitle
           title={t("explore_my")}
           subtitle={t("projects")}
         />
 
-        <div className="mt-12 max-w-4xl mx-auto">
+        <div className="mt-10 max-w-4xl mx-auto">
           {projects.map((project, index) => (
             <ProjectItem key={project.slug} project={project} index={index} />
           ))}
@@ -107,7 +111,8 @@ function Projects() {
           <div className="pt-8 text-center">
             <Link
               to="/blog?category=project"
-              className="text-sm text-gray-400 hover:text-gray-600 transition-colors"
+              className="text-sm transition-opacity hover:opacity-80"
+              style={{ color: "var(--text-muted)" }}
             >
               Alle Projekte →
             </Link>

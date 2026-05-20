@@ -27,7 +27,8 @@ function FloatingBackButton() {
   return (
     <Link
       to={isPostPage ? "/blog" : "/"}
-      className="fixed top-6 left-6 z-50 flex items-center justify-center w-12 h-12 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition duration-300"
+      className="fixed top-6 left-6 z-50 flex items-center justify-center w-12 h-12 text-white rounded-full shadow-lg transition duration-300"
+      style={{ backgroundColor: "var(--accent)" }}
     >
       <FaArrowLeft size={24} />
     </Link>

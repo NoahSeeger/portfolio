@@ -10,6 +10,7 @@
   "nav_open": "Menü öffnen",
   "nav_close": "Menü schließen",
   "nav_home": "Home",
+  "nav_blog": "Blog",
   "nav_about": "Über mich",
   "nav_posts": "Beiträge",
   "nav_experience": "Erfahrung",
@@ -82,5 +83,12 @@
   "footer_experience": "Erfahrung",
   "footer_projects": "Projekte",
   "footer_contact": "Kontakt",
-  "footer_copyright": "© 2024 Noah Seeger. Alle Rechte vorbehalten."
+  "footer_copyright": "© 2024 Noah Seeger. Alle Rechte vorbehalten.",
+
+  "search_placeholder": "Alle Beiträge durchsuchen...",
+  "search_hint": "Tippe um Beiträge zu durchsuchen",
+  "search_no_results": "Keine Ergebnisse gefunden",
+  "search_nav": "navigate",
+  "search_open": "open",
+  "search_close": "close"
 }
