@@ -4,7 +4,7 @@ import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { Helmet } from "react-helmet-async";
-import { FaCopy, FaCheck } from "react-icons/fa6";
+import { FaCopy, FaCheck, FaRss } from "react-icons/fa6";
 import { getAllPosts, formatDateShort, calculateReadTime, groupPostsByYearMonth } from "../lib/blog";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -24,7 +24,18 @@ export function BlogIndex() {
   return (
     <div className="min-h-screen bg-white py-16">
       <div className="max-w-3xl mx-auto px-4">
-        <h1 className="text-4xl font-bold mb-12">{t("posts_all_title", "Alle Beiträge")}</h1>
+        <div className="flex items-center gap-4 mb-12">
+          <h1 className="text-4xl font-bold">{t("posts_all_title", "Alle Beiträge")}</h1>
+          <a
+            href="/rss.xml"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="RSS Feed"
+            className="text-blue-600 hover:text-blue-700 transition-colors"
+          >
+            <FaRss size={24} />
+          </a>
+        </div>
 
         {years.map((year) => {
           const yearPosts = grouped[year];
