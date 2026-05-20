@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, useParams, useLocation, Link } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 import About from "./components/About";
 import Experience from "./components/Experience";
 import Header from "./components/Header";
@@ -49,9 +50,11 @@ function FloatingBackButton() {
 
 function App() {
   return (
-    <BrowserRouter>
-      <BlogRoutes />
-    </BrowserRouter>
+    <HelmetProvider>
+      <BrowserRouter>
+        <BlogRoutes />
+      </BrowserRouter>
+    </HelmetProvider>
   );
 }
 

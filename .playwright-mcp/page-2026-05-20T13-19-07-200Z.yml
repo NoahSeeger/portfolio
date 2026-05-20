@@ -1,0 +1,227 @@
+- generic [ref=e2]:
+  - link [ref=e3] [cursor=pointer]:
+    - /url: /blog
+    - img [ref=e4]
+  - generic [ref=e7]:
+    - article [ref=e8]:
+      - generic [ref=e9]:
+        - heading "Markdown Feature Showcase" [level=1] [ref=e10]
+        - generic [ref=e11]:
+          - img [ref=e12]
+          - time [ref=e14]: 20 Mai, 2026
+          - generic [ref=e15]: ·
+          - generic [ref=e16]: 3 min Lesezeit
+      - img "Markdown Feature Showcase" [ref=e18]
+      - generic [ref=e19]:
+        - paragraph [ref=e20]:
+          - text: This is a
+          - strong [ref=e21]: comprehensive test post
+          - text: showcasing every Markdown feature available in this blog system. Use this as a reference when writing new posts.
+        - heading "Text Formatting" [level=2] [ref=e22]
+        - paragraph [ref=e23]:
+          - text: Regular paragraph with
+          - strong [ref=e24]: bold text
+          - text: ","
+          - emphasis [ref=e25]: italic text
+          - text: ", and"
+          - emphasis [ref=e26]:
+            - strong [ref=e27]: bold italic combined
+          - text: . You can also use
+          - code [ref=e28]: "`inline code`"
+          - text: for technical terms.
+        - paragraph [ref=e29]: "Here's a blockquote:"
+        - blockquote [ref=e30]:
+          - paragraph [ref=e31]: This is a blockquote. It should stand out from regular text with a left border and slightly different styling. Perfect for highlighting important information, quotes, or callouts.
+        - separator [ref=e32]
+        - heading "Headings" [level=2] [ref=e33]
+        - heading "Heading 3" [level=3] [ref=e34]
+        - heading "Heading 4" [level=4] [ref=e35]
+        - separator [ref=e36]
+        - heading "Code Blocks" [level=2] [ref=e37]
+        - paragraph [ref=e38]: "JavaScript:"
+        - generic [ref=e40]:
+          - generic [ref=e41]:
+            - generic [ref=e42]: javascript
+            - button "Copy" [ref=e43] [cursor=pointer]:
+              - img [ref=e44]
+              - generic [ref=e46]: Copy
+          - code [ref=e48]:
+            - text: "function greet(name) { const message = `Hello, ${name}!`; console.log(message); return message;"
+            - text: "}"
+            - text: const result = greet("World");
+        - paragraph [ref=e49]: "Python:"
+        - generic [ref=e51]:
+          - generic [ref=e52]:
+            - generic [ref=e53]: python
+            - button "Copy" [ref=e54] [cursor=pointer]:
+              - img [ref=e55]
+              - generic [ref=e57]: Copy
+          - code [ref=e59]:
+            - text: "def calculate_fibonacci(n: int) -> list[int]: \"\"\"Calculate Fibonacci sequence up to n terms.\"\"\" if n <= 0: return [] elif n == 1: return [0] sequence = [0, 1] for i in range(2, n): sequence.append(sequence[i-1] + sequence[i-2]) return sequence"
+            - text: "# Example usage fib_numbers = calculate_fibonacci(10)"
+            - text: "print(fib_numbers) # [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]"
+        - paragraph [ref=e60]: "Swift:"
+        - generic [ref=e62]:
+          - generic [ref=e63]:
+            - generic [ref=e64]: swift
+            - button "Copy" [ref=e65] [cursor=pointer]:
+              - img [ref=e66]
+              - generic [ref=e68]: Copy
+          - code [ref=e70]:
+            - text: import Foundation
+            - text: "struct User: Codable { let id: UUID let name: String let email: String let createdAt: Date var displayName: String { return name.isEmpty ? email : name }"
+            - text: "}"
+            - text: // Example
+            - text: "let user = User( id: UUID(), name: \"John Doe\", email: \"john@example.com\", createdAt: Date()"
+            - text: )
+        - paragraph [ref=e71]: "SQL:"
+        - generic [ref=e73]:
+          - generic [ref=e74]:
+            - generic [ref=e75]: sql
+            - button "Copy" [ref=e76] [cursor=pointer]:
+              - img [ref=e77]
+              - generic [ref=e79]: Copy
+          - code [ref=e81]:
+            - text: SELECT p.id, p.title, p.published_at, COUNT(c.id) as comment_count
+            - text: FROM posts p
+            - text: LEFT JOIN comments c ON c.post_id = p.id
+            - text: WHERE p.draft = false AND p.published_at <= NOW()
+            - text: GROUP BY p.id, p.title, p.published_at
+            - text: ORDER BY p.published_at DESC
+            - text: LIMIT 10;
+        - separator [ref=e82]
+        - heading "Lists" [level=2] [ref=e83]
+        - heading "Unordered List" [level=3] [ref=e84]
+        - list [ref=e85]:
+          - listitem [ref=e86]: First item
+          - listitem [ref=e87]:
+            - text: Second item
+            - list [ref=e88]:
+              - listitem [ref=e89]: Nested item
+              - listitem [ref=e90]:
+                - text: Another nested item
+                - list [ref=e91]:
+                  - listitem [ref=e92]: Deeply nested
+          - listitem [ref=e93]: Third item
+        - heading "Ordered List" [level=3] [ref=e94]
+        - list [ref=e95]:
+          - listitem [ref=e96]: Step one
+          - listitem [ref=e97]:
+            - text: Step two
+            - list [ref=e98]:
+              - listitem [ref=e99]: Substep A
+              - listitem [ref=e100]: Substep B
+          - listitem [ref=e101]: Step three
+        - heading "Task List" [level=3] [ref=e102]
+        - list [ref=e103]:
+          - listitem [ref=e104]:
+            - checkbox [checked] [disabled] [ref=e105]
+            - text: Write blog post
+          - listitem [ref=e106]:
+            - checkbox [checked] [disabled] [ref=e107]
+            - text: Add code examples
+          - listitem [ref=e108]:
+            - checkbox [disabled] [ref=e109]
+            - text: Add more content
+          - listitem [ref=e110]:
+            - checkbox [disabled] [ref=e111]
+            - text: Review and edit
+        - separator [ref=e112]
+        - heading "Tables" [level=2] [ref=e113]
+        - table [ref=e114]:
+          - rowgroup [ref=e115]:
+            - row "Feature Status Notes" [ref=e116]:
+              - columnheader "Feature" [ref=e117]
+              - columnheader "Status" [ref=e118]
+              - columnheader "Notes" [ref=e119]
+          - rowgroup [ref=e120]:
+            - row "Headings ✅ Working H1-H6 supported" [ref=e121]:
+              - cell "Headings" [ref=e122]
+              - cell "✅ Working" [ref=e123]
+              - cell "H1-H6 supported" [ref=e124]
+            - row "Bold/Italic ✅ Working Standard Markdown" [ref=e125]:
+              - cell "Bold/Italic" [ref=e126]
+              - cell "✅ Working" [ref=e127]
+              - cell "Standard Markdown" [ref=e128]
+            - row "Code blocks ✅ Working With syntax highlighting" [ref=e129]:
+              - cell "Code blocks" [ref=e130]
+              - cell "✅ Working" [ref=e131]
+              - cell "With syntax highlighting" [ref=e132]
+            - row "Images ✅ Working With lazy loading" [ref=e133]:
+              - cell "Images" [ref=e134]
+              - cell "✅ Working" [ref=e135]
+              - cell "With lazy loading" [ref=e136]
+            - row "Tables ✅ Working Grid alignment" [ref=e137]:
+              - cell "Tables" [ref=e138]
+              - cell "✅ Working" [ref=e139]
+              - cell "Grid alignment" [ref=e140]
+            - row "Blockquotes ✅ Working Left border style" [ref=e141]:
+              - cell "Blockquotes" [ref=e142]
+              - cell "✅ Working" [ref=e143]
+              - cell "Left border style" [ref=e144]
+            - row "Links ✅ Working Blue underline on hover" [ref=e145]:
+              - cell "Links" [ref=e146]
+              - cell "✅ Working" [ref=e147]
+              - cell "Blue underline on hover" [ref=e148]
+            - row "Lists ✅ Working Ordered & unordered" [ref=e149]:
+              - cell "Lists" [ref=e150]
+              - cell "✅ Working" [ref=e151]
+              - cell "Ordered & unordered" [ref=e152]
+        - separator [ref=e153]
+        - heading "Links" [level=2] [ref=e154]
+        - paragraph [ref=e155]:
+          - link "Internal link to home page" [ref=e156] [cursor=pointer]:
+            - /url: /
+        - paragraph [ref=e157]:
+          - link "External link to Google" [ref=e158] [cursor=pointer]:
+            - /url: https://www.google.com
+        - separator [ref=e159]
+        - heading "Images" [level=2] [ref=e160]
+        - paragraph [ref=e161]: "Below is an image embedded using standard Markdown syntax:"
+        - paragraph [ref=e162]:
+          - img "Project screenshot" [ref=e163]
+        - paragraph [ref=e164]: Images are automatically styled with rounded corners and shadow. The prose container handles proper sizing and margins.
+        - separator [ref=e165]
+        - heading "Horizontal Rules" [level=2] [ref=e166]
+        - paragraph [ref=e167]: "Three dashes create a horizontal divider:"
+        - separator [ref=e168]
+        - paragraph [ref=e169]: Perfect for separating sections visually.
+        - separator [ref=e170]
+        - heading "Nested Content" [level=2] [ref=e171]
+        - blockquote [ref=e172]:
+          - paragraph [ref=e173]:
+            - strong [ref=e174]: "Note:"
+            - text: Blockquotes can contain multiple paragraphs and other formatting.
+          - paragraph [ref=e175]: Like this second paragraph within the same blockquote.
+          - list [ref=e176]:
+            - listitem [ref=e177]: And even lists within blockquotes
+            - listitem [ref=e178]: Are supported
+        - separator [ref=e179]
+        - heading "Edge Cases" [level=2] [ref=e180]
+        - paragraph [ref=e181]:
+          - text: "Inline code:"
+          - code [ref=e182]: "`const x = \\`"
+          - text: "template literal``"
+        - paragraph [ref=e183]:
+          - text: "Strong emphasis:"
+          - strong [ref=e184]: bold
+        - paragraph [ref=e185]:
+          - text: "Emphasis:"
+          - emphasis [ref=e186]: italic
+        - paragraph [ref=e187]:
+          - text: "Combined:"
+          - emphasis [ref=e188]:
+            - strong [ref=e189]: bold italic
+        - paragraph [ref=e190]:
+          - text: "Strikethrough:"
+          - deletion [ref=e191]: not needed but works
+        - paragraph [ref=e192]: That's all the basic Markdown features covered. Happy writing!
+    - contentinfo [ref=e193]:
+      - generic [ref=e195]:
+        - link "Zurück zu allen Beiträgen" [ref=e196] [cursor=pointer]:
+          - /url: /blog
+          - img [ref=e197]
+          - text: Zurück zu allen Beiträgen
+        - button "Nach oben" [ref=e199] [cursor=pointer]:
+          - text: Nach oben
+          - img [ref=e200]

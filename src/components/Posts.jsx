@@ -25,33 +25,21 @@ function Posts() {
                   whileHover={{ y: -5 }}
                   className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 h-full flex flex-col"
                 >
-                  {post.heroImage ? (
-                    <div className="flex gap-3 mb-3 items-start">
+                  <time className="text-sm text-gray-500">
+                    {formatDate(post.pubDatetime, locale)}
+                  </time>
+                  <h3 className="text-lg font-semibold mt-2 mb-3 break-words leading-tight line-clamp-2">{post.title}</h3>
+
+                  <div className="flex gap-3 mt-auto items-stretch">
+                    <p className="text-gray-600 line-clamp-3 text-sm flex-1">{post.description}</p>
+                    {post.heroImage && (
                       <img
                         src={post.heroImage}
                         alt={post.title}
                         className="w-20 h-16 object-cover rounded-lg flex-shrink-0"
                       />
-                      <div className="min-w-0 flex-1">
-                        <time className="text-xs text-gray-500">
-                          {formatDate(post.pubDatetime, locale)}
-                        </time>
-                        <h3 className="text-base font-semibold mt-1 break-words leading-tight">{post.title}</h3>
-                      </div>
-                    </div>
-                  ) : (
-                    <>
-                      <time className="text-sm text-gray-500">
-                        {formatDate(post.pubDatetime, locale)}
-                      </time>
-                      <h3 className="text-xl font-semibold mt-2 mb-3">{post.title}</h3>
-                      <p className="text-gray-600 flex-grow line-clamp-3 text-sm">{post.description}</p>
-                    </>
-                  )}
-
-                  {!post.heroImage && (
-                    <p className="text-gray-600 flex-grow line-clamp-3 text-sm">{post.description}</p>
-                  )}
+                    )}
+                  </div>
 
                   <div className="flex items-center text-blue-600 mt-4 text-sm">
                     <span>{calculateReadTime(post.content)} min {t("posts_read", "read")}</span>
