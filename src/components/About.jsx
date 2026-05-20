@@ -1,5 +1,5 @@
 import React from "react";
-import about from "../assets/personal/about.png";
+import about from "../assets/personal/about.jpg";
 import { FaUserGraduate, FaGraduationCap, FaArrowRight } from "react-icons/fa6";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
