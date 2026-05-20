@@ -11,7 +11,7 @@ function Posts() {
   const locale = i18n.language;
 
   return (
-    <section id="POSTS" className="min-h-screen py-16 bg-white">
+    <section id="POSTS" className="py-20 bg-white">
       <div className="container mx-auto px-4">
         <SectionTitle
           title={t("posts_section_title", "Erkunde meine")}

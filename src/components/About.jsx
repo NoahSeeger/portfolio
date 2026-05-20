@@ -8,7 +8,7 @@ function About() {
   const { t } = useTranslation();
 
   return (
-    <section id="ABOUT" className="bg-gray-50">
+    <section id="ABOUT" className="py-20 bg-white">
       <div className="container mx-auto px-6">
         <SectionTitle
           title={t("about_section_title", "Erfahre mehr")}

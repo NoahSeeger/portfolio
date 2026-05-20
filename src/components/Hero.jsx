@@ -22,7 +22,7 @@ function Hero() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="min-h-screen w-full flex flex-col md:flex-row justify-center items-center gap-12 md:gap-16 px-4"
+      className="w-full flex flex-col md:flex-row justify-center items-center gap-12 md:gap-16 px-4 py-20"
     >
       <motion.div
         whileHover={{

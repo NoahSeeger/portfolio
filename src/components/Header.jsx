@@ -10,7 +10,7 @@ const BOTTOM_TOLERANCE = 100;
 const SCROLL_DEBOUNCE_MS = 16;
 const SMOOTH_SCROLL_TIMEOUT = 1000;
 
-const SECTIONS = ["ABOUT", "POSTS", "EXPERIENCE", "PROJECTS", "CONTACT"];
+const SECTIONS = ["ABOUT", "POSTS", "PROJECTS", "CONTACT"];
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -129,7 +129,6 @@ function Header() {
     () => [
       { id: "POSTS", label: t("nav_posts", "Beiträge") },
       { id: "ABOUT", label: t("nav_about", "Über mich") },
-      { id: "EXPERIENCE", label: t("nav_experience", "Erfahrung") },
       { id: "PROJECTS", label: t("nav_projects", "Projekte") },
       { id: "CONTACT", label: t("nav_contact", "Kontakt") },
     ],

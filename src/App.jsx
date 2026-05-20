@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route, useParams, useLocation, Link } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import About from "./components/About";
-import Experience from "./components/Experience";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import Posts from "./components/Posts";
@@ -18,7 +17,6 @@ function Home() {
       <Hero />
       <Posts />
       <About />
-      <Experience />
       <Projects />
       <Contact />
     </>

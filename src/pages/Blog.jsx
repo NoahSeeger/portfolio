@@ -7,7 +7,7 @@ import { Helmet } from "react-helmet-async";
 import { FaCopy, FaCheck, FaRss } from "react-icons/fa6";
 import { getAllPosts, formatDateShort, calculateReadTime, groupPostsByYearMonth } from "../lib/blog";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 const MONTH_NAMES = [
   "January", "February", "March", "April", "May", "June",
@@ -16,25 +16,38 @@ const MONTH_NAMES = [
 
 export function BlogIndex() {
   const { t, i18n } = useTranslation();
-  const posts = getAllPosts();
+  const [searchParams] = useSearchParams();
+  const category = searchParams.get("category");
+
+  let posts = getAllPosts();
+  if (category) {
+    posts = posts.filter((post) => post.category === category);
+  }
+
   const locale = i18n.language === "de" ? "de" : "en";
   const grouped = groupPostsByYearMonth(posts);
   const years = Object.keys(grouped).sort((a, b) => b - a);
+
+  const title = category === "project"
+    ? (locale === "de" ? "Projekte" : "Projects")
+    : t("posts_all_title", "Alle Beiträge");
 
   return (
     <div className="min-h-screen bg-white py-16">
       <div className="max-w-3xl mx-auto px-4">
         <div className="flex items-center gap-4 mb-12">
-          <h1 className="text-4xl font-bold">{t("posts_all_title", "Alle Beiträge")}</h1>
-          <a
-            href="/rss.xml"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="RSS Feed"
-            className="text-blue-600 hover:text-blue-700 transition-colors"
-          >
-            <FaRss size={24} />
-          </a>
+          <h1 className="text-4xl font-bold">{title}</h1>
+          {!category && (
+            <a
+              href="/rss.xml"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="RSS Feed"
+              className="text-blue-600 hover:text-blue-700 transition-colors"
+            >
+              <FaRss size={24} />
+            </a>
+          )}
         </div>
 
         {years.map((year) => {

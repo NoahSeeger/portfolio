@@ -55,6 +55,14 @@ export function getAllPosts() {
     .sort((a, b) => new Date(b.pubDatetime) - new Date(a.pubDatetime));
 }
 
+export function getFeaturedProjects() {
+  return getAllPosts().filter((post) => post.featured && post.category === "project");
+}
+
+export function getPostsByCategory(category) {
+  return getAllPosts().filter((post) => post.category === category);
+}
+
 export function getPostBySlug(slug) {
   const posts = getAllPosts();
   return posts.find((p) => p.slug === slug);

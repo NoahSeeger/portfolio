@@ -10,7 +10,7 @@ function Contact() {
   return (
     <section
       id="CONTACT"
-      className="h-[50vh] flex flex-col justify-center items-center gap-12"
+      className="py-20 flex flex-col justify-center items-center gap-12"
     >
       <SectionTitle
         title={t("contact_section_title", "Treten wir in")}
