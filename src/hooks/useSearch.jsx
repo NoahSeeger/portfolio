@@ -1,9 +1,8 @@
-import { createContext, useContext, useEffect } from "react";
+import { createContext, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 const SearchContext = createContext({
   openSearch: () => {},
-  closeSearch: () => {},
 });
 
 export function SearchProvider({ children }) {
@@ -14,12 +13,7 @@ export function SearchProvider({ children }) {
   };
 
   return (
-    <SearchContext.Provider
-      value={{
-        openSearch,
-        closeSearch: () => navigate(-1),
-      }}
-    >
+    <SearchContext.Provider value={{ openSearch }}>
       {children}
     </SearchContext.Provider>
   );

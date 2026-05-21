@@ -3,14 +3,36 @@ import { initReactI18next } from "react-i18next";
 import translationDE from "./locales/de/translation.json";
 import translationEN from "./locales/en/translation.json";
 
-// Sprache aus localStorage oder Browser ermitteln
+const LANG_EXPIRY_MS = 24 * 60 * 60 * 1000;
+
+function isGermanLocale() {
+  if (typeof navigator === "undefined") return false;
+  const langs = navigator.languages || [navigator.language || "en"];
+  return langs.some((lang) => {
+    const lower = lang.toLowerCase();
+    return lower.startsWith("de") || lower === "de" || lower === "de-de" || lower === "de-at" || lower === "de-ch";
+  });
+}
+
+function isLangSetManually() {
+  const timestamp = localStorage.getItem("langSetTimestamp");
+  if (!timestamp) return false;
+  const setTime = parseInt(timestamp, 10);
+  const hoursSinceSet = (Date.now() - setTime) / (1000 * 60 * 60);
+  return hoursSinceSet < 24;
+}
+
+function clearExpiredLang() {
+  localStorage.removeItem("lang");
+  localStorage.removeItem("langSetTimestamp");
+}
+
 function detectInitialLanguage() {
-  const stored = localStorage.getItem("lang");
-  if (stored && (stored === "de" || stored === "en")) return stored;
-  const browser = navigator.language || navigator.userLanguage;
-  if (browser && browser.toLowerCase().startsWith("de")) return "de";
-  if (browser && browser.toLowerCase().startsWith("en")) return "en";
-  return "de"; // fallback
+  if (isLangSetManually()) {
+    return localStorage.getItem("lang") || (isGermanLocale() ? "de" : "en");
+  }
+  clearExpiredLang();
+  return isGermanLocale() ? "de" : "en";
 }
 
 const initialLang = detectInitialLanguage();
@@ -21,16 +43,20 @@ i18n.use(initReactI18next).init({
     en: { translation: translationEN },
   },
   lng: initialLang,
-  fallbackLng: "de",
+  fallbackLng: "en",
   interpolation: { escapeValue: false },
 });
 
-// Sprache bei Wechsel in localStorage speichern
-// (wird in Header.jsx auch gemacht, aber hier als Fallback)
+function setUserLang(lng) {
+  localStorage.setItem("lang", lng);
+  localStorage.setItem("langSetTimestamp", Date.now().toString());
+}
+
 i18n.on("languageChanged", (lng) => {
   if (lng === "de" || lng === "en") {
-    localStorage.setItem("lang", lng);
+    setUserLang(lng);
   }
 });
 
+export { setUserLang };
 export default i18n;

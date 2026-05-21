@@ -27,7 +27,9 @@ function About() {
               <img
                 src={about}
                 alt={t("about_img_alt", "Über mich")}
-                className="w-full aspect-square rounded-2xl object-cover shadow-lg"
+                className="w-full aspect-square rounded-2xl object-cover shadow-lg select-none"
+                draggable="false"
+                loading="eager"
               />
             </motion.div>
 

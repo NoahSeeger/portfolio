@@ -1,5 +1,5 @@
-import React, { useState, useMemo, useEffect } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import React, { useState, useMemo, useEffect, useRef } from "react";
+import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaMagnifyingGlass, FaArrowRight, FaXmark } from "react-icons/fa6";
 import { getAllPosts, calculateReadTime } from "../lib/blog";
@@ -47,20 +47,34 @@ function highlightAll(text, query) {
 
 export function SearchPage() {
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  const query = searchParams.get("q") || "";
-  const [inputValue, setInputValue] = useState(query);
+  const urlQuery = searchParams.get("q") || "";
+  const [inputValue, setInputValue] = useState(urlQuery);
   const locale = i18n.language;
 
+  // Sync input when URL changes (e.g. back/forward navigation)
   useEffect(() => {
-    setInputValue(query);
-  }, [query]);
+    setInputValue(urlQuery);
+  }, [urlQuery]);
+
+  // Escape to go back
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        navigate(-1);
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [navigate]);
 
   const posts = useMemo(() => getAllPosts(), []);
 
+  // Live filter using inputValue (instant, no Enter needed)
   const results = useMemo(() => {
-    if (!query.trim()) return [];
-    const q = query.toLowerCase();
+    if (!inputValue.trim()) return [];
+    const q = inputValue.toLowerCase();
     return posts
       .map((post) => {
         const titleCount = countOccurrences(post.title || "", q);
@@ -72,11 +86,21 @@ export function SearchPage() {
       })
       .filter((p) => p._totalCount > 0)
       .sort((a, b) => b._totalCount - a._totalCount);
-  }, [posts, query]);
+  }, [posts, inputValue]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setSearchParams({ q: inputValue });
+  const debounceRef = useRef(null);
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setInputValue(value);
+    clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => {
+      if (value.trim()) {
+        setSearchParams({ q: value });
+      } else {
+        setSearchParams({});
+      }
+    }, 250);
   };
 
   const clearSearch = () => {
@@ -85,24 +109,24 @@ export function SearchPage() {
   };
 
   return (
-    <div className="min-h-screen w-full" style={{ backgroundColor: "var(--bg-primary)" }}>
+    <div className="min-h-screen w-full pt-16 md:pt-20" style={{ backgroundColor: "var(--bg-primary)" }}>
         <h1 className="text-4xl font-bold mb-2" style={{ color: "var(--text-primary)" }}>
           {t("search_title", "Search")}
         </h1>
         <p className="text-sm mb-8" style={{ color: "var(--text-muted)" }}>
           {results.length > 0
-            ? `${results.length} ${t("search_results", "resultaten")}${query ? ` ${t("search_for", "für")} "${query}"` : ""}`
-            : query
-            ? `${t("search_no_results", "Keine Ergebnisse für")} "${query}"`
+            ? `${results.length} ${t("search_results", "resultaten")}${inputValue ? ` ${t("search_for", "für")} "${inputValue}"` : ""}`
+            : inputValue
+            ? `${t("search_no_results", "Keine Ergebnisse für")} "${inputValue}"`
             : t("search_start", "Tippe um zu suchen")}
         </p>
 
-        <form onSubmit={handleSubmit} className="relative mb-10">
+        <div className="relative mb-10">
           <FaMagnifyingGlass size={20} className="absolute left-5 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: "var(--text-muted)" }} />
           <input
             type="text"
             value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
+            onChange={handleInputChange}
             placeholder={t("search_placeholder", "Alle Beiträge durchsuchen...")}
             autoFocus
             className="w-full pl-14 pr-12 py-4 rounded-2xl text-base outline-none transition-shadow"
@@ -123,7 +147,7 @@ export function SearchPage() {
               <FaXmark size={18} />
             </button>
           )}
-        </form>
+        </div>
 
         {results.length > 0 && (
           <div className="space-y-6">
@@ -139,7 +163,7 @@ export function SearchPage() {
                   <div className="flex-1 min-w-0">
                     <Link to={`/blog/${post.slug}`} className="group">
                       <h2 className="text-xl font-bold group-hover:underline break-words leading-tight" style={{ color: "var(--accent)" }}>
-                        {highlightAll(post.title, query)}
+                        {highlightAll(post.title, inputValue)}
                       </h2>
                     </Link>
                     <div className="flex items-center gap-3 text-sm mt-1" style={{ color: "var(--text-muted)" }}>
@@ -148,30 +172,25 @@ export function SearchPage() {
                       <span>{calculateReadTime(post.content)} min {t("posts_read", "read")}</span>
                     </div>
                   </div>
-                  <div className="flex-shrink-0 flex flex-col items-end gap-1">
+                  <div className="flex-shrink-0">
                     <span
                       className="px-3 py-1 rounded-full text-xs font-bold text-white"
                       style={{ backgroundColor: "var(--accent)" }}
                     >
                       {post._totalCount} {t("search_matches", "Treffer")}
                     </span>
-                    <div className="flex gap-2 text-xs" style={{ color: "var(--text-muted)" }}>
-                      {post._titleCount > 0 && <span>{post._titleCount}× title</span>}
-                      {post._descCount > 0 && <span>{post._descCount}× desc</span>}
-                      {post._contentCount > 0 && <span>{post._contentCount}× content</span>}
-                    </div>
                   </div>
                 </div>
 
                 <p className="text-sm mb-4" style={{ color: "var(--text-secondary)" }}>
-                  {highlightAll(post.description, query)}
+                  {highlightAll(post.description, inputValue)}
                 </p>
 
                 {post._snippets.length > 0 && (
                   <div className="space-y-2">
                     {post._snippets.map((s, i) => (
                       <div key={i} className="text-sm p-3 rounded-lg" style={{ backgroundColor: "var(--bg-tertiary)", color: "var(--text-secondary)" }}>
-                        {highlightAll(s.text, query)}
+                        {highlightAll(s.text, inputValue)}
                       </div>
                     ))}
                   </div>

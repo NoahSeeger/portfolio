@@ -10,11 +10,12 @@ function ProjectCard({ project }) {
     <div className="rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden border" style={{ backgroundColor: "var(--bg-primary)", borderColor: "var(--border)" }}>
       {/* Hero Image */}
       {project.heroImage && (
-        <div className="aspect-video overflow-hidden" style={{ backgroundColor: "var(--bg-tertiary)" }}>
+        <div className="aspect-video overflow-hidden select-none" style={{ backgroundColor: "var(--bg-tertiary)" }}>
           <img
             src={project.heroImage}
             alt={project.title}
             className="w-full h-full object-cover hover:scale-[1.02] transition-transform duration-300"
+            draggable="false"
           />
         </div>
       )}

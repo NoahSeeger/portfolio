@@ -35,7 +35,10 @@ function Hero() {
           <img
             src={me}
             alt={t("hero_img_alt", "Noah Seeger")}
-            className="rounded-full w-full h-full object-cover"
+            className="rounded-full w-full h-full object-cover select-none"
+            draggable="false"
+            loading="eager"
+            fetchPriority="high"
           />
         </motion.div>
 

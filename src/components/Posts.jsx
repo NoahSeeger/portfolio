@@ -37,7 +37,8 @@ function Posts() {
                       <img
                         src={post.heroImage}
                         alt={post.title}
-                        className="w-20 h-16 object-cover rounded-lg flex-shrink-0"
+                        className="w-20 h-16 object-cover rounded-lg flex-shrink-0 select-none"
+                        draggable="false"
                       />
                     )}
                   </div>

@@ -1,25 +1,28 @@
 import React, { useCallback } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { ThemeToggle } from "./ThemeToggle";
-import { FaMagnifyingGlass, FaArrowLeft } from "react-icons/fa6";
+import { FaMagnifyingGlass, FaArrowLeft, FaXmark } from "react-icons/fa6";
 import { FaHome, FaBook } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSearch } from "../hooks/useSearch";
 import DeFlag from "../assets/de.svg";
 import UsFlag from "../assets/us.svg";
+import { setUserLang } from "../i18n";
 
 export function FloatingNav() {
   const { t, i18n } = useTranslation();
   const location = useLocation();
+  const navigate = useNavigate();
   const { openSearch } = useSearch();
+  const isSearch = location.pathname === "/search";
   const isBlogPost = location.pathname.startsWith("/blog/");
   const isBlogIndex = location.pathname === "/blog";
 
   const handleLangToggle = useCallback(() => {
     const newLang = i18n.language === "de" ? "en" : "de";
     i18n.changeLanguage(newLang);
-    localStorage.setItem("lang", newLang);
+    setUserLang(newLang);
   }, [i18n]);
 
   const getNavIcon = () => {
@@ -46,7 +49,7 @@ export function FloatingNav() {
   };
 
   return (
-    <div className="fixed top-6 left-0 right-0">
+    <div className="fixed top-0 left-0 right-0 z-[60] pt-4 md:pt-6">
       <div className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <motion.div
@@ -74,12 +77,27 @@ export function FloatingNav() {
             className="w-11 h-11"
           >
             <button
-              onClick={openSearch}
+              onClick={() => isSearch ? navigate(-1) : openSearch()}
               className="w-11 h-11 rounded-full flex items-center justify-center transition-transform hover:scale-105 active:scale-95"
               style={{ backgroundColor: "var(--bg-secondary)", border: "1px solid var(--border)" }}
-              aria-label="Search"
+              aria-label={isSearch ? "Close search" : "Search"}
             >
-              <FaMagnifyingGlass size={18} style={{ color: "var(--text-primary)" }} />
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={isSearch ? "x" : "search"}
+                  initial={{ scale: 0.5, opacity: 0, rotate: -90 }}
+                  animate={{ scale: 1, opacity: 1, rotate: 0 }}
+                  exit={{ scale: 0.5, opacity: 0, rotate: 90 }}
+                  transition={{ duration: 0.15, ease: "easeOut" }}
+                  className="flex items-center justify-center"
+                >
+                  {isSearch ? (
+                    <FaXmark size={18} style={{ color: "var(--text-primary)" }} />
+                  ) : (
+                    <FaMagnifyingGlass size={18} style={{ color: "var(--text-primary)" }} />
+                  )}
+                </motion.div>
+              </AnimatePresence>
             </button>
           </motion.div>
         </div>
@@ -106,8 +124,7 @@ export function FloatingNav() {
               onClick={handleLangToggle}
               className="relative w-11 h-11 rounded-full overflow-hidden transition-transform hover:scale-105 active:scale-95"
               style={{
-                backgroundColor: "var(--accent)",
-                border: "1px solid transparent"
+                backgroundColor: "var(--accent)"
               }}
               aria-label="Toggle language"
             >

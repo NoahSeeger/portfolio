@@ -1,9 +1,10 @@
 import { useTheme } from "../hooks/useTheme";
 import { FaSun, FaMoon } from "react-icons/fa6";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 export function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
+  const isDark = theme === "dark";
 
   return (
     <button
@@ -13,22 +14,24 @@ export function ThemeToggle() {
         backgroundColor: "var(--bg-tertiary)",
         border: "1px solid var(--border)"
       }}
-      aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+      aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
     >
-      <motion.div
-        initial={false}
-        animate={{
-          rotate: theme === "dark" ? 180 : 0
-        }}
-        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-        className="flex items-center justify-center"
-      >
-        {theme === "dark" ? (
-          <FaMoon size={16} style={{ color: "var(--accent)" }} />
-        ) : (
-          <FaSun size={16} style={{ color: "var(--accent)" }} />
-        )}
-      </motion.div>
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          key={theme}
+          initial={{ scale: 0.5, opacity: 0, rotate: -90 }}
+          animate={{ scale: 1, opacity: 1, rotate: 0 }}
+          exit={{ scale: 0.5, opacity: 0, rotate: 90 }}
+          transition={{ duration: 0.15, ease: "easeOut" }}
+          className="flex items-center justify-center"
+        >
+          {isDark ? (
+            <FaMoon size={16} style={{ color: "var(--accent)" }} />
+          ) : (
+            <FaSun size={16} style={{ color: "var(--accent)" }} />
+          )}
+        </motion.div>
+      </AnimatePresence>
       <span
         className="absolute inset-0 rounded-full opacity-0 hover:opacity-[0.15] transition-opacity duration-200"
         style={{ backgroundColor: "var(--accent)" }}

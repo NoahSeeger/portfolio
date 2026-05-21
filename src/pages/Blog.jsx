@@ -33,7 +33,7 @@ export function BlogIndex() {
     : t("posts_all_title", "Alle Beiträge");
 
   return (
-    <div className="min-h-screen w-full" style={{ backgroundColor: "var(--bg-primary)" }}>
+    <div className="min-h-screen w-full pt-16 md:pt-20" style={{ backgroundColor: "var(--bg-primary)" }}>
         <div className="flex items-center gap-4 mb-12">
           <h1 className="text-4xl font-bold" style={{ color: "var(--text-primary)" }}>{title}</h1>
           {!category && (
@@ -100,7 +100,8 @@ export function BlogIndex() {
                                   <img
                                     src={post.heroImage}
                                     alt={post.title}
-                                    className="w-28 sm:w-32 h-auto object-cover rounded-lg flex-shrink-0"
+                                    className="w-28 sm:w-32 h-auto object-cover rounded-lg flex-shrink-0 select-none"
+                                    draggable="false"
                                   />
                                 )}
                                 <p className="text-sm sm:text-base line-clamp-2" style={{ color: "var(--text-secondary)" }}>{post.description}</p>
@@ -176,7 +177,7 @@ export function BlogPost({ post }) {
         style={{ width: `${progress}%`, backgroundColor: "var(--accent)" }}
       />
 
-      <article className="flex-1 max-w-3xl mx-auto w-full">
+      <article className="flex-1 max-w-3xl mx-auto w-full pt-16 md:pt-20">
         <header className="mb-8">
           <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-4 break-words" style={{ color: "var(--text-primary)" }}>{post.title}</h1>
 
@@ -191,12 +192,13 @@ export function BlogPost({ post }) {
         </header>
 
         {post.heroImage && (
-          <div className="aspect-video rounded-lg mb-8 overflow-hidden" style={{ backgroundColor: "var(--bg-tertiary)" }}>
+          <div className="aspect-video rounded-lg mb-8 overflow-hidden select-none" style={{ backgroundColor: "var(--bg-tertiary)" }}>
             <img
               src={post.heroImage}
               alt={post.title}
               className="w-full h-full object-cover"
               loading="lazy"
+              draggable="false"
             />
           </div>
         )}
