@@ -2,9 +2,8 @@
 title: "Livo - Travel & Goals Tracker"
 description: "A progressive web app for tracking countries visited and personal goals. Features an interactive map and Supabase backend."
 pubDatetime: 2026-02-20T10:00:00+01:00
-tags: ["Web", "Next.js", "Supabase", "Project"]
 category: "project"
-technologies: ["Next.js", "React", "Supabase", "TailwindCSS", "react-simple-maps"]
+tags: ["Next.js", "React", "Supabase", "TailwindCSS", "react-simple-maps"]
 github: "https://github.com/NoahSeeger/livo"
 liveDemo: "https://livoapp.netlify.app"
 heroImage: "/img/projects/livo.png"

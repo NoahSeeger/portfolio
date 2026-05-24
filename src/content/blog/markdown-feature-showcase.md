@@ -4,7 +4,7 @@ description: "A comprehensive test post demonstrating all available Markdown fea
 pubDatetime: 2026-05-20T10:00:00+02:00
 tags: ["markdown", "test", "showcase", "features"]
 heroImage: "/img/2026/openclaw/clawcon.jpg"
-draft: false
+draft: true
 ---
 
 This is a **comprehensive test post** showcasing every Markdown feature available in this blog system. Use this as a reference when writing new posts.

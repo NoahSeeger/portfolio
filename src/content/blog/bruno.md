@@ -4,7 +4,7 @@ description: "SwiftUI iOS app for tracking body transformation with progress pho
 pubDatetime: 2026-03-10T10:00:00+01:00
 tags: ["iOS", "SwiftUI", "Project"]
 category: "project"
-technologies: ["Swift", "SwiftUI", "SwiftData"]
+tags: ["Swift", "SwiftUI", "SwiftData"]
 github: "https://github.com/NoahSeeger/Pincode"
 liveDemo: ""
 heroImage: "/img/projects/bruno.png"

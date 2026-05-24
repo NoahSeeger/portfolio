@@ -84,9 +84,16 @@ export function BlogIndex() {
                             className="block group"
                           >
                             <article className="py-4">
-                              <h3 className="text-lg sm:text-xl font-semibold group-hover:underline break-words" style={{ color: "var(--accent)" }}>
-                                {post.title}
-                              </h3>
+                              <div className="flex items-center gap-2">
+                                <h3 className="text-lg sm:text-xl font-semibold group-hover:underline break-words" style={{ color: "var(--accent)" }}>
+                                  {post.title}
+                                </h3>
+                                {post.draft && (
+                                  <span className="px-2 py-0.5 rounded text-xs font-bold text-white" style={{ backgroundColor: "var(--accent)" }}>
+                                    DRAFT
+                                  </span>
+                                )}
+                              </div>
                               <div className="flex items-center gap-2 text-sm mt-1 flex-wrap" style={{ color: "var(--text-muted)" }}>
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -167,9 +174,6 @@ export function BlogPost({ post }) {
         <Helmet>
           <title>{post.title} - Noah Seeger</title>
           <meta name="description" content={post.description} />
-          <meta property="og:title" content={post.title} />
-          <meta property="og:description" content={post.description} />
-          {post.heroImage && <meta property="og:image" content={post.heroImage} />}
         </Helmet>
       )}
       <div
@@ -179,7 +183,14 @@ export function BlogPost({ post }) {
 
       <article className="flex-1 max-w-3xl mx-auto w-full pt-16 md:pt-20">
         <header className="mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-4 break-words" style={{ color: "var(--text-primary)" }}>{post.title}</h1>
+          <div className="flex items-center gap-3 mb-2">
+            <h1 className="text-4xl md:text-5xl font-bold leading-tight break-words" style={{ color: "var(--text-primary)" }}>{post.title}</h1>
+            {post.draft && (
+              <span className="px-2 py-0.5 rounded text-xs font-bold text-white" style={{ backgroundColor: "var(--accent)" }}>
+                DRAFT
+              </span>
+            )}
+          </div>
 
           <div className="flex items-center gap-3 text-sm flex-wrap" style={{ color: "var(--text-muted)" }}>
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -291,6 +302,19 @@ export function BlogPost({ post }) {
 
       <footer className="border-t py-8 mt-auto" style={{ borderColor: "var(--border)" }}>
         <div className="max-w-3xl mx-auto">
+          {post.tags && post.tags.length > 0 && (
+            <div className="flex flex-wrap gap-2 mb-6">
+              {post.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="px-3 py-1 rounded-full text-xs font-mono"
+                  style={{ backgroundColor: "var(--bg-tertiary)", color: "var(--text-secondary)" }}
+                >
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          )}
           <div className="flex items-center justify-between text-sm">
             <Link
               to="/blog"

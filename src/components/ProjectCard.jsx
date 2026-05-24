@@ -38,16 +38,16 @@ function ProjectCard({ project }) {
           {project.description}
         </p>
 
-        {/* Technologies */}
-        {project.technologies && (
+        {/* Tags */}
+        {project.tags && (
           <div className="flex flex-wrap gap-1.5 mb-4">
-            {project.technologies.map((tech) => (
+            {project.tags.map((tag) => (
               <span
-                key={tech}
+                key={tag}
                 className="px-2 py-0.5 rounded text-xs font-mono"
                 style={{ backgroundColor: "var(--bg-tertiary)", color: "var(--text-secondary)" }}
               >
-                {tech}
+                {tag}
               </span>
             ))}
           </div>

@@ -51,7 +51,10 @@ export function getAllPosts() {
         content,
       };
     })
-    .filter((post) => !post.draft)
+    .filter((post) => {
+      if (import.meta.env.DEV) return true;
+      return !post.draft;
+    })
     .sort((a, b) => new Date(b.pubDatetime) - new Date(a.pubDatetime));
 }
 
