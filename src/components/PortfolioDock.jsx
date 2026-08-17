@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
@@ -15,9 +15,6 @@ import {
 } from "react-icons/fa6";
 import { useSearch } from "../hooks/useSearch";
 import { ThemeToggle } from "./ThemeToggle";
-import DeFlag from "../assets/de.svg";
-import UsFlag from "../assets/us.svg";
-import { setUserLang } from "../i18n";
 
 const contacts = [
   { label: "Email", href: "mailto:noahseeger@outlook.de", icon: FaEnvelope },
@@ -28,19 +25,13 @@ const contacts = [
 ];
 
 export function PortfolioDock() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
   const { openSearch } = useSearch();
   const isSearch = location.pathname === "/search";
   const isBlogPost = location.pathname.startsWith("/blog/");
   const isBlogIndex = location.pathname === "/blog";
-
-  const handleLangToggle = useCallback(() => {
-    const nextLanguage = i18n.language === "de" ? "en" : "de";
-    i18n.changeLanguage(nextLanguage);
-    setUserLang(nextLanguage);
-  }, [i18n]);
 
   const navLink = isBlogPost ? "/blog" : isBlogIndex ? "/" : "/blog";
   const navLabel = isBlogPost ? t("posts_back") : isBlogIndex ? t("nav_home") : t("nav_blog");
@@ -69,15 +60,6 @@ export function PortfolioDock() {
         </button>
 
         <ThemeToggle />
-
-        <button type="button" className="top-nav-language" onClick={handleLangToggle} aria-label="Toggle language" title="Toggle language">
-          <img
-            key={i18n.language}
-            src={i18n.language === "de" ? DeFlag : UsFlag}
-            alt=""
-            className="language-flag language-flag-enter h-4 w-6 object-cover"
-          />
-        </button>
       </nav>
 
       <nav

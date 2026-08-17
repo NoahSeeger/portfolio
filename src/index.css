@@ -207,6 +207,26 @@
   text-align: center;
 }
 
+.portfolio-intro-link {
+  color: inherit;
+  text-decoration-line: underline;
+  text-decoration-style: wavy;
+  text-decoration-color: var(--text-muted);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.24em;
+  transition: color 160ms ease, text-decoration-color 160ms ease;
+}
+
+.portfolio-intro-link:hover {
+  color: var(--text-primary);
+  text-decoration-color: var(--text-primary);
+}
+
+.portfolio-intro-link:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 0.2rem;
+}
+
 .portfolio-section-link,
 .portfolio-card-link {
   display: inline-flex;
@@ -304,8 +324,7 @@
    deliberately monochrome so it belongs to both themes without looking like
    a second navigation system. */
 .portfolio-top-nav .top-nav-control,
-.portfolio-top-nav .dock-control,
-.top-nav-language {
+.portfolio-top-nav .dock-control {
   position: relative;
   display: inline-flex;
   width: 2.25rem;
@@ -319,8 +338,7 @@
 }
 
 .portfolio-top-nav .top-nav-control:hover,
-.portfolio-top-nav .dock-control:hover,
-.top-nav-language:hover {
+.portfolio-top-nav .dock-control:hover {
   color: var(--text-primary);
   background: var(--accent-muted);
   border-color: var(--border);
@@ -328,15 +346,13 @@
 }
 
 .portfolio-top-nav .top-nav-control:focus-visible,
-.portfolio-top-nav .dock-control:focus-visible,
-.top-nav-language:focus-visible {
+.portfolio-top-nav .dock-control:focus-visible {
   outline: 2px solid var(--text-primary);
   outline-offset: 3px;
 }
 
 .portfolio-top-nav .top-nav-control:active,
-.portfolio-top-nav .dock-control:active,
-.top-nav-language:active { transform: scale(0.92); }
+.portfolio-top-nav .dock-control:active { transform: scale(0.92); }
 
 .portfolio-dock {
   color: var(--text-primary);
@@ -348,8 +364,7 @@
   -webkit-backdrop-filter: blur(14px);
 }
 
-.dock-control,
-.dock-language {
+.dock-control {
   position: relative;
   z-index: 1;
   display: inline-flex;
@@ -362,8 +377,7 @@
   transition: background-color 180ms ease, color 180ms ease, box-shadow 180ms ease, transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.dock-control:hover,
-.dock-language:hover {
+.dock-control:hover {
   color: var(--text-primary);
   background: var(--accent-muted);
   box-shadow: inset 0 0 0 1px var(--border);
@@ -373,19 +387,16 @@
 .dock-control svg { transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1); }
 .dock-control:hover svg { transform: scale(1.08); }
 
-.dock-control:focus-visible,
-.dock-language:focus-visible {
+.dock-control:focus-visible {
   color: var(--text-primary);
   background: transparent;
 }
 
-.dock-control:active,
-.dock-language:active {
+.dock-control:active {
   transform: scale(0.92);
 }
 
-.dock-control:focus-visible,
-.dock-language:focus-visible {
+.dock-control:focus-visible {
   outline: 2px solid var(--text-primary);
   outline-offset: 3px;
 }
@@ -433,11 +444,6 @@
 
 .theme-icon { display: inline-flex; animation: theme-icon-in 150ms ease-out both; }
 
-@keyframes language-flag-in {
-  from { opacity: 0; transform: translateY(0.3rem) scale(0.9); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-
 @keyframes portfolio-top-nav-in {
   from { opacity: 0; transform: translateY(-1.1rem); }
   to { opacity: 1; transform: translateY(0); }
@@ -451,11 +457,10 @@
 .portfolio-top-nav-enter { animation: portfolio-top-nav-in 450ms cubic-bezier(0.22, 1, 0.36, 1) 120ms both; }
 .portfolio-dock-enter { transform: translateX(-50%); animation: portfolio-dock-in 600ms cubic-bezier(0.22, 1, 0.36, 1) 150ms both; }
 .nav-icon-swap { display: inline-flex; animation: theme-icon-in 160ms ease-out both; }
-.language-flag-enter { animation: language-flag-in 180ms ease-out both; }
 
 @keyframes theme-reveal {
   from { clip-path: circle(0 at var(--theme-transition-x) var(--theme-transition-y)); }
-  to { clip-path: circle(150vmax at var(--theme-transition-x) var(--theme-transition-y)); }
+  to { clip-path: circle(200vmax at var(--theme-transition-x) var(--theme-transition-y)); }
 }
 
 html[data-theme-transition]::view-transition-old(root),
@@ -496,7 +501,6 @@ html[data-theme-fallback] body * {
   .search-result-enter,
   .theme-icon,
   .nav-icon-swap,
-  .language-flag-enter,
   .theme-fallback-base,
   .theme-fallback-reveal { display: none; animation: none; }
   .portfolio-project-enter { opacity: 1; transform: none; }
