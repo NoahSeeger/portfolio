@@ -98,13 +98,10 @@ function Hero() {
         <p className="portfolio-meta">{t("about_line1", "Student @ HdM Stuttgart, Mobile Media.")}</p>
 
         <div className="portfolio-intro">
-          <p>
-            {t("home_intro_prefix", "I'm interested in building and learning — currently exploring iOS apps and homelabbing, and")}{" "}
-            <Link to="/blog" className="portfolio-intro-link">
-              {t("home_intro_link", "showing my learnings here")}
-            </Link>
-            .
-          </p>
+          <p>{t("home_intro_line1", "Exploring everything in tech and engineering.")}</p>
+          <p>{t("home_intro_line2", "Building iOS apps in my free time. PicSwipe, Quanta, Birthday Calendar.")}</p>
+          <p>{t("home_intro_line3", "Recently got into 3D printing (A1 Mini) and homelabbing with Proxmox on my Raspi + T480s.")}</p>
+          <p>{t("home_intro_line4", "Always looking for interesting people to work with.")}</p>
         </div>
       </section>
 
