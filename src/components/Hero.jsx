@@ -84,7 +84,7 @@ function Hero() {
         <p className="portfolio-meta">{t("about_line1", "Student @ HdM Stuttgart, Mobile Media.")}</p>
 
         <div className="portfolio-intro">
-          <p>{t("home_intro", "Ich studiere Mobile Media an der HdM Stuttgart. In meiner Freizeit baue ich iOS-Apps, probiere Homelab-Setups aus und lerne, wie aus kleinen Ideen funktionierende Projekte werden. Was dabei funktioniert und was nicht, schreibe ich hier auf.")}</p>
+          <p>{t("home_intro", "In meiner Freizeit baue ich iOS-Apps, probiere Homelab-Setups aus und lerne, wie aus kleinen Ideen funktionierende Projekte werden. Was dabei funktioniert und was nicht, schreibe ich hier auf.")}</p>
         </div>
       </motion.section>
 
