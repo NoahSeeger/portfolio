@@ -132,6 +132,26 @@
   color: var(--text-primary);
 }
 
+@keyframes portfolio-hero-in {
+  from { opacity: 0; transform: translateY(1.1rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes portfolio-project-in {
+  from { opacity: 0; transform: translateY(1.1rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes search-result-in {
+  from { opacity: 0; transform: translateY(0.6rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.portfolio-hero-enter { animation: portfolio-hero-in 700ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+.portfolio-project-enter { opacity: 0; transform: translateY(1.1rem); }
+.portfolio-project-enter.is-visible { animation: portfolio-project-in 550ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+.search-result-enter { animation: search-result-in 300ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+
 .portfolio-hero {
   display: flex;
   min-height: min(850px, calc(100svh - 1rem));
@@ -187,7 +207,6 @@
   text-align: center;
 }
 
-.portfolio-muted { color: var(--text-muted); }
 .portfolio-section-link,
 .portfolio-card-link {
   display: inline-flex;
@@ -240,8 +259,7 @@
 
 .portfolio-project-list { display: grid; gap: 0.9rem; }
 
-.portfolio-project-card,
-.portfolio-current-card {
+.portfolio-project-card {
   display: flex;
   overflow: hidden;
   border: 1px solid var(--border);
@@ -250,8 +268,7 @@
   transition: border-color 180ms ease, transform 180ms ease, background-color 180ms ease;
 }
 
-.portfolio-project-card:hover,
-.portfolio-current-card:hover { border-color: var(--border-strong); transform: translateY(-2px); }
+.portfolio-project-card:hover { border-color: var(--border-strong); transform: translateY(-2px); }
 
 .portfolio-project-image {
   width: 10.5rem;
@@ -282,23 +299,6 @@
 .portfolio-card-link svg { transition: transform 180ms ease; }
 .portfolio-card-link:hover svg { transform: translateX(0.2rem); }
 .portfolio-empty { color: var(--text-muted); font-size: 0.9rem; }
-
-.portfolio-current-card { align-items: center; justify-content: space-between; gap: 2rem; padding: 1.5rem; }
-.portfolio-current-card h3 { margin: 0; font-size: 1rem; }
-.portfolio-current-card > p { max-width: 19rem; color: var(--text-secondary); font-size: 0.85rem; line-height: 1.55; text-align: right; }
-.portfolio-card-label { margin-top: 0.25rem; color: var(--text-muted); font-size: 0.75rem; }
-
-.portfolio-notes-list { border-top: 1px solid var(--border); }
-.portfolio-note-row { display: grid; grid-template-columns: 7rem minmax(0, 1fr) auto; align-items: center; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--border); color: var(--text-primary); transition: color 160ms ease, padding 160ms ease; }
-.portfolio-note-row:hover { padding-left: 0.35rem; color: var(--text-muted); }
-.portfolio-note-row > span { color: var(--text-muted); font-size: 0.72rem; }
-.portfolio-note-row strong { font-size: 0.9rem; font-weight: 500; }
-.portfolio-note-row svg { color: var(--text-muted); font-size: 0.75rem; }
-
-.portfolio-contact-section { margin-bottom: 2rem; }
-.portfolio-contact-row { display: flex; align-items: center; justify-content: space-between; gap: 2rem; padding-top: 1rem; border-top: 1px solid var(--border); }
-.portfolio-contact-row > p { max-width: 23rem; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; }
-.portfolio-contact-links { display: flex; flex-wrap: wrap; justify-content: end; gap: 0.9rem; font-size: 0.8rem; }
 
 /* The only strong UI object is the small Hackyfolio-inspired dock. It is
    deliberately monochrome so it belongs to both themes without looking like
@@ -420,16 +420,49 @@
   animation: nav-edge-shine 1.4s ease-in-out 0.55s 1 both;
 }
 
-[data-theme-transition]::view-transition-old(root),
-[data-theme-transition]::view-transition-new(root) {
-  animation: none;
-  mix-blend-mode: normal;
+@keyframes theme-icon-in {
+  from { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+  to { opacity: 1; transform: scale(1) rotate(0); }
 }
 
-[data-theme-transition]::view-transition-old(root) { z-index: 1; }
-[data-theme-transition]::view-transition-new(root) { z-index: 9999; }
+.theme-icon { display: inline-flex; animation: theme-icon-in 150ms ease-out both; }
+
+@keyframes portfolio-top-nav-in {
+  from { opacity: 0; transform: translateY(-1.1rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes portfolio-dock-in {
+  from { opacity: 0; transform: translate(-50%, 3.75rem) scale(0.8); }
+  to { opacity: 1; transform: translate(-50%, 0) scale(1); }
+}
+
+.portfolio-top-nav-enter { animation: portfolio-top-nav-in 450ms cubic-bezier(0.22, 1, 0.36, 1) 120ms both; }
+.portfolio-dock-enter { transform: translateX(-50%); animation: portfolio-dock-in 600ms cubic-bezier(0.22, 1, 0.36, 1) 150ms both; }
+.nav-icon-swap,
+.language-flag-enter { display: inline-flex; animation: theme-icon-in 160ms ease-out both; }
+
+@keyframes theme-reveal {
+  from { clip-path: circle(0 at var(--theme-reveal-x) var(--theme-reveal-y)); }
+  to { clip-path: circle(150vmax at var(--theme-reveal-x) var(--theme-reveal-y)); }
+}
+
+.theme-reveal {
+  position: fixed;
+  z-index: 9999;
+  inset: 0;
+  pointer-events: none;
+  background: var(--bg-primary);
+  animation: theme-reveal 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
 
 @media (prefers-reduced-motion: reduce) {
+  .portfolio-hero-enter,
+  .portfolio-project-enter,
+  .search-result-enter,
+  .theme-icon,
+  .theme-reveal { animation: none; }
+  .portfolio-project-enter { opacity: 1; transform: none; }
   .nav-edge-shine { animation: none; opacity: 0; }
   .portfolio-dock { transition: none; }
   .portfolio-project-card:hover .portfolio-project-image,
@@ -445,12 +478,6 @@
   .portfolio-section-heading { align-items: start; flex-direction: column; }
   .portfolio-project-card { flex-direction: column; }
   .portfolio-project-image { width: 100%; height: 11rem; min-height: 0; }
-  .portfolio-current-card,
-  .portfolio-contact-row { align-items: start; flex-direction: column; }
-  .portfolio-current-card > p { text-align: left; }
-  .portfolio-contact-links { justify-content: start; }
-  .portfolio-note-row { grid-template-columns: 5.5rem minmax(0, 1fr) auto; gap: 0.65rem; }
-  .portfolio-note-row strong { font-size: 0.82rem; }
 }
 
 /* Global transitions for theme switching */

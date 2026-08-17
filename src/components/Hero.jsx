@@ -1,5 +1,4 @@
-import React from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FaArrowRight, FaArrowUpRightFromSquare } from "react-icons/fa6";
@@ -22,16 +21,37 @@ function SectionHeading({ title, link, linkLabel }) {
   );
 }
 
+function useReveal() {
+  const ref = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches || !window.IntersectionObserver) {
+      setIsVisible(true);
+      return undefined;
+    }
+
+    const observer = new window.IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setIsVisible(true);
+        observer.disconnect();
+      }
+    }, { threshold: 0.18 });
+
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return [ref, isVisible];
+}
+
 function ProjectCard({ project }) {
-  const reduceMotion = useReducedMotion();
+  const [revealRef, isVisible] = useReveal();
 
   return (
-    <motion.div
-      className="portfolio-project-card"
-      initial={reduceMotion ? false : { opacity: 0, y: 18 }}
-      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+    <div
+      ref={revealRef}
+      className={`portfolio-project-card portfolio-project-enter${isVisible ? " is-visible" : ""}`}
     >
       {project.heroImage && (
         <img
@@ -57,25 +77,19 @@ function ProjectCard({ project }) {
           Mehr zum Projekt <FaArrowRight aria-hidden="true" />
         </Link>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
 function Hero() {
   const { t } = useTranslation();
-  const reduceMotion = useReducedMotion();
   const projects = getAllPosts()
     .filter((post) => post.category === "project" && post.status !== "archived" && !post.draft)
     .slice(0, 3);
 
   return (
     <div className="portfolio-home">
-      <motion.section
-        className="portfolio-hero"
-        initial={reduceMotion ? false : { opacity: 0, y: 18 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-      >
+      <section className="portfolio-hero portfolio-hero-enter">
         <div className="portfolio-portrait" aria-hidden="true">
           <img src={profileImage} alt={t("hero_img_alt", "Noah Seeger")} />
         </div>
@@ -86,7 +100,7 @@ function Hero() {
         <div className="portfolio-intro">
           <p>{t("home_intro", "In meiner Freizeit baue ich iOS-Apps, probiere Homelab-Setups aus und lerne, wie aus kleinen Ideen funktionierende Projekte werden. Was dabei funktioniert und was nicht, schreibe ich hier auf.")}</p>
         </div>
-      </motion.section>
+      </section>
 
       <div className="portfolio-content">
         <section id="work" className="portfolio-section">

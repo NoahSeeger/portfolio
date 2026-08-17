@@ -1,7 +1,6 @@
 import React, { useCallback } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { AnimatePresence, motion } from "framer-motion";
 import {
   FaArrowLeft,
   FaBook,
@@ -49,12 +48,9 @@ export function PortfolioDock() {
 
   return (
     <>
-      <motion.nav
+      <nav
         aria-label="Site navigation"
-        initial={{ opacity: 0, y: -18 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1], delay: 0.12 }}
-        className="portfolio-top-nav fixed right-5 top-5 z-[70] flex items-center gap-1 sm:right-7 sm:top-7"
+        className="portfolio-top-nav portfolio-top-nav-enter fixed right-5 top-5 z-[70] flex items-center gap-1 sm:right-7 sm:top-7"
       >
         <Link to={navLink} className="top-nav-control" aria-label={navLabel} title={navLabel}>
           {navIcon}
@@ -67,43 +63,26 @@ export function PortfolioDock() {
           aria-label={isSearch ? t("search_close", "Close search") : t("search_title", "Search")}
           title={isSearch ? t("search_close", "Close search") : t("search_title", "Search")}
         >
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.span
-              key={isSearch ? "close" : "search"}
-              initial={{ opacity: 0, scale: 0.55, rotate: -45 }}
-              animate={{ opacity: 1, scale: 1, rotate: 0 }}
-              exit={{ opacity: 0, scale: 0.55, rotate: 45 }}
-              transition={{ duration: 0.16 }}
-            >
-              {isSearch ? <FaXmark /> : <FaMagnifyingGlass />}
-            </motion.span>
-          </AnimatePresence>
+          <span key={isSearch ? "close" : "search"} className="nav-icon-swap">
+            {isSearch ? <FaXmark /> : <FaMagnifyingGlass />}
+          </span>
         </button>
 
         <ThemeToggle />
 
         <button type="button" className="top-nav-language" onClick={handleLangToggle} aria-label="Toggle language" title="Toggle language">
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.img
-              key={i18n.language}
-              src={i18n.language === "de" ? DeFlag : UsFlag}
-              alt=""
-              className="h-4 w-6 object-cover"
-              initial={{ opacity: 0, y: 5 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -5 }}
-              transition={{ duration: 0.15 }}
-            />
-          </AnimatePresence>
+          <img
+            key={i18n.language}
+            src={i18n.language === "de" ? DeFlag : UsFlag}
+            alt=""
+            className="language-flag language-flag-enter h-4 w-6 object-cover"
+          />
         </button>
-      </motion.nav>
+      </nav>
 
-      <motion.nav
+      <nav
         aria-label="Contact links"
-        initial={{ opacity: 0, y: 60, scale: 0.8, x: "-50%" }}
-        animate={{ opacity: 1, y: 0, scale: 1, x: "-50%" }}
-        transition={{ type: "spring", stiffness: 260, damping: 15, delay: 0.15 }}
-        className="portfolio-dock portfolio-contact-dock fixed bottom-5 left-1/2 z-[70] flex items-center gap-1.5 px-2 py-2 sm:bottom-6 sm:gap-2 sm:px-2.5"
+        className="portfolio-dock portfolio-contact-dock portfolio-dock-enter fixed bottom-5 left-1/2 z-[70] flex items-center gap-1.5 px-2 py-2 sm:bottom-6 sm:gap-2 sm:px-2.5"
       >
         <span className="nav-edge-shine pointer-events-none absolute inset-0 rounded-full" aria-hidden="true" />
         {contacts.map(({ label, href, icon: Icon }) => (
@@ -119,7 +98,7 @@ export function PortfolioDock() {
             <Icon aria-hidden="true" />
           </a>
         ))}
-      </motion.nav>
+      </nav>
     </>
   );
 }

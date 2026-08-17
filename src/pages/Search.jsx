@@ -1,6 +1,5 @@
 import React, { useState, useMemo, useEffect, useRef } from "react";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
 import { FaMagnifyingGlass, FaArrowRight, FaXmark } from "react-icons/fa6";
 import { getAllPosts, calculateReadTime } from "../lib/blog";
 import { useTranslation } from "react-i18next";
@@ -152,11 +151,9 @@ export function SearchPage() {
         {results.length > 0 && (
           <div className="space-y-6">
             {results.map((post) => (
-              <motion.div
+              <div
                 key={post.slug}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="rounded-2xl p-6 transition-shadow"
+                className="search-result-enter rounded-2xl p-6 transition-shadow"
                 style={{ backgroundColor: "var(--bg-secondary)", border: "1px solid var(--border)" }}
               >
                 <div className="flex items-start justify-between gap-4 mb-3">
@@ -204,7 +201,7 @@ export function SearchPage() {
                   {t("search_read_post", "Zum Beitrag")}
                   <FaArrowRight size={14} />
                 </Link>
-              </motion.div>
+              </div>
             ))}
           </div>
         )}
