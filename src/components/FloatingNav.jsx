@@ -61,7 +61,7 @@ export function FloatingNav() {
           >
             <Link
               to={getNavLink()}
-              className="w-11 h-11 rounded-full flex items-center justify-center transition-transform hover:scale-105 active:scale-95"
+              className="w-11 h-11 flex items-center justify-center transition-transform hover:scale-105 active:scale-95"
               style={{ backgroundColor: "var(--bg-secondary)", border: "1px solid var(--border)" }}
               aria-label={getNavLabel()}
             >
@@ -78,7 +78,7 @@ export function FloatingNav() {
           >
             <button
               onClick={() => isSearch ? navigate(-1) : openSearch()}
-              className="w-11 h-11 rounded-full flex items-center justify-center transition-transform hover:scale-105 active:scale-95"
+              className="w-11 h-11 flex items-center justify-center transition-transform hover:scale-105 active:scale-95"
               style={{ backgroundColor: "var(--bg-secondary)", border: "1px solid var(--border)" }}
               aria-label={isSearch ? "Close search" : "Search"}
             >
@@ -122,7 +122,7 @@ export function FloatingNav() {
           >
             <button
               onClick={handleLangToggle}
-              className="relative w-11 h-11 rounded-full overflow-hidden transition-transform hover:scale-105 active:scale-95"
+              className="relative w-11 h-11 overflow-hidden transition-transform hover:scale-105 active:scale-95"
               style={{
                 backgroundColor: "var(--accent)"
               }}

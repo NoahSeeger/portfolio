@@ -1,118 +1,108 @@
 import React from "react";
-import me from "../assets/personal/me.png";
-import { FaGithub, FaLinkedin, FaXTwitter, FaDiscord } from "react-icons/fa6";
-import { TextShimmer } from "./utils/text-shimmer";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import SocialIcon from "./SocialIcon";
-import EmailBubble from "./EmailBubble";
+import { FaArrowRight, FaArrowUpRightFromSquare } from "react-icons/fa6";
+import { getAllPosts } from "../lib/blog";
+import profileImage from "../assets/personal/me.png";
+
+function SectionHeading({ title, link, linkLabel }) {
+  return (
+    <div className="portfolio-section-heading">
+      <div>
+        <h2>{title}</h2>
+      </div>
+      {link && (
+        <Link to={link} className="portfolio-section-link">
+          {linkLabel}
+          <FaArrowRight aria-hidden="true" />
+        </Link>
+      )}
+    </div>
+  );
+}
+
+function ProjectCard({ project }) {
+  const reduceMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      className="portfolio-project-card"
+      initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+    >
+      {project.heroImage && (
+        <img
+          src={project.heroImage}
+          alt=""
+          className="portfolio-project-image"
+          loading="lazy"
+          draggable="false"
+        />
+      )}
+      <div className="portfolio-project-body">
+        <div className="portfolio-project-title-row">
+          <h3>{project.title}</h3>
+          <FaArrowUpRightFromSquare aria-hidden="true" />
+        </div>
+        <p>{project.description}</p>
+        {project.tags?.length > 0 && (
+          <div className="portfolio-tags">
+            {project.tags.slice(0, 4).map((tag) => <span key={tag}>{tag}</span>)}
+          </div>
+        )}
+        <Link to={`/blog/${project.slug}`} className="portfolio-card-link">
+          Mehr zum Projekt <FaArrowRight aria-hidden="true" />
+        </Link>
+      </div>
+    </motion.div>
+  );
+}
 
 function Hero() {
   const { t } = useTranslation();
-
-  const socialIcons = [
-    { href: "https://github.com/NoahSeeger", label: "GitHub", icon: <FaGithub size={24} /> },
-    { href: "https://www.linkedin.com/in/noahseeger/", label: "LinkedIn", icon: <FaLinkedin size={24} /> },
-    { href: "https://x.com/thenoahsee", label: "X", icon: <FaXTwitter size={24} /> },
-    { href: "https://discord.com/users/noahsee", label: "Discord", icon: <FaDiscord size={24} /> },
-  ];
+  const reduceMotion = useReducedMotion();
+  const projects = getAllPosts()
+    .filter((post) => post.category === "project" && post.status !== "archived" && !post.draft)
+    .slice(0, 3);
 
   return (
-    <section className="w-full">
-      <div className="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-16 pt-32">
-        <motion.div
-          whileHover={{
-            scale: 1.05,
-            rotate: [0, -2, 2, -2, 0],
-            transition: { duration: 0.5 },
-          }}
-          className="w-56 h-56 md:w-72 md:h-72 flex-shrink-0 rounded-full"
-          style={{ boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)" }}
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-        >
-          <img
-            src={me}
-            alt={t("hero_img_alt", "Noah Seeger")}
-            className="rounded-full w-full h-full object-cover select-none"
-            draggable="false"
-            loading="eager"
-            fetchPriority="high"
+    <div className="portfolio-home">
+      <motion.section
+        className="portfolio-hero"
+        initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <div className="portfolio-portrait" aria-hidden="true">
+          <img src={profileImage} alt={t("hero_img_alt", "Noah Seeger")} />
+        </div>
+
+        <h1>Noah Seeger</h1>
+        <p className="portfolio-meta">{t("about_line1", "Student @ HdM Stuttgart, Mobile Media.")}</p>
+
+        <div className="portfolio-intro">
+          <p>{t("home_intro", "Ich studiere Mobile Media an der HdM Stuttgart. In meiner Freizeit baue ich iOS-Apps, probiere Homelab-Setups aus und lerne, wie aus kleinen Ideen funktionierende Projekte werden. Was dabei funktioniert und was nicht, schreibe ich hier auf.")}</p>
+        </div>
+      </motion.section>
+
+      <div className="portfolio-content">
+        <section id="work" className="portfolio-section">
+          <SectionHeading
+            title={t("home_work_heading", "Projekte")}
+            link="/blog?category=project"
+            linkLabel={t("projects_all", "Alle Projekte")}
           />
-        </motion.div>
-
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.2, duration: 0.5 }}
-          className="flex flex-col items-center md:items-start text-center md:text-left max-w-lg"
-        >
-          <motion.span
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.4 }}
-            className="text-lg mb-3"
-            style={{ color: "var(--text-muted)" }}
-          >
-            {t("hero_greeting", "Hallo, Ich bin")}
-          </motion.span>
-
-          <motion.h1
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.5 }}
-            className="text-4xl md:text-5xl font-bold mb-3"
-            style={{ color: "var(--text-primary)" }}
-          >
-            {t("header_name", "Noah Seeger")}
-          </motion.h1>
-
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.5, duration: 0.5 }}
-            className="mb-6"
-          >
-            <TextShimmer
-              duration={2.5}
-              className="text-xl md:text-2xl font-bold"
-              baseColor="var(--accent)"
-              gradientColor="rgba(255,255,255,0.35)"
-            >
-              {t("hero_job", "Angehender Entwickler")}
-            </TextShimmer>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.65, duration: 0.3 }}
-            className="flex flex-row gap-3 justify-center md:justify-start"
-          >
-            {socialIcons.map((item, index) => (
-              <motion.div
-                key={item.href}
-                initial={{ x: -20, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ delay: 0.7 + index * 0.08, duration: 0.3 }}
-              >
-                <SocialIcon href={item.href} label={item.label}>
-                  {item.icon}
-                </SocialIcon>
-              </motion.div>
-            ))}
-            <motion.div
-              initial={{ x: -20, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ delay: 0.7 + socialIcons.length * 0.08, duration: 0.3 }}
-            >
-              <EmailBubble />
-            </motion.div>
-          </motion.div>
-        </motion.div>
+          <div className="portfolio-project-list">
+            {projects.length > 0 ? projects.map((project) => <ProjectCard key={project.slug} project={project} />) : (
+              <p className="portfolio-empty">{t("projects_no_current", "Neue Projekte folgen.")}</p>
+            )}
+          </div>
+        </section>
       </div>
-    </section>
+    </div>
   );
 }
 
