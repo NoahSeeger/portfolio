@@ -10,7 +10,10 @@ export function ThemeToggle() {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [reveal, setReveal] = useState(null);
 
-  useEffect(() => () => window.clearTimeout(timeoutRef.current), []);
+  useEffect(() => () => {
+    window.clearTimeout(timeoutRef.current);
+    delete document.documentElement.dataset.themeRevealing;
+  }, []);
 
   const handleToggle = (event) => {
     if (transitionInFlight.current || isTransitioning) return;
@@ -26,14 +29,21 @@ export function ThemeToggle() {
     transitionInFlight.current = true;
     setIsTransitioning(true);
     const rect = button.getBoundingClientRect();
-    setReveal({ x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 });
+    const root = document.documentElement;
+    root.dataset.themeRevealing = "true";
+    setReveal({
+      x: rect.left + rect.width / 2,
+      y: rect.top + rect.height / 2,
+      cover: isDark ? "#000000" : "#ffffff",
+    });
     toggleTheme();
 
     timeoutRef.current = window.setTimeout(() => {
       setReveal(null);
+      delete root.dataset.themeRevealing;
       transitionInFlight.current = false;
       setIsTransitioning(false);
-    }, 440);
+    }, 560);
   };
 
   return (
@@ -54,9 +64,13 @@ export function ThemeToggle() {
       </button>
       {reveal && (
         <span
-          className="theme-reveal"
+          className="theme-cover"
           aria-hidden="true"
-          style={{ "--theme-reveal-x": `${reveal.x}px`, "--theme-reveal-y": `${reveal.y}px` }}
+          style={{
+            "--theme-reveal-x": `${reveal.x}px`,
+            "--theme-reveal-y": `${reveal.y}px`,
+            "--theme-cover-color": reveal.cover,
+          }}
         />
       )}
     </>
