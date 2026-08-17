@@ -18,8 +18,7 @@ function isLangSetManually() {
   const timestamp = localStorage.getItem("langSetTimestamp");
   if (!timestamp) return false;
   const setTime = parseInt(timestamp, 10);
-  const hoursSinceSet = (Date.now() - setTime) / (1000 * 60 * 60);
-  return hoursSinceSet < 24;
+  return Date.now() - setTime < LANG_EXPIRY_MS;
 }
 
 function clearExpiredLang() {
@@ -36,6 +35,7 @@ function detectInitialLanguage() {
 }
 
 const initialLang = detectInitialLanguage();
+document.documentElement.lang = initialLang;
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -55,6 +55,7 @@ function setUserLang(lng) {
 i18n.on("languageChanged", (lng) => {
   if (lng === "de" || lng === "en") {
     setUserLang(lng);
+    document.documentElement.lang = lng;
   }
 });
 

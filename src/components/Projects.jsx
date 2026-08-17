@@ -5,13 +5,18 @@ import { Link } from "react-router-dom";
 import SectionTitle from "./SectionTitle";
 import { getFeaturedProjects } from "../lib/blog";
 
-function ProjectItem({ project, index }) {
+function ProjectItem({ project }) {
   const { t } = useTranslation();
 
   return (
     <article className="group grid md:grid-cols-[1fr_1.5fr] gap-6 md:gap-10 py-10 last:border-b-0" style={{ borderBottom: "1px solid var(--border)" }}>
       {/* Image */}
-      <div className="relative overflow-hidden rounded-lg aspect-[4/3]" style={{ backgroundColor: "var(--bg-tertiary)" }}>
+      <Link
+        to={`/blog/${project.slug}`}
+        className="relative overflow-hidden rounded-lg aspect-[4/3] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+        style={{ backgroundColor: "var(--bg-tertiary)", outlineColor: "var(--accent)" }}
+        aria-label={t("project_open", { title: project.title })}
+      >
         {project.heroImage ? (
           <img
             src={project.heroImage}
@@ -20,10 +25,10 @@ function ProjectItem({ project, index }) {
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-sm" style={{ backgroundColor: "var(--bg-tertiary)", color: "var(--text-muted)" }}>
-            No preview
+            {t("project_no_preview")}
           </div>
         )}
-      </div>
+      </Link>
 
       {/* Content */}
       <div className="flex flex-col justify-center">
@@ -70,7 +75,7 @@ function ProjectItem({ project, index }) {
               style={{ color: "var(--text-secondary)" }}
             >
               <FaGithub size={16} />
-              <span>GitHub</span>
+              <span>{t("github")}</span>
             </a>
           )}
           {project.liveDemo && (
@@ -82,7 +87,7 @@ function ProjectItem({ project, index }) {
               style={{ color: "var(--text-secondary)" }}
             >
               <FaArrowUpRightFromSquare size={14} />
-              <span>Demo</span>
+              <span>{t("live_demo")}</span>
             </a>
           )}
         </div>
@@ -104,8 +109,8 @@ function Projects() {
         />
 
         <div className="mt-10">
-          {projects.map((project, index) => (
-            <ProjectItem key={project.slug} project={project} index={index} />
+          {projects.map((project) => (
+            <ProjectItem key={project.slug} project={project} />
           ))}
 
           <div className="pt-8 text-center">
@@ -114,7 +119,7 @@ function Projects() {
               className="text-sm transition-opacity hover:opacity-80"
               style={{ color: "var(--text-muted)" }}
             >
-              Alle Projekte →
+              {t("projects_all")} →
             </Link>
           </div>
         </div>

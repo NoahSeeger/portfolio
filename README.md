@@ -39,3 +39,16 @@ brew install exiftool
 ## RSS Feed
 
 An RSS feed is automatically generated at `/rss.xml` during build.
+
+## Blog post metadata
+
+Posts use frontmatter. `draft: true` excludes a post from production and RSS
+(but keeps it visible during local development). Archived projects stay
+available as context but are omitted from the current project highlights:
+
+```md
+pubDatetime: 2026-08-05T10:00:00+02:00
+updatedDatetime: 2026-08-12T10:00:00+02:00 # optional
+status: "archived" # optional
+draft: false
+```

@@ -17,9 +17,9 @@ function Home() {
   return (
     <>
       <Hero />
-      <Posts />
       <About />
       <Projects />
+      <Posts />
       <Contact />
     </>
   );

@@ -30,8 +30,6 @@ function Header() {
     localStorage.setItem("lang", newLang);
   }, [i18n]);
 
-  const currentFlag = i18n.language === "de" ? DeFlag : UsFlag;
-
   return (
     <motion.header
       initial="hidden"

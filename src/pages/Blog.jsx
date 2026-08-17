@@ -1,18 +1,13 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { Helmet } from "react-helmet-async";
 import { FaCopy, FaCheck, FaRss } from "react-icons/fa6";
-import { getAllPosts, formatDateShort, calculateReadTime, groupPostsByYearMonth } from "../lib/blog";
+import { getAllPosts, formatDateShort, formatMonth, calculateReadTime, groupPostsByYearMonth } from "../lib/blog";
 import { useTranslation } from "react-i18next";
 import { Link, useSearchParams } from "react-router-dom";
-
-const MONTH_NAMES = [
-  "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
-];
 
 export function BlogIndex() {
   const { t, i18n } = useTranslation();
@@ -65,7 +60,7 @@ export function BlogIndex() {
 
               {months.map((monthIdx) => {
                 const monthPosts = yearPosts[monthIdx];
-                const monthName = MONTH_NAMES[parseInt(monthIdx)];
+                const monthName = formatMonth(parseInt(monthIdx), locale);
 
                 return (
                   <div key={monthIdx} className="mb-8">
@@ -90,9 +85,14 @@ export function BlogIndex() {
                                 </h3>
                                 {post.draft && (
                                   <span className="px-2 py-0.5 rounded text-xs font-bold text-white" style={{ backgroundColor: "var(--accent)" }}>
-                                    DRAFT
-                                  </span>
-                                )}
+                                  {t("posts_draft")}
+                                </span>
+                              )}
+                              {post.status === "archived" && (
+                                <span className="px-2 py-0.5 rounded text-xs font-bold" style={{ backgroundColor: "var(--bg-tertiary)", color: "var(--text-secondary)" }}>
+                                  {t("posts_archived")}
+                                </span>
+                              )}
                               </div>
                               <div className="flex items-center gap-2 text-sm mt-1 flex-wrap" style={{ color: "var(--text-muted)" }}>
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -100,7 +100,13 @@ export function BlogIndex() {
                                 </svg>
                                 <time>{formatDateShort(post.pubDatetime, locale)}</time>
                                 <span>·</span>
-                                <span>{readTime} min {t("posts_read", "read")}</span>
+                                <span>{readTime} {t("posts_read")}</span>
+                                {post.updatedDatetime && (
+                                  <>
+                                    <span>·</span>
+                                    <span>{t("posts_updated")} {formatDateShort(post.updatedDatetime, locale)}</span>
+                                  </>
+                                )}
                               </div>
                               <div className="flex gap-4 mt-3">
                                 {post.heroImage && (
@@ -187,7 +193,7 @@ export function BlogPost({ post }) {
             <h1 className="text-4xl md:text-5xl font-bold leading-tight break-words" style={{ color: "var(--text-primary)" }}>{post.title}</h1>
             {post.draft && (
               <span className="px-2 py-0.5 rounded text-xs font-bold text-white" style={{ backgroundColor: "var(--accent)" }}>
-                DRAFT
+                {t("posts_draft")}
               </span>
             )}
           </div>
@@ -196,11 +202,23 @@ export function BlogPost({ post }) {
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
-            <time>{formatDateShort(post.pubDatetime, locale)}</time>
+            <time dateTime={post.pubDatetime}>{formatDateShort(post.pubDatetime, locale)}</time>
             <span style={{ color: "var(--border)" }}>·</span>
-            <span>{readTime} min {t("posts_read", "read")}</span>
+            <span>{readTime} {t("posts_read")}</span>
+            {post.updatedDatetime && (
+              <>
+                <span style={{ color: "var(--border)" }}>·</span>
+                <time dateTime={post.updatedDatetime}>{t("posts_updated")} {formatDateShort(post.updatedDatetime, locale)}</time>
+              </>
+            )}
           </div>
         </header>
+
+        {post.status === "archived" && (
+          <aside className="rounded-lg px-4 py-3 mb-8 text-sm" style={{ backgroundColor: "var(--bg-tertiary)", color: "var(--text-secondary)", border: "1px solid var(--border)" }}>
+            {t("posts_archived_notice")}
+          </aside>
+        )}
 
         {post.heroImage && (
           <div className="aspect-video rounded-lg mb-8 overflow-hidden select-none" style={{ backgroundColor: "var(--bg-tertiary)" }}>
@@ -243,7 +261,7 @@ export function BlogPost({ post }) {
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             components={{
-              code({ node, inline, className, children, ...props }) {
+              code({ node: _node, inline, className, children, ...props }) {
               const match = /language-(\w+)/.exec(className || "");
               const codeString = String(children).replace(/\n$/, "");
               const [copied, setCopied] = useState(false);
@@ -267,7 +285,7 @@ export function BlogPost({ post }) {
                         onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "transparent"; e.currentTarget.style.color = "var(--text-muted)"; }}
                       >
                         {copied ? <FaCheck size={12} /> : <FaCopy size={12} />}
-                        <span>{copied ? "Copied!" : "Copy"}</span>
+                        <span>{copied ? t("code_copied") : t("code_copy")}</span>
                       </button>
                     </div>
                     <SyntaxHighlighter

@@ -18,8 +18,7 @@ function isThemeSetManually() {
   const timestamp = localStorage.getItem("themeSetTimestamp");
   if (!timestamp) return false;
   const setTime = parseInt(timestamp, 10);
-  const hoursSinceSet = (Date.now() - setTime) / (1000 * 60 * 60);
-  return hoursSinceSet < 24;
+  return Date.now() - setTime < THEME_EXPIRY_MS;
 }
 
 function clearExpiredTheme() {

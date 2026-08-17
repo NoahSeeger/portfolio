@@ -26,7 +26,7 @@
   "about_line3": "Building iOS apps in my free time. PicSwipe, Quanta, Birthday calendar.",
   "about_line4": "Recently got into 3D printing (A1 Mini) and homelabbing with Proxmox on my Raspi + T480s.",
   "about_line5": "Always looking for interesting people to work with.",
-  "about_github_link": "github.com/NoahSeeger →",
+  "about_github_link": "github.com/NoahSeeger",
 
   "experience_title": "Erfahrung",
   "experience_text": "Hier findest du einen Überblick über meine bisherigen Stationen und Erfahrungen im Bereich Entwicklung.",
@@ -59,7 +59,12 @@
   "posts_read_all": "Alle Beiträge lesen",
   "posts_read_more": "Weiterlesen",
   "posts_read": "Lesezeit",
+  "posts_read_more": "Weiterlesen",
   "posts_all_title": "Alle Beiträge",
+  "posts_draft": "ENTWURF",
+  "posts_archived": "ARCHIVIERT",
+  "posts_archived_notice": "Dieses Projekt wird nicht mehr aktiv weiterentwickelt und ist als Archiv erhalten.",
+  "posts_updated": "Aktualisiert",
   "posts_back": "Zurück zu allen Beiträgen",
   "posts_back_to_all": "Alle Beiträge",
   "posts_back_to_top": "Nach oben",
@@ -71,6 +76,9 @@
   "technologies": "Technologien",
   "live_demo": "Live Demo",
   "github": "GitHub",
+  "projects_all": "Alle Projekte",
+  "project_no_preview": "Keine Vorschau",
+  "project_open": "Projekt {{title}} öffnen",
 
   "contact_title": "Kontakt",
   "contact_text": "Du möchtest mit mir zusammenarbeiten oder hast Fragen? Schreib mir gerne eine Nachricht!",
@@ -91,4 +99,6 @@
   "search_nav": "navigate",
   "search_open": "open",
   "search_close": "close"
+  ,"code_copy": "Kopieren"
+  ,"code_copied": "Kopiert!"
 }

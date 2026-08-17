@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "prebuild": "npm run strip-exif",
     "dev": "vite",
     "build": "vite build && node scripts/generate-rss.js",
     "strip-exif": "node scripts/strip-exif.js",

@@ -9,6 +9,7 @@ liveDemo: "https://livoapp.netlify.app"
 heroImage: "/img/projects/livo.png"
 draft: false
 featured: true
+status: "archived"
 ---
 
 ## What is Livo?

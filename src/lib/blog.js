@@ -1,5 +1,3 @@
-import ReactMarkdown from "react-markdown";
-
 function parseFrontmatter(raw) {
   const fmMatch = raw.match(/^---\r?\n([\s\S]*?)\r?\n---/);
   if (!fmMatch) return { data: {}, content: raw };
@@ -59,7 +57,9 @@ export function getAllPosts() {
 }
 
 export function getFeaturedProjects() {
-  return getAllPosts().filter((post) => post.featured && post.category === "project");
+  return getAllPosts().filter(
+    (post) => post.featured && post.category === "project" && post.status !== "archived"
+  );
 }
 
 export function getPostsByCategory(category) {
@@ -86,6 +86,12 @@ export function formatDateShort(dateString, locale = "en") {
   const day = date.getDate();
   const year = date.getFullYear();
   return `${day} ${month}, ${year}`;
+}
+
+export function formatMonth(monthIndex, locale = "en") {
+  return new Intl.DateTimeFormat(locale, { month: "long" }).format(
+    new Date(2026, monthIndex, 1)
+  );
 }
 
 export function calculateReadTime(content) {

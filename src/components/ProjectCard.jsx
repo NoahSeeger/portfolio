@@ -1,11 +1,8 @@
 import React from "react";
 import { FaGithub, FaArrowRight, FaArrowUpRightFromSquare } from "react-icons/fa6";
-import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 function ProjectCard({ project }) {
-  const { t } = useTranslation();
-
   return (
     <div className="rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden border" style={{ backgroundColor: "var(--bg-primary)", borderColor: "var(--border)" }}>
       {/* Hero Image */}

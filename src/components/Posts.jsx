@@ -3,12 +3,104 @@ import SectionTitle from "./SectionTitle";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { getAllPosts, formatDate, calculateReadTime } from "../lib/blog";
+import { getAllPosts, formatDateShort, calculateReadTime } from "../lib/blog";
+
+function PostItem({ post, index }) {
+  const { t, i18n } = useTranslation();
+  const locale = i18n.language;
+  const readTime = calculateReadTime(post.content);
+
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.1, duration: 0.5 }}
+      className="group grid md:grid-cols-[1fr_2fr] gap-6 md:gap-10 py-8 last:border-b-0"
+      style={{ borderBottom: "1px solid var(--border)" }}
+    >
+      {/* Image */}
+      <div className="relative overflow-hidden rounded-lg aspect-[4/3]" style={{ backgroundColor: "var(--bg-tertiary)" }}>
+        {post.heroImage ? (
+          <img
+            src={post.heroImage}
+            alt={post.title}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+            draggable="false"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-sm" style={{ backgroundColor: "var(--bg-tertiary)", color: "var(--text-muted)" }}>
+            No preview
+          </div>
+        )}
+      </div>
+
+      {/* Content */}
+      <div className="flex flex-col justify-center">
+        <div className="flex items-start justify-between gap-4 mb-2">
+          <Link to={`/blog/${post.slug}`} className="group/title">
+            <h3 className="text-xl md:text-2xl font-bold group-hover/title:opacity-80 transition-opacity" style={{ color: "var(--text-primary)" }}>
+              {post.title}
+            </h3>
+          </Link>
+          <div className="flex items-center gap-2 shrink-0">
+            {post.draft && (
+              <span className="px-2 py-0.5 rounded text-[10px] font-bold text-white" style={{ backgroundColor: "var(--accent)" }}>
+                DRAFT
+              </span>
+            )}
+            <Link
+              to={`/blog/${post.slug}`}
+              className="shrink-0 transition-opacity mt-1"
+              style={{ color: "var(--text-muted)" }}
+            >
+              →
+            </Link>
+          </div>
+        </div>
+
+        <p className="text-sm md:text-base mb-4 leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+          {post.description}
+        </p>
+
+        {/* Tags */}
+        {post.tags && post.tags.length > 0 && (
+          <div className="flex flex-wrap gap-2 mb-4">
+            {post.tags.map((tag) => (
+              <span
+                key={tag}
+                className="px-2 py-0.5 rounded text-xs font-mono"
+                style={{ backgroundColor: "var(--bg-tertiary)", color: "var(--text-secondary)" }}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {/* Meta */}
+        <div className="flex items-center gap-4 text-xs md:text-sm" style={{ color: "var(--text-muted)" }}>
+          <time>{formatDateShort(post.pubDatetime, locale)}</time>
+          <span>·</span>
+          <span>{readTime} min {t("posts_read", "read")}</span>
+          <Link
+            to={`/blog/${post.slug}`}
+            className="ml-auto flex items-center gap-1 transition-opacity hover:opacity-80"
+            style={{ color: "var(--accent)" }}
+          >
+            {t("posts_read_more")}
+            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </Link>
+        </div>
+      </div>
+    </motion.article>
+  );
+}
 
 function Posts() {
-  const { t, i18n } = useTranslation();
-  const posts = getAllPosts().slice(0, 3);
-  const locale = i18n.language;
+  const { t } = useTranslation();
+  const posts = getAllPosts().slice(0, 1);
 
   return (
     <section id="POSTS" className="w-full">
@@ -17,98 +109,30 @@ function Posts() {
           title={t("posts_section_title", "Erkunde meine")}
           subtitle={t("posts_section_subtitle", "Beiträge")}
         />
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
+
+        <div className="mt-10">
           {posts.length > 0 ? (
-            posts.map((post) => (
-              <Link key={post.slug} to={`/blog/${post.slug}`}>
-                <motion.article
-                  whileHover={{ y: -5 }}
-                  className="p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 h-full flex flex-col"
-                  style={{ backgroundColor: "var(--bg-secondary)" }}
-                >
-                  <time className="text-sm" style={{ color: "var(--text-muted)" }}>
-                    {formatDate(post.pubDatetime, locale)}
-                  </time>
-                  <h3 className="text-lg font-semibold mt-2 mb-3 break-words leading-tight line-clamp-2" style={{ color: "var(--text-primary)" }}>{post.title}</h3>
-
-                  <div className="flex gap-3 mt-auto items-stretch">
-                    <p className="line-clamp-3 text-sm flex-1" style={{ color: "var(--text-secondary)" }}>{post.description}</p>
-                    {post.heroImage && (
-                      <img
-                        src={post.heroImage}
-                        alt={post.title}
-                        className="w-20 h-16 object-cover rounded-lg flex-shrink-0 select-none"
-                        draggable="false"
-                      />
-                    )}
-                  </div>
-
-                  <div className="flex items-center mt-4 text-sm" style={{ color: "var(--accent)" }}>
-                    <span>{calculateReadTime(post.content)} min {t("posts_read", "read")}</span>
-                    <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </div>
-                </motion.article>
-              </Link>
+            posts.map((post, index) => (
+              <PostItem key={post.slug} post={post} index={index} />
             ))
           ) : (
-            <>
-              <PostCard
-                title={t("posts_card_placeholder_title", "Bald verfügbar")}
-                description={t(
-                  "posts_card_placeholder_desc",
-                  "Hier werden bald meine neuesten Blog-Beiträge erscheinen."
-                )}
-                date={t("posts_card_placeholder_date", "Coming soon")}
-              />
-              <PostCard
-                title={t("posts_card_placeholder_title", "Bald verfügbar")}
-                description={t(
-                  "posts_card_placeholder_desc",
-                  "Hier werden bald meine neuesten Blog-Beiträge erscheinen."
-                )}
-                date={t("posts_card_placeholder_date", "Coming soon")}
-              />
-              <PostCard
-                title={t("posts_card_placeholder_title", "Bald verfügbar")}
-                description={t(
-                  "posts_card_placeholder_desc",
-                  "Hier werden bald meine neuesten Blog-Beiträge erscheinen."
-                )}
-                date={t("posts_card_placeholder_date", "Coming soon")}
-              />
-            </>
+            <p className="text-center py-10" style={{ color: "var(--text-muted)" }}>
+              {t("posts_no_posts", "Noch keine Beiträge vorhanden.")}
+            </p>
           )}
         </div>
-        <div className="flex justify-center mt-12">
+
+        <div className="pt-8 text-center">
           <Link
             to="/blog"
-            className="flex items-center justify-center px-6 py-4 rounded-full hover:opacity-90 transition duration-300 whitespace-nowrap w-fit"
-            style={{ backgroundColor: "var(--accent)", color: "white" }}
+            className="text-sm transition-opacity hover:opacity-80"
+            style={{ color: "var(--text-muted)" }}
           >
-            {t("posts_read_all", "Alle Beiträge lesen")}
-            <svg className="ml-4 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
+            {t("posts_read_all")} →
           </Link>
         </div>
       </div>
     </section>
-  );
-}
-
-function PostCard({ title, description, date }) {
-  return (
-    <motion.div
-      whileHover={{ y: -5 }}
-      className="p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300"
-      style={{ backgroundColor: "var(--bg-secondary)" }}
-    >
-      <span className="text-sm" style={{ color: "var(--text-muted)" }}>{date}</span>
-      <h3 className="text-xl font-semibold mt-2 mb-3" style={{ color: "var(--text-primary)" }}>{title}</h3>
-      <p style={{ color: "var(--text-secondary)" }}>{description}</p>
-    </motion.div>
   );
 }
 

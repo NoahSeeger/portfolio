@@ -261,7 +261,7 @@ function DatenschutzModal({ isOpen, onClose }) {
                     <div className="flex items-start gap-4">
                       <div className="flex-shrink-0">
                         <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-green-100 text-green-600">
-                          <FaShieldAlt className="text-lg" />
+                          <FaShieldHalved className="text-lg" />
                         </div>
                       </div>
                       <div>

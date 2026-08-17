@@ -57,15 +57,25 @@ function About() {
               </p>
 
               <div className="pt-6">
-                <a
+                <motion.a
                   href="https://github.com/NoahSeeger"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-medium transition-colors"
-                  style={{ color: "var(--text-secondary)" }}
+                  className="group inline-flex items-center gap-1.5 font-medium focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 rounded-sm"
+                  style={{ color: "var(--text-secondary)", outlineColor: "var(--accent)" }}
+                  whileHover={{ x: 4 }}
+                  whileTap={{ x: 2 }}
+                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
                 >
-                  {t("about_github_link", "github.com/NoahSeeger →")}
-                </a>
+                  <span className="relative pb-1">
+                    {t("about_github_link", "github.com/NoahSeeger")}
+                    <span
+                      aria-hidden="true"
+                      className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-[var(--accent)] transition-transform duration-200 ease-out group-hover:scale-x-100"
+                    />
+                  </span>
+                  <span aria-hidden="true">→</span>
+                </motion.a>
               </div>
 
               {/* GitHub Activity */}

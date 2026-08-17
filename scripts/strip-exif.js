@@ -34,7 +34,7 @@ function findMedia(dir) {
           media.push(full);
         }
       }
-    } catch (e) {
+    } catch {
       // skip inaccessible dirs
     }
   }
@@ -68,7 +68,7 @@ function stripExif(file) {
       execSync(`exiftool -all= -overwrite_original "${file}"`, { stdio: "pipe" });
     }
     return true;
-  } catch (e) {
+  } catch {
     return false;
   }
 }

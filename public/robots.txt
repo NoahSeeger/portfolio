@@ -1,0 +1,37 @@
+# Noah Seeger — crawl policy
+#
+# Public pages and published blog posts may be indexed by search engines.
+# Draft posts are not part of the production build and therefore cannot be crawled.
+# This file is a request to compliant crawlers; it is not access control.
+
+# Search engines: keep normal search visibility intact.
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+# AI model training: do not use this site's content for model training.
+# OpenAI's training crawler; this does not block OAI-SearchBot.
+User-agent: GPTBot
+Disallow: /
+
+# Google control token for Gemini training and Gemini grounding.
+# This does not affect Google Search indexing or ranking.
+User-agent: Google-Extended
+Disallow: /
+
+# Anthropic's training crawler.
+User-agent: ClaudeBot
+Disallow: /
+
+# Common Crawl data is frequently used as a source for training datasets.
+User-agent: CCBot
+Disallow: /
+
+# Default: allow other well-behaved crawlers to discover the public portfolio.
+User-agent: *
+Allow: /
