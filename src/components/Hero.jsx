@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FaArrowRight, FaArrowUpRightFromSquare } from "react-icons/fa6";
 import { getAllPosts } from "../lib/blog";
 import profileImage from "../assets/personal/me.png";
+import Seo from "./Seo";
 
 function SectionHeading({ title, link, linkLabel }) {
   return (
@@ -46,6 +47,7 @@ function useReveal() {
 }
 
 function ProjectCard({ project }) {
+  const { t } = useTranslation();
   const [revealRef, isVisible] = useReveal();
 
   return (
@@ -59,6 +61,7 @@ function ProjectCard({ project }) {
           alt=""
           className="portfolio-project-image"
           loading="lazy"
+          decoding="async"
           draggable="false"
         />
       )}
@@ -74,7 +77,7 @@ function ProjectCard({ project }) {
           </div>
         )}
         <Link to={`/blog/${project.slug}`} className="portfolio-card-link">
-          Mehr zum Projekt <FaArrowRight aria-hidden="true" />
+          {t("project_read_more", "Read the project")} <FaArrowRight aria-hidden="true" />
         </Link>
       </div>
     </div>
@@ -89,8 +92,9 @@ function Hero() {
 
   return (
     <div className="portfolio-home">
+      <Seo />
       <section className="portfolio-hero portfolio-hero-enter">
-        <div className="portfolio-portrait" aria-hidden="true">
+        <div className="portfolio-portrait">
           <img src={profileImage} alt={t("hero_img_alt", "Noah Seeger")} />
         </div>
 

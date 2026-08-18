@@ -40,13 +40,15 @@ export function ThemeToggle() {
 
     if (typeof document.startViewTransition !== "function") {
       root.dataset.themeFallback = "active";
-      setFallbackReveal({
-        x: rect.left + rect.width / 2,
-        y: rect.top + rect.height / 2,
-        oldColor: isDark ? "#000000" : "#ffffff",
-        newColor: isDark ? "#ffffff" : "#000000",
+      flushSync(() => {
+        setFallbackReveal({
+          x: rect.left + rect.width / 2,
+          y: rect.top + rect.height / 2,
+          oldColor: isDark ? "#000000" : "#ffffff",
+          newColor: isDark ? "#ffffff" : "#000000",
+        });
+        toggleTheme();
       });
-      toggleTheme();
       timeoutRef.current = window.setTimeout(() => {
         setFallbackReveal(null);
         delete root.dataset.themeTransition;
@@ -98,9 +100,9 @@ export function ThemeToggle() {
         aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
         title={isDark ? "Switch to light mode" : "Switch to dark mode"}
       >
-      <span key={theme} className="theme-icon" aria-hidden="true">
-        {isDark ? <FaMoon size={16} style={{ color: "var(--accent)" }} /> : <FaSun size={16} style={{ color: "var(--accent)" }} />}
-      </span>
+        <span key={theme} className="theme-icon" aria-hidden="true">
+          {isDark ? <FaMoon size={16} style={{ color: "var(--accent)" }} /> : <FaSun size={16} style={{ color: "var(--accent)" }} />}
+        </span>
       </button>
       {fallbackReveal && (
         <>

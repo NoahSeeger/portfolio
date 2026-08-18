@@ -1,8 +1,9 @@
-import React, { useState, useMemo, useEffect, useRef } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { FaMagnifyingGlass, FaArrowRight, FaXmark } from "react-icons/fa6";
 import { getAllPosts, calculateReadTime } from "../lib/blog";
 import { useTranslation } from "react-i18next";
+import Seo from "../components/Seo";
 
 function formatDate(dateString, locale = "en") {
   const date = new Date(dateString);
@@ -38,7 +39,7 @@ function highlightAll(text, query) {
   const regex = new RegExp(`(${escapeRegex(query)})`, "gi");
   const parts = text.split(regex);
   return parts.map((part, i) =>
-    regex.test(part) ? (
+    i % 2 === 1 ? (
       <mark key={i} style={{ backgroundColor: "var(--accent)", color: "white", borderRadius: "2px", padding: "0 2px" }}>{part}</mark>
     ) : part
   );
@@ -51,6 +52,7 @@ export function SearchPage() {
   const urlQuery = searchParams.get("q") || "";
   const [inputValue, setInputValue] = useState(urlQuery);
   const locale = i18n.language;
+  const debounceRef = useRef(null);
 
   // Sync input when URL changes (e.g. back/forward navigation)
   useEffect(() => {
@@ -68,7 +70,9 @@ export function SearchPage() {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [navigate]);
 
-  const posts = useMemo(() => getAllPosts(), []);
+  useEffect(() => () => clearTimeout(debounceRef.current), []);
+
+  const posts = useMemo(() => getAllPosts().filter((post) => post.status !== "archived"), []);
 
   // Live filter using inputValue (instant, no Enter needed)
   const results = useMemo(() => {
@@ -86,8 +90,6 @@ export function SearchPage() {
       .filter((p) => p._totalCount > 0)
       .sort((a, b) => b._totalCount - a._totalCount);
   }, [posts, inputValue]);
-
-  const debounceRef = useRef(null);
 
   const handleInputChange = (e) => {
     const value = e.target.value;
@@ -109,26 +111,29 @@ export function SearchPage() {
 
   return (
     <div className="min-h-screen w-full pt-16 md:pt-20" style={{ backgroundColor: "var(--bg-primary)" }}>
+      <Seo title={t("search_title", "Search")} description={t("search_description", "Search Noah Seeger's notes and project write-ups.")} path="/search" noindex />
         <h1 className="text-4xl font-bold mb-2" style={{ color: "var(--text-primary)" }}>
           {t("search_title", "Search")}
         </h1>
-        <p className="text-sm mb-8" style={{ color: "var(--text-muted)" }}>
+        <p className="mb-8 text-sm" style={{ color: "var(--text-muted)" }} aria-live="polite">
           {results.length > 0
-            ? `${results.length} ${t("search_results", "resultaten")}${inputValue ? ` ${t("search_for", "für")} "${inputValue}"` : ""}`
+            ? `${results.length} ${t("search_results", "results")}${inputValue ? ` ${t("search_for", "for")} "${inputValue}"` : ""}`
             : inputValue
-            ? `${t("search_no_results", "Keine Ergebnisse für")} "${inputValue}"`
-            : t("search_start", "Tippe um zu suchen")}
+            ? `${t("search_no_results", "No results for")} "${inputValue}"`
+            : t("search_start", "Type to search")}
         </p>
 
         <div className="relative mb-10">
           <FaMagnifyingGlass size={20} className="absolute left-5 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: "var(--text-muted)" }} />
+          <label htmlFor="post-search" className="sr-only">{t("search_title", "Search")}</label>
           <input
-            type="text"
+            id="post-search"
+            type="search"
             value={inputValue}
             onChange={handleInputChange}
-            placeholder={t("search_placeholder", "Alle Beiträge durchsuchen...")}
+            placeholder={t("search_placeholder", "Search all posts...")}
             autoFocus
-            className="w-full pl-14 pr-12 py-4 rounded-2xl text-base outline-none transition-shadow"
+            className="w-full rounded-2xl py-4 pl-14 pr-12 text-base outline-none transition-shadow focus-visible:ring-2"
             style={{
               backgroundColor: "var(--bg-secondary)",
               color: "var(--text-primary)",
@@ -140,8 +145,9 @@ export function SearchPage() {
             <button
               type="button"
               onClick={clearSearch}
-              className="absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full transition-colors"
+              className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full p-2 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
               style={{ color: "var(--text-muted)" }}
+              aria-label={t("search_clear", "Clear search")}
             >
               <FaXmark size={18} />
             </button>
@@ -163,8 +169,8 @@ export function SearchPage() {
                         {highlightAll(post.title, inputValue)}
                       </h2>
                     </Link>
-                    <div className="flex items-center gap-3 text-sm mt-1" style={{ color: "var(--text-muted)" }}>
-                      <time>{formatDate(post.pubDatetime, locale)}</time>
+                    <div className="mt-1 flex items-center gap-3 text-sm" style={{ color: "var(--text-muted)" }}>
+                      <time dateTime={post.pubDatetime}>{formatDate(post.pubDatetime, locale)}</time>
                       <span>·</span>
                       <span>{calculateReadTime(post.content)} min {t("posts_read", "read")}</span>
                     </div>
@@ -198,7 +204,7 @@ export function SearchPage() {
                   className="inline-flex items-center gap-2 mt-4 text-sm font-medium transition-colors"
                   style={{ color: "var(--accent)" }}
                 >
-                  {t("search_read_post", "Zum Beitrag")}
+                  {t("search_read_post", "Read post")}
                   <FaArrowRight size={14} />
                 </Link>
               </div>

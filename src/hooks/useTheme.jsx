@@ -5,8 +5,6 @@ const ThemeContext = createContext({
   toggleTheme: () => {},
 });
 
-const THEME_EXPIRY_MS = 24 * 60 * 60 * 1000; // 24 hours
-
 function getSystemTheme() {
   if (typeof window !== "undefined" && window.matchMedia) {
     return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
@@ -14,57 +12,47 @@ function getSystemTheme() {
   return "light";
 }
 
-function isThemeSetManually() {
-  const timestamp = localStorage.getItem("themeSetTimestamp");
-  if (!timestamp) return false;
-  const setTime = parseInt(timestamp, 10);
-  return Date.now() - setTime < THEME_EXPIRY_MS;
-}
-
-function clearExpiredTheme() {
-  localStorage.removeItem("theme");
-  localStorage.removeItem("themeSetTimestamp");
+function getStoredTheme() {
+  try {
+    const storedTheme = window.localStorage.getItem("theme");
+    return storedTheme === "dark" || storedTheme === "light" ? storedTheme : null;
+  } catch {
+    return null;
+  }
 }
 
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(() => {
-    if (typeof window !== "undefined") {
-      if (isThemeSetManually()) {
-        return localStorage.getItem("theme") || getSystemTheme();
-      }
-      clearExpiredTheme();
-      return getSystemTheme();
-    }
+    if (typeof window !== "undefined") return getStoredTheme() || getSystemTheme();
     return "light";
   });
 
   useEffect(() => {
     const root = document.documentElement;
-    if (theme === "dark") {
-      root.classList.add("dark");
-    } else {
-      root.classList.remove("dark");
-    }
+    root.classList.toggle("dark", theme === "dark");
+    root.style.colorScheme = theme;
   }, [theme]);
 
   useEffect(() => {
-    if (typeof window === "undefined" || !window.matchMedia) return;
+    if (typeof window === "undefined" || !window.matchMedia) return undefined;
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    const handler = (e) => {
-      if (isThemeSetManually()) {
-        return;
-      }
-      setTheme(e.matches ? "dark" : "light");
+    const handleSystemThemeChange = (event) => {
+      if (getStoredTheme()) return;
+      setTheme(event.matches ? "dark" : "light");
     };
-    mediaQuery.addEventListener("change", handler);
-    return () => mediaQuery.removeEventListener("change", handler);
+
+    mediaQuery.addEventListener("change", handleSystemThemeChange);
+    return () => mediaQuery.removeEventListener("change", handleSystemThemeChange);
   }, []);
 
   const toggleTheme = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
-    localStorage.setItem("theme", newTheme);
-    localStorage.setItem("themeSetTimestamp", Date.now().toString());
-    setTheme(newTheme);
+    const nextTheme = theme === "light" ? "dark" : "light";
+    try {
+      window.localStorage.setItem("theme", nextTheme);
+    } catch {
+      // Keep the choice for this session when storage is blocked.
+    }
+    setTheme(nextTheme);
   };
 
   return (

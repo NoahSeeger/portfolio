@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import { execSync } from "child_process";
+import { execFileSync } from "child_process";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -45,8 +45,24 @@ function findMedia(dir) {
 
 function hasMetadata(file) {
   try {
-    const output = execSync(`exiftool -has< "${file}"`, { stdio: "pipe" }).toString().trim();
-    return output === "1";
+    // Ask only for metadata fields that can contain personal information. The
+    // old shell command used `-has<`, where `<` was interpreted as redirection
+    // by the shell and the check was therefore unreliable for paths with
+    // spaces and for most image formats.
+    const output = execFileSync(
+      "exiftool",
+      [
+        "-s3",
+        "-EXIF:all",
+        "-GPS:all",
+        "-XMP:all",
+        "-IPTC:all",
+        "-MakerNotes:all",
+        file,
+      ],
+      { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }
+    );
+    return output.trim().length > 0;
   } catch {
     return false;
   }
@@ -63,12 +79,27 @@ function stripExif(file) {
 
   try {
     if (isVideo) {
-      execSync(`exiftool -gps:all= -overwrite_original "${file}"`, { stdio: "pipe" });
+      // Preserve video container information while removing location and
+      // camera metadata that can identify where or how it was recorded.
+      execFileSync(
+        "exiftool",
+        [
+          "-GPS:all=",
+          "-EXIF:all=",
+          "-XMP:all=",
+          "-IPTC:all=",
+          "-MakerNotes:all=",
+          "-overwrite_original",
+          file,
+        ],
+        { stdio: "ignore" }
+      );
     } else {
-      execSync(`exiftool -all= -overwrite_original "${file}"`, { stdio: "pipe" });
+      execFileSync("exiftool", ["-all=", "-overwrite_original", file], { stdio: "ignore" });
     }
     return true;
-  } catch {
+  } catch (error) {
+    console.warn(`Could not strip metadata from ${path.relative(process.cwd(), file)}: ${error.message}`);
     return false;
   }
 }

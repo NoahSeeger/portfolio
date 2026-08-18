@@ -35,49 +35,52 @@ function parseFrontmatter(raw) {
   return { data, content };
 }
 
+const publishedModules = import.meta.glob("/src/content/blog/published/*.md", {
+  eager: true,
+  query: "?raw",
+  import: "default",
+});
+
+// Drafts are useful during local writing, but they should not be part of the
+// production JavaScript bundle or discoverable through its source.
+const draftModules = import.meta.env.DEV
+  ? import.meta.glob("/src/content/blog/drafts/*.md", { eager: true, query: "?raw", import: "default" })
+  : {};
+
+const postModules = { ...publishedModules, ...draftModules };
+
+const parsedPosts = Object.entries(postModules)
+  .map(([filePath, rawPost]) => {
+    const { data, content } = parseFrontmatter(rawPost);
+    const slug = filePath.split("/").pop().replace(".md", "");
+
+    return {
+      slug,
+      ...data,
+      content,
+    };
+  })
+  .sort((a, b) => new Date(b.pubDatetime) - new Date(a.pubDatetime));
+
+function isVisiblePost(post) {
+  if (import.meta.env.DEV) return true;
+  if (post.draft) return false;
+
+  const publicationTime = new Date(post.pubDatetime).getTime();
+  return Number.isNaN(publicationTime) || publicationTime <= Date.now();
+}
+
+// Parsing the markdown once keeps the home page, blog and search route from
+// repeating the same work on every render.
+const visiblePosts = parsedPosts.filter(isVisiblePost);
+
 export function getAllPosts() {
-  const posts = import.meta.glob("/src/content/blog/**/*.md", { eager: true, query: "?raw", import: "default" });
-
-  return Object.entries(posts)
-    .map(([path, post]) => {
-      const { data, content } = parseFrontmatter(post);
-      const slug = path.split("/").pop().replace(".md", "");
-
-      return {
-        slug,
-        ...data,
-        content,
-      };
-    })
-    .filter((post) => {
-      if (import.meta.env.DEV) return true;
-      return !post.draft;
-    })
-    .sort((a, b) => new Date(b.pubDatetime) - new Date(a.pubDatetime));
-}
-
-export function getFeaturedProjects() {
-  return getAllPosts().filter(
-    (post) => post.featured && post.category === "project" && post.status !== "archived"
-  );
-}
-
-export function getPostsByCategory(category) {
-  return getAllPosts().filter((post) => post.category === category);
+  return visiblePosts;
 }
 
 export function getPostBySlug(slug) {
   const posts = getAllPosts();
   return posts.find((p) => p.slug === slug);
-}
-
-export function formatDate(dateString, locale = "de") {
-  const date = new Date(dateString);
-  return date.toLocaleDateString(locale, {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
 }
 
 export function formatDateShort(dateString, locale = "en") {
@@ -95,6 +98,7 @@ export function formatMonth(monthIndex, locale = "en") {
 }
 
 export function calculateReadTime(content) {
+  if (!content?.trim()) return 0;
   const wordsPerMinute = 200;
   const words = content.trim().split(/\s+/).length;
   const minutes = Math.ceil(words / wordsPerMinute);

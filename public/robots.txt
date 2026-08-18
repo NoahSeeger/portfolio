@@ -7,9 +7,11 @@
 # Search engines: keep normal search visibility intact.
 User-agent: Googlebot
 Allow: /
+Disallow: /search
 
 User-agent: Bingbot
 Allow: /
+Disallow: /search
 
 User-agent: DuckDuckBot
 Allow: /
@@ -35,3 +37,7 @@ Disallow: /
 # Default: allow other well-behaved crawlers to discover the public portfolio.
 User-agent: *
 Allow: /
+Disallow: /search
+
+# Help crawlers discover the published feed and pages.
+Sitemap: https://noahseeger.de/sitemap.xml

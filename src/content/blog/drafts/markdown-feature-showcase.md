@@ -1,9 +1,9 @@
 ---
-title: "Markdown Featues shown in prakix"
+title: "Markdown features showcase"
 description: "A comprehensive test post demonstrating all available Markdown features, styling options, and blog system capabilities including headings, code blocks, images, tables, and more."
 pubDatetime: 2026-05-20T10:00:00+02:00
 tags: ["markdown", "test", "showcase", "features"]
-heroImage: "/img/2026/openclaw/clawcon.jpg"
+category: "note"
 draft: true
 ---
 
@@ -159,7 +159,7 @@ LIMIT 10;
 
 Below is an image embedded using standard Markdown syntax:
 
-![Project screenshot](/assets/projects/Bruno.png)
+![Project screenshot](/img/projects/bruno.png)
 
 Images are automatically styled with rounded corners and shadow. The prose container handles proper sizing and margins.
 

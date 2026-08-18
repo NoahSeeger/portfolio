@@ -18,6 +18,21 @@ npm run dev
 npm run build
 ```
 
+The build also creates `dist/rss.xml` and `dist/sitemap.xml`. Set `SITE_URL`
+when building for another domain; it defaults to `https://noahseeger.de`.
+
+## Content
+
+Published posts live in `src/content/blog/published/`. Work-in-progress posts
+belong in `src/content/blog/drafts/`; drafts are available in development but
+are excluded from the production JavaScript bundle, RSS feed and sitemap.
+
+Run the checks before committing:
+
+```bash
+npm run lint
+```
+
 ## Optional: EXIF Stripping
 
 Images in `src/assets` and `public` may contain EXIF metadata (GPS, camera info, timestamps).
@@ -44,7 +59,8 @@ An RSS feed is automatically generated at `/rss.xml` during build.
 
 Posts use frontmatter. `draft: true` excludes a post from production and RSS
 (but keeps it visible during local development). Archived projects stay
-available as context but are omitted from the current project highlights:
+available as context, are hidden from search and are omitted from the current
+project highlights, RSS feed and sitemap:
 
 ```md
 pubDatetime: 2026-08-05T10:00:00+02:00

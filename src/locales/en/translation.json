@@ -25,6 +25,9 @@
   "home_notes_heading": "Notes",
   "home_contact_heading": "Contact",
   "projects_no_current": "New projects soon.",
+  "project_read_more": "Read the project",
+  "projects_description": "Selected projects and experiments.",
+  "posts_description": "Notes on software, iOS apps, homelabbing and things I am learning.",
 
   "header_name": "Noah Seeger",
   "lang_toggle": "Toggle language",
@@ -114,9 +117,17 @@
   "footer_contact": "Contact",
   "footer_copyright": "© 2024 Noah Seeger. All rights reserved.",
 
+  "search_title": "Search",
+  "search_description": "Search Noah Seeger's notes and project write-ups.",
   "search_placeholder": "Search all posts...",
   "search_hint": "Type to search posts",
+  "search_start": "Type to search",
+  "search_results": "results",
+  "search_for": "for",
   "search_no_results": "No results found",
+  "search_matches": "matches",
+  "search_read_post": "Read post",
+  "search_clear": "Clear search",
   "search_nav": "navigate",
   "search_open": "open",
   "search_close": "close"

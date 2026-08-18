@@ -1,4 +1,5 @@
 import react from "eslint-plugin-react";
+import reactHooks from "eslint-plugin-react-hooks";
 
 export default [
   {
@@ -19,13 +20,18 @@ export default [
         clearTimeout: "readonly",
         setTimeout: "readonly",
         window: "readonly",
+        URL: "readonly",
       },
     },
-    plugins: { react },
+    plugins: { react, "react-hooks": reactHooks },
     settings: { react: { version: "detect" } },
     rules: {
       "no-undef": "error",
-      "no-unused-vars": ["error", { argsIgnorePattern: "^_", varsIgnorePattern: "^React$" }],
+      "no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
+      "react/jsx-no-target-blank": "error",
+      "react/jsx-uses-vars": "error",
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "error",
     },
   },
   {
@@ -33,7 +39,7 @@ export default [
     languageOptions: {
       ecmaVersion: "latest",
       sourceType: "module",
-      globals: { console: "readonly" },
+      globals: { console: "readonly", process: "readonly" },
     },
     rules: {
       "no-undef": "error",

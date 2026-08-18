@@ -1,13 +1,105 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { Helmet } from "react-helmet-async";
+import javascript from "react-syntax-highlighter/dist/esm/languages/prism/javascript";
+import typescript from "react-syntax-highlighter/dist/esm/languages/prism/typescript";
+import jsx from "react-syntax-highlighter/dist/esm/languages/prism/jsx";
+import python from "react-syntax-highlighter/dist/esm/languages/prism/python";
+import swift from "react-syntax-highlighter/dist/esm/languages/prism/swift";
+import bash from "react-syntax-highlighter/dist/esm/languages/prism/bash";
+import json from "react-syntax-highlighter/dist/esm/languages/prism/json";
+import css from "react-syntax-highlighter/dist/esm/languages/prism/css";
+import markup from "react-syntax-highlighter/dist/esm/languages/prism/markup";
+import markdown from "react-syntax-highlighter/dist/esm/languages/prism/markdown";
 import { FaCopy, FaCheck, FaRss } from "react-icons/fa6";
 import { getAllPosts, formatDateShort, formatMonth, calculateReadTime, groupPostsByYearMonth } from "../lib/blog";
 import { useTranslation } from "react-i18next";
 import { Link, useSearchParams } from "react-router-dom";
+import Seo from "../components/Seo";
+
+SyntaxHighlighter.registerLanguage("javascript", javascript);
+SyntaxHighlighter.registerLanguage("js", javascript);
+SyntaxHighlighter.registerLanguage("typescript", typescript);
+SyntaxHighlighter.registerLanguage("ts", typescript);
+SyntaxHighlighter.registerLanguage("jsx", jsx);
+SyntaxHighlighter.registerLanguage("tsx", jsx);
+SyntaxHighlighter.registerLanguage("python", python);
+SyntaxHighlighter.registerLanguage("py", python);
+SyntaxHighlighter.registerLanguage("swift", swift);
+SyntaxHighlighter.registerLanguage("bash", bash);
+SyntaxHighlighter.registerLanguage("shell", bash);
+SyntaxHighlighter.registerLanguage("json", json);
+SyntaxHighlighter.registerLanguage("css", css);
+SyntaxHighlighter.registerLanguage("html", markup);
+SyntaxHighlighter.registerLanguage("markup", markup);
+SyntaxHighlighter.registerLanguage("markdown", markdown);
+SyntaxHighlighter.registerLanguage("md", markdown);
+
+const SUPPORTED_LANGUAGES = new Set([
+  "javascript", "js", "typescript", "ts", "jsx", "tsx", "python", "py",
+  "swift", "bash", "shell", "json", "css", "html", "markup", "markdown", "md",
+]);
+
+function MarkdownCodeBlock({ inline, className, children, ...props }) {
+  const { t } = useTranslation();
+  const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+  const match = /language-(\w+)/.exec(className || "");
+  const codeString = String(children).replace(/\n$/, "");
+
+  useEffect(() => () => window.clearTimeout(copyTimeoutRef.current), []);
+
+  const handleCopy = async () => {
+    if (!navigator.clipboard?.writeText) return;
+
+    try {
+      await navigator.clipboard.writeText(codeString);
+      setCopied(true);
+      window.clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = window.setTimeout(() => setCopied(false), 2000);
+    } catch {
+      setCopied(false);
+    }
+  };
+
+  const language = match?.[1]?.toLowerCase();
+
+  if (!inline && match && SUPPORTED_LANGUAGES.has(language)) {
+    return (
+      <div className="not-prose relative my-6 overflow-hidden rounded-lg" style={{ backgroundColor: "var(--bg-code, #1e1e1e)" }}>
+        <div className="flex items-center justify-between border-b px-4 py-2 text-xs" style={{ borderColor: "var(--border)", color: "var(--text-muted)" }}>
+          <span className="font-mono">{match[1]}</span>
+          <button
+            type="button"
+            onClick={handleCopy}
+            className="flex items-center gap-1.5 rounded px-2 py-1 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+            style={{ backgroundColor: "transparent", color: "var(--text-muted)", outlineColor: "var(--text-primary)" }}
+            aria-label={copied ? t("code_copied") : t("code_copy")}
+          >
+            {copied ? <FaCheck size={12} /> : <FaCopy size={12} />}
+            <span>{copied ? t("code_copied") : t("code_copy")}</span>
+          </button>
+        </div>
+        <SyntaxHighlighter
+          style={vscDarkPlus}
+          language={language}
+          PreTag="pre"
+          customStyle={{ margin: 0, padding: "1rem", background: "transparent", fontSize: "0.875rem", lineHeight: "1.5" }}
+        >
+          {codeString}
+        </SyntaxHighlighter>
+      </div>
+    );
+  }
+
+  return (
+    <code className="rounded px-1.5 py-0.5 text-sm font-mono" style={{ backgroundColor: "var(--bg-tertiary)" }} {...props}>
+      {children}
+    </code>
+  );
+}
 
 export function BlogIndex() {
   const { t, i18n } = useTranslation();
@@ -26,9 +118,13 @@ export function BlogIndex() {
   const title = category === "project"
     ? (locale === "de" ? "Projekte" : "Projects")
     : t("posts_all_title", "Alle Beiträge");
+  const description = category === "project"
+    ? t("projects_description", "Selected projects and experiments.")
+    : t("posts_description", "Notes on software, iOS apps, homelabbing and things I am learning.");
 
   return (
     <div className="min-h-screen w-full pt-16 md:pt-20" style={{ backgroundColor: "var(--bg-primary)" }}>
+        <Seo title={title} description={description} path="/blog" noindex={Boolean(category)} />
         <div className="flex items-center gap-4 mb-12">
           <h1 className="text-4xl font-bold" style={{ color: "var(--text-primary)" }}>{title}</h1>
           {!category && (
@@ -98,7 +194,7 @@ export function BlogIndex() {
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                 </svg>
-                                <time>{formatDateShort(post.pubDatetime, locale)}</time>
+                                <time dateTime={post.pubDatetime}>{formatDateShort(post.pubDatetime, locale)}</time>
                                 <span>·</span>
                                 <span>{readTime} {t("posts_read")}</span>
                                 {post.updatedDatetime && (
@@ -113,7 +209,9 @@ export function BlogIndex() {
                                   <img
                                     src={post.heroImage}
                                     alt={post.title}
-                                    className="w-28 sm:w-32 h-auto object-cover rounded-lg flex-shrink-0 select-none"
+                                    className="h-20 w-28 flex-shrink-0 select-none rounded-lg object-cover sm:h-24 sm:w-32"
+                                    loading="lazy"
+                                    decoding="async"
                                     draggable="false"
                                   />
                                 )}
@@ -177,10 +275,20 @@ export function BlogPost({ post }) {
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: "var(--bg-primary)" }}>
       {post && (
-        <Helmet>
-          <title>{post.title} - Noah Seeger</title>
-          <meta name="description" content={post.description} />
-        </Helmet>
+        <>
+          <Seo
+            title={post.title}
+            description={post.description}
+            path={`/blog/${post.slug}`}
+            image={post.heroImage}
+            type="article"
+            noindex={post.status === "archived"}
+            article={{
+              publishedTime: post.pubDatetime,
+              modifiedTime: post.updatedDatetime,
+            }}
+          />
+        </>
       )}
       <div
         className="fixed top-0 left-0 h-[5px] z-50"
@@ -226,7 +334,9 @@ export function BlogPost({ post }) {
               src={post.heroImage}
               alt={post.title}
               className="w-full h-full object-cover"
-              loading="lazy"
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
               draggable="false"
             />
           </div>
@@ -258,61 +368,7 @@ export function BlogPost({ post }) {
           prose-strong:text-[var(--text-primary)]
           prose-em:text-[var(--text-primary)]
         ">
-          <ReactMarkdown
-            remarkPlugins={[remarkGfm]}
-            components={{
-              code({ node: _node, inline, className, children, ...props }) {
-              const match = /language-(\w+)/.exec(className || "");
-              const codeString = String(children).replace(/\n$/, "");
-              const [copied, setCopied] = useState(false);
-
-              const handleCopy = async () => {
-                await navigator.clipboard.writeText(codeString);
-                setCopied(true);
-                setTimeout(() => setCopied(false), 2000);
-              };
-
-              if (!inline && match) {
-                return (
-                  <div className="not-prose relative my-6 rounded-lg overflow-hidden" style={{ backgroundColor: "var(--bg-code, #1e1e1e)" }}>
-                    <div className="flex items-center justify-between px-4 py-2 text-xs border-b" style={{ borderColor: "var(--border)", color: "var(--text-muted)" }}>
-                      <span className="font-mono">{match[1]}</span>
-                      <button
-                        onClick={handleCopy}
-                        className="flex items-center gap-1.5 px-2 py-1 rounded transition-colors"
-                        style={{ backgroundColor: "transparent", color: "var(--text-muted)" }}
-                        onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = "var(--bg-tertiary)"; }}
-                        onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "transparent"; e.currentTarget.style.color = "var(--text-muted)"; }}
-                      >
-                        {copied ? <FaCheck size={12} /> : <FaCopy size={12} />}
-                        <span>{copied ? t("code_copied") : t("code_copy")}</span>
-                      </button>
-                    </div>
-                    <SyntaxHighlighter
-                      style={vscDarkPlus}
-                      language={match[1]}
-                      PreTag="pre"
-                      customStyle={{
-                        margin: 0,
-                        padding: '1rem',
-                        background: 'transparent',
-                        fontSize: '0.875rem',
-                        lineHeight: '1.5',
-                      }}
-                    >
-                      {codeString}
-                    </SyntaxHighlighter>
-                  </div>
-                );
-              }
-
-              return (
-                <code className="px-1.5 py-0.5 rounded text-sm font-mono" style={{ backgroundColor: "var(--bg-tertiary)" }} {...props}>
-                  {children}
-                </code>
-              );
-            }
-          }}>
+          <ReactMarkdown remarkPlugins={[remarkGfm]} components={{ code: MarkdownCodeBlock }}>
             {post.content}
           </ReactMarkdown>
         </div>
