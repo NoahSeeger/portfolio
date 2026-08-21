@@ -5,7 +5,7 @@ pubDatetime: 2026-01-15T10:00:00+01:00
 category: "project"
 tags: ["Swift", "SwiftUI", "PhotosUI"]
 github: "https://github.com/NoahSeeger/PicSwipe"
-liveDemo: "https://picswipe.netlify.app/"
+liveDemo: "https://picswipe.noahseeger.de"
 heroImage: "/img/projects/picswipe.png"
 draft: false
 featured: true
@@ -39,4 +39,4 @@ Built with SwiftUI and PhotosUI framework for native iOS performance. Uses PHPho
 ## Links
 
 - [GitHub](https://github.com/NoahSeeger/PicSwipe)
-- [Live Demo](https://picswipe.netlify.app/) (Web Version)
+- [Live Demo](https://picswipe.noahseeger.de) (Web Version)

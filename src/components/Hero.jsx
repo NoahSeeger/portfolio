@@ -5,6 +5,7 @@ import { FaArrowRight, FaArrowUpRightFromSquare } from "react-icons/fa6";
 import { getAllPosts } from "../lib/blog";
 import profileImage from "../assets/personal/me.png";
 import Seo from "./Seo";
+import { SiteFooter } from "./SiteFooter";
 
 function SectionHeading({ title, link, linkLabel }) {
   return (
@@ -123,6 +124,7 @@ function Hero() {
           </div>
         </section>
       </div>
+      <SiteFooter />
     </div>
   );
 }
