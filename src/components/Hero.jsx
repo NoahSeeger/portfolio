@@ -6,6 +6,7 @@ import { getAllPosts } from "../lib/blog";
 import profileImage from "../assets/personal/me.png";
 import Seo from "./Seo";
 import { SiteFooter } from "./SiteFooter";
+import { AppShelf } from "./AppShelf";
 
 function SectionHeading({ title, link, linkLabel }) {
   return (
@@ -111,6 +112,8 @@ function Hero() {
       </section>
 
       <div className="portfolio-content">
+        <AppShelf />
+
         <section id="work" className="portfolio-section">
           <SectionHeading
             title={t("home_work_heading", "Projekte")}
