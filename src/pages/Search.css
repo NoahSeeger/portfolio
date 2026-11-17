@@ -21,7 +21,4 @@
 .search-result:hover .search-result-heading > svg { transform: translateX(3px); color: var(--text-primary); }
 .search-result-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; margin: 0.4rem 0 0; color: var(--text-muted); font-size: 0.75rem; line-height: 1.6; }
 .search-result-excerpt, .search-empty { margin: 0.85rem 0 0; font-size: 0.9375rem; line-height: 1.7; color: var(--text-secondary); overflow-wrap: anywhere; }
-.search-result mark { background: #dceaff; color: inherit; border-radius: 0.15em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
-.dark .search-result mark { background: #368cff33; }
-.search-result mark::selection { background: #a7caff; color: #172b4d; }
 @media (prefers-reduced-motion: reduce) { .search-form, .search-clear, .search-result-heading > svg { transition: none; } .search-result:hover .search-result-heading > svg { transform: none; } }

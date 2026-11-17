@@ -48,9 +48,13 @@ export function HomeIntro({ enabled, children }) {
   const [contentVisible, setContentVisible] = useState(!enabled);
   const [brandState, setBrandState] = useState(enabled ? "visible" : "hidden");
   const hasPlayed = useRef(false);
+  // Only a document opened on Home gets the intro. Leaving Home also consumes
+  // it when navigation interrupts the animation before its finish timer.
+  const [eligible, setEligible] = useState(enabled);
 
   useLayoutEffect(() => {
-    if (!enabled || hasPlayed.current) {
+    if (!enabled) setEligible(false);
+    if (!enabled || !eligible || hasPlayed.current) {
       setPhase("done");
       setCanInteract(true);
       setContentVisible(true);
@@ -128,12 +132,13 @@ export function HomeIntro({ enabled, children }) {
       window.removeEventListener("touchmove", onScroll);
       unlock();
     };
-  }, [enabled]);
+  }, [enabled, eligible]);
 
   const concealed = enabled && !canInteract;
   const settled = phase === "settled" || phase === "done";
   return (
     <div className={enabled ? "home-intro" : undefined} data-intro-phase={enabled ? phase : undefined}
+      data-intro-skipped={enabled && !eligible ? "" : undefined}
       data-intro-flat={flatScale ? "" : undefined} data-intro-interactive={canInteract ? "" : undefined}
       data-intro-brand={brandState} data-intro-static={settled ? "" : undefined}
       data-intro-content={contentVisible ? "visible" : "hidden"}>

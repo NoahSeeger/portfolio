@@ -63,7 +63,6 @@ export function SearchPage() {
       </nav>
       <header className="reading-index-header">
         <div className="reading-index-title-row"><h1>{t("search_title", "Search")}</h1></div>
-        <p className="reading-intro">{t("search_description")}</p>
       </header>
       <form role="search" className="search-form" onSubmit={(event) => { event.preventDefault(); clearTimeout(debounceRef.current); updateUrl(inputValue); }}>
         <FaMagnifyingGlass className="search-field-icon" aria-hidden="true" />

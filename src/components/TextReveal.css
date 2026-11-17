@@ -1,6 +1,8 @@
 /* Perspective unfolds back into the page, with the reference's masked lines. */
-.text-reveal {
+.text-reveal, .portfolio-notes {
   --reveal-easing: cubic-bezier(0.73, 0, 0, 1);
+  --reveal-duration: 2000ms;
+  --reveal-stagger: 100ms;
 }
 
 /* The accessible copy must not be copied again when selecting across blocks. */
@@ -40,12 +42,12 @@
   }
 
   .text-reveal[data-reveal="ready"] .text-reveal-block {
-    animation: text-reveal-unfold 2000ms var(--reveal-easing) var(--reveal-delay) both;
+    animation: text-reveal-unfold var(--reveal-duration) var(--reveal-easing) var(--reveal-delay) both;
   }
 
   .text-reveal[data-reveal="ready"] .text-reveal-word > span {
-    animation: text-reveal-line 2000ms var(--reveal-easing) both;
-    animation-delay: calc(var(--reveal-delay) + var(--reveal-line, 0) * 100ms);
+    animation: text-reveal-line var(--reveal-duration) var(--reveal-easing) both;
+    animation-delay: calc(var(--reveal-delay) + var(--reveal-line, 0) * var(--reveal-stagger));
   }
 }
 
@@ -59,8 +61,6 @@
   to { transform: translateY(0); }
 }
 
-@media (max-width: 767.98px) and (prefers-reduced-motion: no-preference) {
-  .text-reveal[data-reveal="ready"] .text-reveal-word > span {
-    animation-delay: calc(var(--reveal-delay) + var(--reveal-line, 0) * 50ms);
-  }
+@media (max-width: 767.98px) {
+  .text-reveal, .portfolio-notes { --reveal-stagger: 50ms; }
 }

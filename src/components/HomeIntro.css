@@ -128,3 +128,23 @@
   .home-intro .intro-page { visibility: visible !important; }
   .home-intro *, .home-intro *::before, .home-intro *::after { animation: none !important; transition: none !important; }
 }
+
+/* Internal navigation returns directly to the finished homepage. */
+.home-intro[data-intro-skipped] :is(.text-reveal-block, .text-reveal-word > span, .post-list > li, .post-row, .portfolio-section-heading, .portfolio-top-nav-enter, .portfolio-dock-enter) {
+  animation: none !important;
+  opacity: 1;
+}
+
+/* One clock for the intro text and Notes. Other routes never opt into this. */
+.home-intro .portfolio-content { perspective: 1000px; }
+.home-intro .note-row-mask { overflow: clip; overflow-clip-margin: 6px; }
+.home-intro:is([data-intro-phase="reveal"], [data-intro-phase="settled"]) .portfolio-notes {
+  transform-origin: 50% 100%;
+  animation: text-reveal-unfold var(--reveal-duration) var(--reveal-easing) both;
+}
+.home-intro:is([data-intro-phase="reveal"], [data-intro-phase="settled"]) .portfolio-notes :is(.portfolio-section-heading, .post-row) {
+  animation: text-reveal-line var(--reveal-duration) var(--reveal-easing) both;
+}
+.home-intro:is([data-intro-phase="reveal"], [data-intro-phase="settled"]) .portfolio-notes .post-row {
+  animation-delay: calc((var(--post-order) + 1) * var(--reveal-stagger));
+}

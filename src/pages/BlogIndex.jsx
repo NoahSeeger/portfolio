@@ -21,7 +21,7 @@ export function BlogIndex() {
         <Link to="/" className="reading-back"><FaArrowLeft aria-hidden="true" />{t("nav_home", "Home")}</Link>
       </nav>
       <div>
-        <header className="reading-index-header reading-page-enter">
+        <header className="reading-index-header">
           <div className="reading-index-title-row">
             <h1>{title}</h1>
             <a className="reading-rss" href="/rss.xml" aria-label="RSS feed"><FaRss aria-hidden="true" />RSS</a>

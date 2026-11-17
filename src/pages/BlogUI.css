@@ -18,7 +18,5 @@
 .reading-rss svg { width: 0.7rem; }
 .reading-year { margin-top: 3.5rem; }
 .reading-year > h2 { display: flex; align-items: baseline; gap: 0.7rem; margin: 0 0 0.7rem; font-size: 0.8rem; font-weight: 500; color: var(--text-secondary); }
-.reading-page-enter { animation: reading-page-enter 700ms ease-out both; }
-@keyframes reading-page-enter { from { opacity: 0; filter: blur(4px); transform: translateY(10px); } to { opacity: 1; filter: none; transform: none; } }
 @media (max-width: 540px) { .reading-topbar { min-height: 5rem; } .portfolio-top-nav.portfolio-reading-nav { top: 1.4rem; } }
-@media (prefers-reduced-motion: reduce) { .reading-page-enter { animation: none; } .reading-back, .reading-back svg { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .reading-back, .reading-back svg { transition: none; } }

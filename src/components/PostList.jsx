@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { createNotePreviewIntent } from "../lib/note-preview-intent";
+import "./TextReveal.css";
 import "./PostList.css";
 
 export function NotePreview({ post, expanded }) {
@@ -49,7 +50,6 @@ export function PostList({ posts, label }) {
   const intent = useRef(null);
   if (intent.current === null) intent.current = createNotePreviewIntent({ onChange: setActiveSlug });
   const { i18n } = useTranslation();
-  const identity = posts.map((post) => post.slug).join(",");
   useEffect(() => () => intent.current.dispose(), []);
   useLayoutEffect(() => {
     if (!activeSlug) return;
@@ -75,50 +75,24 @@ export function PostList({ posts, label }) {
       document.removeEventListener("keydown", onKeyDown);
     };
   }, [activeSlug]);
-  useLayoutEffect(() => {
-    const element = ref.current;
-    if (!element || !window.IntersectionObserver || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return undefined;
-    const section = element.closest("section");
-    element.dataset.reveal = "pending";
-    if (section) section.dataset.notesReveal = "pending";
-    const observer = new window.IntersectionObserver(([entry]) => {
-      if (!entry.isIntersecting) return;
-      element.dataset.reveal = "ready";
-      if (section) section.dataset.notesReveal = "ready";
-      observer.disconnect();
-    }, { threshold: 0 });
-    const intro = element.closest(".home-intro");
-    let introObserver;
-    if (intro?.dataset.introContent === "hidden") {
-      introObserver = new window.MutationObserver(() => {
-        if (intro.dataset.introContent !== "visible") return;
-        introObserver.disconnect();
-        observer.observe(element);
-      });
-      introObserver.observe(intro, { attributes: true, attributeFilter: ["data-intro-content"] });
-    } else observer.observe(element);
-    return () => {
-      observer.disconnect();
-      introObserver?.disconnect();
-      delete element.dataset.reveal;
-      if (section) delete section.dataset.notesReveal;
-    };
-  }, [identity]);
+
 
   return (
     <ul ref={ref} className="post-list" aria-label={label}>
       {posts.map((post, index) => (
         <li key={post.slug} data-preview-open={activeSlug === post.slug ? "" : undefined} style={{ "--post-order": Math.min(index, 7) }}>
-          <Link className="post-row" to={`/blog/${post.slug}`}
-            onPointerEnter={(event) => { if (event.pointerType === "mouse") intent.current.enter(post.slug); }}
-            onPointerLeave={() => intent.current.leave(post.slug)}
-            onFocus={(event) => { if (event.currentTarget.matches(":focus-visible")) intent.current.enter(post.slug, true); }}
-            onBlur={() => intent.current.leave(post.slug)}
-          >
-            <span className="post-row-title">{post.title}</span>
-            <time className="post-row-date" dateTime={post.pubDatetime}>{new Date(post.pubDatetime).toLocaleDateString(i18n.language, { month: "short", day: "numeric", year: "numeric" })}</time>
-            <NoteThumb title={post.title} description={post.description} />
-          </Link>
+          <div className="note-row-mask">
+            <Link className="post-row" to={`/blog/${post.slug}`}
+              onPointerEnter={(event) => { if (event.pointerType === "mouse") intent.current.enter(post.slug); }}
+              onPointerLeave={() => intent.current.leave(post.slug)}
+              onFocus={(event) => { if (event.currentTarget.matches(":focus-visible")) intent.current.enter(post.slug, true); }}
+              onBlur={() => intent.current.leave(post.slug)}
+            >
+              <span className="post-row-title">{post.title}</span>
+              <time className="post-row-date" dateTime={post.pubDatetime}>{new Date(post.pubDatetime).toLocaleDateString(i18n.language, { month: "short", day: "numeric", year: "numeric" })}</time>
+              <NoteThumb title={post.title} description={post.description} />
+            </Link>
+          </div>
           <NotePreview post={post} expanded={activeSlug === post.slug} />
         </li>
       ))}

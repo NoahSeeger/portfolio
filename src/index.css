@@ -9,7 +9,7 @@
 :root {
   --content-width: 38rem;
   --page-gutter: 1.5rem;
-  --footer-wordmark-size: clamp(5.25rem, 27vw, 80rem);
+  --footer-wordmark-size: min(11rem, calc((100vw - var(--page-gutter) * 2) * 0.29));
   /* 60% - Background Colors */
   --bg-primary: #ffffff;
   --bg-secondary: #f7f7f7;
@@ -79,7 +79,9 @@ html {
 
 html { scroll-behavior: smooth; }
 
-::selection {
+/* Native selection and search hits intentionally share one visual definition. */
+::selection,
+.search-result mark {
   background-color: #dceaff;
   color: #172b4d;
   text-decoration-line: underline;
@@ -190,7 +192,8 @@ html { scroll-behavior: smooth; }
 }
 
 .portfolio-site-footer {
-  width: 100%;
+  width: min(var(--content-width), calc(100% - var(--page-gutter) * 2));
+  margin-inline: auto;
   margin-top: clamp(5rem, 10vw, 10rem);
   color: var(--text-muted);
   font-size: 0.75rem;

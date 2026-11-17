@@ -24,11 +24,7 @@
 .post-row:is(:hover,:focus-visible) :is(.post-row-title,.post-row-date) { color: var(--text-primary); }
 .post-row:is(:hover,:focus-visible) .note-preview { transform: rotate(var(--note-tilt)) scale(1.05); }
 .post-row:focus-visible { outline: 2px solid #368cff; outline-offset: 2px; }
-.post-list[data-reveal="pending"] > li { opacity: 0; }
-.post-list[data-reveal="ready"] > li { animation: note-enter 700ms ease-out both; animation-delay: calc(180ms + var(--post-order) * 60ms); }
-[data-notes-reveal="pending"] > :is(.portfolio-section-heading,.reading-more-heading,h2) { opacity: 0; }
-[data-notes-reveal="ready"] > :is(.portfolio-section-heading,.reading-more-heading,h2) { animation: note-enter 700ms ease-out 120ms both; }
-@keyframes note-enter { from { opacity: 0; filter: blur(4px); transform: translateY(10px); } to { opacity: 1; filter: none; transform: none; } }
+.note-row-mask { margin-inline: -1rem; padding-inline: 1rem; }
 .note-preview-expanded {
   position: absolute;
   top: 50%;
@@ -63,7 +59,7 @@
   .note-preview-paper { width: 40px; height: 40px; padding: 5px; gap: 2.5px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .post-list[data-reveal] > li, [data-notes-reveal] > :is(.portfolio-section-heading,.reading-more-heading,h2) { opacity: 1; animation: none; }
+  .post-row { animation: none !important; }
   .post-row, .post-row-title, .post-row-date, .note-preview, .note-preview-paper, .note-preview-expanded, .note-preview-expanded::before { transition: none; }
   .post-row:is(:hover,:focus-visible) .note-preview { transform: none; }
   .note-preview-expanded { transform: translateY(calc(-50% + var(--preview-offset, 0px))); }
@@ -72,5 +68,5 @@
 
 /* Critically damped, with no overshoot; the cubic curve remains a fallback. */
 @supports (transition-timing-function: linear(0, 1)) {
-  .post-list { --note-tilt: -4deg; --preview-ease: linear(0.0, 0.049, 0.1569, 0.2847, 0.4112, 0.526, 0.6249, 0.7074, 0.7746, 0.8282, 0.8705, 0.9034, 0.9288, 0.9483, 0.9631, 0.9743, 0.9828, 0.9891, 0.9938, 0.9974, 1.0); }
+  .post-list { --preview-ease: linear(0.0, 0.049, 0.1569, 0.2847, 0.4112, 0.526, 0.6249, 0.7074, 0.7746, 0.8282, 0.8705, 0.9034, 0.9288, 0.9483, 0.9631, 0.9743, 0.9828, 0.9891, 0.9938, 0.9974, 1.0); }
 }
