@@ -101,6 +101,6 @@ test("local dev exposes draft previews and lazy article/search content", async (
     assert.equal(await index.loaders.private(), "DRAFT_SECRET_SENTINEL");
     const search = await server.ssrLoadModule("virtual:blog/search");
     assert.ok(search.default.some((p) => p.content === "DRAFT_SECRET_SENTINEL"));
-    assert.ok(!search.default.some((p) => p.slug === "archived"));
+    assert.ok(search.default.some((p) => p.slug === "archived"), "search includes archived notes that are visible in the listing");
   } finally { await server.close(); }
 });

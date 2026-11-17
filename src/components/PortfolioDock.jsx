@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
   FaArrowLeft,
@@ -11,7 +11,6 @@ import {
   FaLinkedin,
   FaMagnifyingGlass,
   FaXTwitter,
-  FaXmark,
 } from "react-icons/fa6";
 import { useSearch } from "../hooks/useSearch";
 import { ThemeToggle } from "./ThemeToggle";
@@ -28,7 +27,6 @@ export function PortfolioDock() {
   const [shineIteration, setShineIteration] = useState(0);
   const { t } = useTranslation();
   const location = useLocation();
-  const navigate = useNavigate();
   const { openSearch } = useSearch();
   const isSearch = location.pathname === "/search";
   const isBlogPost = location.pathname.startsWith("/blog/");
@@ -58,7 +56,7 @@ export function PortfolioDock() {
     <>
       <nav
         aria-label="Site navigation"
-        className={`portfolio-top-nav portfolio-top-nav-enter fixed right-5 top-5 z-[70] flex items-center gap-1 sm:right-7 sm:top-7${isBlogPost || isBlogIndex ? " portfolio-reading-nav" : ""}`}
+        className={`portfolio-top-nav portfolio-top-nav-enter fixed right-5 top-5 z-[70] flex items-center gap-1 sm:right-7 sm:top-7${isBlogPost || isBlogIndex || isSearch ? " portfolio-reading-nav" : ""}`}
       >
         <Link to={navLink} className="top-nav-control" aria-label={navLabel} title={navLabel}>
           {navIcon}
@@ -67,13 +65,12 @@ export function PortfolioDock() {
         <button
           type="button"
           className="top-nav-control"
-          onClick={() => (isSearch ? navigate(-1) : openSearch())}
-          aria-label={isSearch ? t("search_close", "Close search") : t("search_title", "Search")}
-          title={isSearch ? t("search_close", "Close search") : t("search_title", "Search")}
+          onClick={() => (isSearch ? document.getElementById("post-search")?.focus() : openSearch())}
+          aria-label={t("search_title", "Search")}
+          aria-current={isSearch ? "page" : undefined}
+          title={t("search_title", "Search")}
         >
-          <span key={isSearch ? "close" : "search"} className="nav-icon-swap">
-            {isSearch ? <FaXmark /> : <FaMagnifyingGlass />}
-          </span>
+          <FaMagnifyingGlass />
         </button>
 
         <ThemeToggle />

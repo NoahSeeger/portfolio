@@ -38,6 +38,12 @@ test("unified notes show the latest three entries and keep article navigation an
     assert.ok(!footer.includes("A small place") && !footer.includes("Made with curiosity"));
     const noteLinks = [...notes.matchAll(/<a\b[^>]*>[\s\S]*?<\/a>/g)].map((match) => match[0]);
     assert.ok(noteLinks.every((link) => !link.includes("note-preview-expanded")), "expanded cards must not become part of the link hitbox");
+    const { SearchPage } = await server.ssrLoadModule("/src/pages/Search.jsx");
+    const search = renderToString(shell(React.createElement(SearchPage), "/search?q=bruno"));
+    assert.match(search, /href="\/blog\/bruno"/);
+    assert.match(search, /<mark>Bruno<\/mark>/);
+    assert.equal((search.match(/class="search-clear"/g) || []).length, 1);
+    assert.ok(!search.includes("background-color:var(--accent)"), "search marks inherit readable theme colors");
     const { NotePreview } = await server.ssrLoadModule("/src/components/PostList.jsx");
     const previewPost = { title: "Preview title", description: "Preview description", heroImage: "/img/projects/picswipe.webp" };
     const closedPreview = renderToString(React.createElement(NotePreview, { post: previewPost, expanded: false }));

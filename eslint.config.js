@@ -21,6 +21,7 @@ export default [
         setTimeout: "readonly",
         window: "readonly",
         URL: "readonly",
+        URLSearchParams: "readonly",
       },
     },
     plugins: { react, "react-hooks": reactHooks },

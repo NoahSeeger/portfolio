@@ -36,7 +36,7 @@ export function blogPlugin() {
         return `export default ${JSON.stringify(all.map(metadataOnly))};\nexport const loaders = {${loaders.join(",")}};`;
       }
       if (name === "search") {
-        const searchable = all.filter((post) => post.status !== "archived");
+        const searchable = all;
         return `${searchable.map((post, index) => `import body${index} from ${JSON.stringify(`${prefix}post/${post.slug}`)};`).join("\n")}\nexport default [${searchable.map((post, index) => `({...${JSON.stringify(metadataOnly(post))}, content: body${index}})`).join(",")}];`;
       }
       if (name.startsWith("post/")) {

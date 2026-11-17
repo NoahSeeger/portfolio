@@ -183,7 +183,7 @@ available for regenerating both documents from the same parser.
 
 Posts use YAML frontmatter. Timestamps must include a timezone. `draft: true` excludes a post from production and RSS
 (but keeps it visible during local development). Archived projects stay
-available as context, are hidden from search and are omitted from the current
+available as context, are included in notes search and are omitted from the current
 project highlights, RSS feed and sitemap:
 
 ```md
@@ -192,3 +192,16 @@ updatedDatetime: 2026-08-12T10:00:00+02:00 # optional
 status: "archived" # optional
 draft: false
 ```
+
+## Notes search
+
+Search uses a route-local index of all visible notes, including archived entries.
+Drafts and future posts remain excluded from production by the content pipeline.
+All query words must occur, with title matches ranked above description and body
+matches. Markdown is reduced to readable text once when the route loads; results
+show a single contextual excerpt with theme-aware pastel highlights.
+
+The search input has one clear button. Escape clears a nonempty query first,
+then returns to Notes. URL updates replace history entries, so typing does not
+fill the browser history; Back/Forward restore the query. Clearing returns focus
+to the input. The layout uses the shared reading column and Notes typography.
