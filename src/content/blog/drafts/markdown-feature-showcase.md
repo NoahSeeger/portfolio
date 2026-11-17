@@ -159,7 +159,7 @@ LIMIT 10;
 
 Below is an image embedded using standard Markdown syntax:
 
-![Project screenshot](/img/projects/bruno.png)
+![Project screenshot](/img/projects/bruno.webp)
 
 Images are automatically styled with rounded corners and shadow. The prose container handles proper sizing and margins.
 

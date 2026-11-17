@@ -1,12 +1,11 @@
-import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { FaArrowRight, FaArrowUpRightFromSquare } from "react-icons/fa6";
 import { getAllPosts } from "../lib/blog";
-import profileImage from "../assets/personal/me.png";
+import profileImage from "../assets/personal/me.webp";
 import Seo from "./Seo";
-import { SiteFooter } from "./SiteFooter";
-import { AppShelf } from "./AppShelf";
+import { InlineApps } from "./InlineApps";
+import { TextReveal } from "./TextReveal";
+import { PostList } from "./PostList";
 
 function SectionHeading({ title, link, linkLabel }) {
   return (
@@ -17,117 +16,49 @@ function SectionHeading({ title, link, linkLabel }) {
       {link && (
         <Link to={link} className="portfolio-section-link">
           {linkLabel}
-          <FaArrowRight aria-hidden="true" />
         </Link>
       )}
-    </div>
-  );
-}
-
-function useReveal() {
-  const ref = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches || !window.IntersectionObserver) {
-      setIsVisible(true);
-      return undefined;
-    }
-
-    const observer = new window.IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setIsVisible(true);
-        observer.disconnect();
-      }
-    }, { threshold: 0.18 });
-
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
-
-  return [ref, isVisible];
-}
-
-function ProjectCard({ project }) {
-  const { t } = useTranslation();
-  const [revealRef, isVisible] = useReveal();
-
-  return (
-    <div
-      ref={revealRef}
-      className={`portfolio-project-card portfolio-project-enter${isVisible ? " is-visible" : ""}`}
-    >
-      {project.heroImage && (
-        <img
-          src={project.heroImage}
-          alt=""
-          className="portfolio-project-image"
-          loading="lazy"
-          decoding="async"
-          draggable="false"
-        />
-      )}
-      <div className="portfolio-project-body">
-        <div className="portfolio-project-title-row">
-          <h3>{project.title}</h3>
-          <FaArrowUpRightFromSquare aria-hidden="true" />
-        </div>
-        <p>{project.description}</p>
-        {project.tags?.length > 0 && (
-          <div className="portfolio-tags">
-            {project.tags.slice(0, 4).map((tag) => <span key={tag}>{tag}</span>)}
-          </div>
-        )}
-        <Link to={`/blog/${project.slug}`} className="portfolio-card-link">
-          {t("project_read_more", "Read the project")} <FaArrowRight aria-hidden="true" />
-        </Link>
-      </div>
     </div>
   );
 }
 
 function Hero() {
   const { t } = useTranslation();
-  const projects = getAllPosts()
-    .filter((post) => post.category === "project" && post.status !== "archived" && !post.draft)
+  const posts = getAllPosts()
+    .filter((post) => !post.draft && Date.parse(post.pubDatetime) <= Date.now())
     .slice(0, 3);
 
   return (
     <div className="portfolio-home">
       <Seo />
-      <section className="portfolio-hero portfolio-hero-enter">
+      <section className="portfolio-hero">
         <div className="portfolio-portrait">
-          <img src={profileImage} alt={t("hero_img_alt", "Noah Seeger")} />
+          <img src={profileImage} alt={t("hero_img_alt", "Noah Seeger")} decoding="async" />
         </div>
 
-        <h1>Noah Seeger</h1>
-        <p className="portfolio-meta">{t("about_line1", "Student @ HdM Stuttgart, Mobile Media.")}</p>
+        <TextReveal as="h1">Noah Seeger</TextReveal>
+        <TextReveal className="portfolio-meta">{t("about_line1", "Student @ HdM Stuttgart, Mobile Media.")}</TextReveal>
 
-        <div className="portfolio-intro">
-          <p>{t("home_intro_line1", "Exploring everything in tech and engineering.")}</p>
-          <p>{t("home_intro_line2", "Building iOS apps in my free time. PicSwipe, Quanta, Birthday Calendar.")}</p>
-          <p>{t("home_intro_line3", "Recently got into 3D printing (A1 Mini) and homelabbing with Proxmox on my Raspi + T480s.")}</p>
-          <p>{t("home_intro_line4", "Always looking for interesting people to work with.")}</p>
+        <div className="portfolio-intro" data-reveal-lines>
+          <TextReveal className="portfolio-intro-lead">{t("home_intro_line1", "Exploring everything in tech and engineering.")}</TextReveal>
+          <InlineApps />
+          <TextReveal>{t("home_intro_line3", "Recently got into 3D printing (A1 Mini) and homelabbing with Proxmox on my Raspi + T480s.")}</TextReveal>
+          <TextReveal>{t("home_intro_line4", "Always looking for interesting people to work with.")}</TextReveal>
         </div>
       </section>
 
       <div className="portfolio-content">
-        <AppShelf />
-
-        <section id="work" className="portfolio-section">
+        <section id="notes" className="portfolio-section portfolio-notes">
           <SectionHeading
-            title={t("home_work_heading", "Projekte")}
-            link="/blog?category=project"
-            linkLabel={t("projects_all", "Alle Projekte")}
+            title={t("blog_notes", "Notes")}
+            link="/blog"
+            linkLabel={t("blog_view_all", "View all")}
           />
-          <div className="portfolio-project-list">
-            {projects.length > 0 ? projects.map((project) => <ProjectCard key={project.slug} project={project} />) : (
-              <p className="portfolio-empty">{t("projects_no_current", "Neue Projekte folgen.")}</p>
-            )}
-          </div>
+          {posts.length > 0 ? <PostList posts={posts} label={t("blog_notes", "Notes")} /> : (
+            <p className="portfolio-empty">{t("posts_no_posts", "No notes yet.")}</p>
+          )}
         </section>
       </div>
-      <SiteFooter />
     </div>
   );
 }

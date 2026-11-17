@@ -1,0 +1,24 @@
+.reading-page { width: min(100%, var(--content-width)); margin-inline: auto; color: var(--text-primary); }
+.reading-topbar { position: sticky; top: 0; z-index: 45; display: flex; align-items: center; min-height: 5.25rem; padding-right: 8rem; margin-bottom: clamp(2.75rem, 7vw, 5rem); background: color-mix(in srgb, var(--bg-primary) 90%, transparent); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.reading-back { display: inline-flex; align-items: center; gap: 0.6rem; color: var(--text-secondary); font-size: 0.8rem; line-height: 1.5; transition: color 180ms ease; }
+.reading-back svg { width: 0.75rem; height: 0.75rem; transition: transform 180ms ease; }
+.reading-back:hover { color: var(--text-primary); }
+.reading-back:hover svg { transform: translateX(-3px); }
+.reading-back:focus-visible { outline: 2px solid #368cff; outline-offset: 5px; border-radius: 3px; }
+.portfolio-top-nav.portfolio-reading-nav { top: 1.5rem; right: max(var(--page-gutter), calc((100% - var(--content-width)) / 2)); }
+.reading-eyebrow { display: flex; align-items: center; flex-wrap: wrap; gap: 0.65rem; color: var(--text-muted); font-size: 0.75rem; line-height: 1.7; }
+.reading-eyebrow > * + *::before { content: "·"; margin-right: 0.65rem; opacity: 0.6; }
+.reading-status { color: var(--text-secondary); }
+.reading-intro { margin: 1.15rem 0 0; color: var(--text-secondary); font-size: 1.0625rem; line-height: 1.625; letter-spacing: -0.015em; text-wrap: pretty; }
+.reading-index-header { margin-bottom: 3rem; }
+.reading-index-title-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+.reading-index-title-row h1 { margin: 0; font-size: clamp(2rem, 5vw, 2.75rem); font-weight: 500; letter-spacing: -0.055em; line-height: 1.15; }
+.reading-rss { display: inline-flex; align-items: center; gap: 0.45rem; color: var(--text-muted); font-size: 0.75rem; }
+.reading-rss:hover { color: var(--text-primary); }
+.reading-rss svg { width: 0.7rem; }
+.reading-year { margin-top: 3.5rem; }
+.reading-year > h2 { display: flex; align-items: baseline; gap: 0.7rem; margin: 0 0 0.7rem; font-size: 0.8rem; font-weight: 500; color: var(--text-secondary); }
+.reading-page-enter { animation: reading-page-enter 700ms ease-out both; }
+@keyframes reading-page-enter { from { opacity: 0; filter: blur(4px); transform: translateY(10px); } to { opacity: 1; filter: none; transform: none; } }
+@media (max-width: 540px) { .reading-topbar { min-height: 5rem; } .portfolio-top-nav.portfolio-reading-nav { top: 1.4rem; } }
+@media (prefers-reduced-motion: reduce) { .reading-page-enter { animation: none; } .reading-back, .reading-back svg { transition: none; } }

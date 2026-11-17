@@ -1,46 +1,37 @@
-import { useState, useEffect, useRef } from "react";
+import { Children, isValidElement, lazy, Suspense, useState, useEffect, useLayoutEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
-import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
-import javascript from "react-syntax-highlighter/dist/esm/languages/prism/javascript";
-import typescript from "react-syntax-highlighter/dist/esm/languages/prism/typescript";
-import jsx from "react-syntax-highlighter/dist/esm/languages/prism/jsx";
-import python from "react-syntax-highlighter/dist/esm/languages/prism/python";
-import swift from "react-syntax-highlighter/dist/esm/languages/prism/swift";
-import bash from "react-syntax-highlighter/dist/esm/languages/prism/bash";
-import json from "react-syntax-highlighter/dist/esm/languages/prism/json";
-import css from "react-syntax-highlighter/dist/esm/languages/prism/css";
-import markup from "react-syntax-highlighter/dist/esm/languages/prism/markup";
-import markdown from "react-syntax-highlighter/dist/esm/languages/prism/markdown";
-import { FaCopy, FaCheck, FaRss } from "react-icons/fa6";
-import { getAllPosts, formatDateShort, formatMonth, calculateReadTime, groupPostsByYearMonth } from "../lib/blog";
+import { FaCopy, FaCheck, FaArrowLeft, FaArrowUpRightFromSquare } from "react-icons/fa6";
+import { formatDateShort, getAllPosts } from "../lib/blog";
 import { useTranslation } from "react-i18next";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Seo from "../components/Seo";
+import { PostList } from "../components/PostList";
+import { useReadingReveal } from "../hooks/useReadingReveal";
+import { remarkReadingSections } from "../lib/reading-sections";
+import "./BlogUI.css";
+import "./BlogPost.css";
 
-SyntaxHighlighter.registerLanguage("javascript", javascript);
-SyntaxHighlighter.registerLanguage("js", javascript);
-SyntaxHighlighter.registerLanguage("typescript", typescript);
-SyntaxHighlighter.registerLanguage("ts", typescript);
-SyntaxHighlighter.registerLanguage("jsx", jsx);
-SyntaxHighlighter.registerLanguage("tsx", jsx);
-SyntaxHighlighter.registerLanguage("python", python);
-SyntaxHighlighter.registerLanguage("py", python);
-SyntaxHighlighter.registerLanguage("swift", swift);
-SyntaxHighlighter.registerLanguage("bash", bash);
-SyntaxHighlighter.registerLanguage("shell", bash);
-SyntaxHighlighter.registerLanguage("json", json);
-SyntaxHighlighter.registerLanguage("css", css);
-SyntaxHighlighter.registerLanguage("html", markup);
-SyntaxHighlighter.registerLanguage("markup", markup);
-SyntaxHighlighter.registerLanguage("markdown", markdown);
-SyntaxHighlighter.registerLanguage("md", markdown);
+const HighlightedCode = lazy(() => import("../components/HighlightedCode"));
+
+function PlainCode({ children }) {
+  return <pre style={{ margin: 0, padding: "1rem", overflow: "auto", fontSize: "0.875rem", lineHeight: "1.5", color: "#d4d4d4", fontFamily: 'Menlo, Monaco, Consolas, "Andale Mono", "Ubuntu Mono", "Courier New", monospace' }}><code style={{ font: "inherit", tabSize: 4 }}>{children}</code></pre>;
+}
 
 const SUPPORTED_LANGUAGES = new Set([
   "javascript", "js", "typescript", "ts", "jsx", "tsx", "python", "py",
   "swift", "bash", "shell", "json", "css", "html", "markup", "markdown", "md",
 ]);
+
+function MarkdownPre({ children }) {
+  const items = Children.toArray(children);
+  const language = items.length === 1 && isValidElement(items[0])
+    ? /language-(\w+)/.exec(items[0].props.className || "")?.[1]?.toLowerCase()
+    : null;
+  // Highlighted blocks already own a <pre>; preserve the native wrapper for
+  // plain or unknown-language blocks instead of nesting <pre> elements.
+  return SUPPORTED_LANGUAGES.has(language) ? children : <pre>{children}</pre>;
+}
 
 function MarkdownCodeBlock({ inline, className, children, ...props }) {
   const { t } = useTranslation();
@@ -68,7 +59,7 @@ function MarkdownCodeBlock({ inline, className, children, ...props }) {
 
   if (!inline && match && SUPPORTED_LANGUAGES.has(language)) {
     return (
-      <div className="not-prose relative my-6 overflow-hidden rounded-lg" style={{ backgroundColor: "var(--bg-code, #1e1e1e)" }}>
+      <div className="reading-code-block relative my-6 overflow-hidden rounded-lg" style={{ backgroundColor: "var(--bg-code, #1e1e1e)" }}>
         <div className="flex items-center justify-between border-b px-4 py-2 text-xs" style={{ borderColor: "var(--border)", color: "var(--text-muted)" }}>
           <span className="font-mono">{match[1]}</span>
           <button
@@ -82,14 +73,9 @@ function MarkdownCodeBlock({ inline, className, children, ...props }) {
             <span>{copied ? t("code_copied") : t("code_copy")}</span>
           </button>
         </div>
-        <SyntaxHighlighter
-          style={vscDarkPlus}
-          language={language}
-          PreTag="pre"
-          customStyle={{ margin: 0, padding: "1rem", background: "transparent", fontSize: "0.875rem", lineHeight: "1.5" }}
-        >
-          {codeString}
-        </SyntaxHighlighter>
+        <Suspense fallback={<PlainCode>{codeString}</PlainCode>}>
+          <HighlightedCode language={language}>{codeString}</HighlightedCode>
+        </Suspense>
       </div>
     );
   }
@@ -101,168 +87,23 @@ function MarkdownCodeBlock({ inline, className, children, ...props }) {
   );
 }
 
-export function BlogIndex() {
-  const { t, i18n } = useTranslation();
-  const [searchParams] = useSearchParams();
-  const category = searchParams.get("category");
-
-  let posts = getAllPosts();
-  if (category) {
-    posts = posts.filter((post) => post.category === category);
-  }
-
-  const locale = i18n.language === "de" ? "de" : "en";
-  const grouped = groupPostsByYearMonth(posts);
-  const years = Object.keys(grouped).sort((a, b) => b - a);
-
-  const title = category === "project"
-    ? (locale === "de" ? "Projekte" : "Projects")
-    : t("posts_all_title", "Alle Beiträge");
-  const description = category === "project"
-    ? t("projects_description", "Selected projects and experiments.")
-    : t("posts_description", "Notes on software, iOS apps, homelabbing and things I am learning.");
-
-  return (
-    <div className="min-h-screen w-full pt-16 md:pt-20" style={{ backgroundColor: "var(--bg-primary)" }}>
-        <Seo title={title} description={description} path="/blog" noindex={Boolean(category)} />
-        <div className="flex items-center gap-4 mb-12">
-          <h1 className="text-4xl font-bold" style={{ color: "var(--text-primary)" }}>{title}</h1>
-          {!category && (
-            <a
-              href="/rss.xml"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="RSS Feed"
-              className="transition-colors"
-              style={{ color: "var(--accent)" }}
-            >
-              <FaRss size={24} />
-            </a>
-          )}
-        </div>
-
-        {years.map((year) => {
-          const yearPosts = grouped[year];
-          const months = Object.keys(yearPosts).sort((a, b) => b - a);
-          const yearCount = Object.values(yearPosts).flat().length;
-
-          return (
-            <section key={year} className="mb-12">
-              <div className="flex items-baseline gap-3 mb-6">
-                <h2 className="text-3xl font-bold" style={{ color: "var(--text-primary)" }}>{year}</h2>
-                <span className="text-lg" style={{ color: "var(--text-muted)" }}>{yearCount}</span>
-              </div>
-              <div className="h-px mb-8" style={{ backgroundColor: "var(--border)" }} />
-
-              {months.map((monthIdx) => {
-                const monthPosts = yearPosts[monthIdx];
-                const monthName = formatMonth(parseInt(monthIdx), locale);
-
-                return (
-                  <div key={monthIdx} className="mb-8">
-                    <div className="flex items-baseline gap-3 mb-4">
-                      <h3 className="text-xl font-semibold" style={{ color: "var(--text-primary)" }}>{monthName}</h3>
-                      <span className="text-sm" style={{ color: "var(--text-muted)" }}>{monthPosts.length}</span>
-                    </div>
-
-                    <div className="space-y-6">
-                      {monthPosts.map((post) => {
-                        const readTime = calculateReadTime(post.content);
-                        return (
-                          <Link
-                            key={post.slug}
-                            to={`/blog/${post.slug}`}
-                            className="block group"
-                          >
-                            <article className="py-4">
-                              <div className="flex items-center gap-2">
-                                <h3 className="text-lg sm:text-xl font-semibold group-hover:underline break-words" style={{ color: "var(--accent)" }}>
-                                  {post.title}
-                                </h3>
-                                {post.draft && (
-                                  <span className="px-2 py-0.5 rounded text-xs font-bold text-white" style={{ backgroundColor: "var(--accent)" }}>
-                                  {t("posts_draft")}
-                                </span>
-                              )}
-                              {post.status === "archived" && (
-                                <span className="px-2 py-0.5 rounded text-xs font-bold" style={{ backgroundColor: "var(--bg-tertiary)", color: "var(--text-secondary)" }}>
-                                  {t("posts_archived")}
-                                </span>
-                              )}
-                              </div>
-                              <div className="flex items-center gap-2 text-sm mt-1 flex-wrap" style={{ color: "var(--text-muted)" }}>
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                </svg>
-                                <time dateTime={post.pubDatetime}>{formatDateShort(post.pubDatetime, locale)}</time>
-                                <span>·</span>
-                                <span>{readTime} {t("posts_read")}</span>
-                                {post.updatedDatetime && (
-                                  <>
-                                    <span>·</span>
-                                    <span>{t("posts_updated")} {formatDateShort(post.updatedDatetime, locale)}</span>
-                                  </>
-                                )}
-                              </div>
-                              <div className="flex gap-4 mt-3">
-                                {post.heroImage && (
-                                  <img
-                                    src={post.heroImage}
-                                    alt={post.title}
-                                    className="h-20 w-28 flex-shrink-0 select-none rounded-lg object-cover sm:h-24 sm:w-32"
-                                    loading="lazy"
-                                    decoding="async"
-                                    draggable="false"
-                                  />
-                                )}
-                                <p className="text-sm sm:text-base line-clamp-2" style={{ color: "var(--text-secondary)" }}>{post.description}</p>
-                              </div>
-                            </article>
-                          </Link>
-                        );
-                      })}
-                    </div>
-                  </div>
-                );
-              })}
-            </section>
-          );
-        })}
-
-        {posts.length === 0 && (
-          <p className="text-center" style={{ color: "var(--text-muted)" }}>
-            {t("posts_no_posts", "Noch keine Beiträge vorhanden.")}
-          </p>
-        )}
-    </div>
-  );
-}
-
 export function BlogPost({ post }) {
   const { t, i18n } = useTranslation();
   const locale = i18n.language;
-  const readTime = post ? calculateReadTime(post.content) : 0;
-  const [progress, setProgress] = useState(0);
-  const rafRef = useRef(null);
-
+  const readTime = post?.readTime ?? 0;
+  const articleRef = useRef(null);
+  const endRef = useRef(null);
+  const fadeRef = useRef(null);
+  useReadingReveal(articleRef, post?.slug);
+  useLayoutEffect(() => { window.scrollTo({ top: 0, behavior: "instant" }); }, [post?.slug]);
   useEffect(() => {
-    const handleScroll = () => {
-      if (rafRef.current) return;
-      rafRef.current = requestAnimationFrame(() => {
-        const scrollTop = window.scrollY;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-        setProgress(scrollPercent);
-        rafRef.current = null;
-      });
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    };
-  }, []);
+    if (!endRef.current || !window.IntersectionObserver) return undefined;
+    const observer = new window.IntersectionObserver(([entry]) => {
+      if (fadeRef.current) fadeRef.current.style.opacity = entry.isIntersecting ? "0" : "1";
+    }, { rootMargin: "0px 0px -80px 0px" });
+    observer.observe(endRef.current);
+    return () => observer.disconnect();
+  }, [post?.slug]);
 
   if (!post) {
     return (
@@ -272,148 +113,51 @@ export function BlogPost({ post }) {
     );
   }
 
+  const backLabel = t("blog_all_notes", "All notes");
+  const more = getAllPosts().filter((entry) => entry.slug !== post.slug && !entry.draft && Date.parse(entry.pubDatetime) <= Date.now()).slice(0, 2);
+
   return (
-    <div className="min-h-screen flex flex-col" style={{ backgroundColor: "var(--bg-primary)" }}>
-      {post && (
-        <>
-          <Seo
-            title={post.title}
-            description={post.description}
-            path={`/blog/${post.slug}`}
-            image={post.heroImage}
-            type="article"
-            noindex={post.status === "archived"}
-            article={{
-              publishedTime: post.pubDatetime,
-              modifiedTime: post.updatedDatetime,
-            }}
-          />
-        </>
-      )}
-      <div
-        className="fixed top-0 left-0 h-[5px] z-50"
-        style={{ width: `${progress}%`, backgroundColor: "var(--accent)" }}
-      />
-
-      <article className="flex-1 max-w-3xl mx-auto w-full pt-16 md:pt-20">
-        <header className="mb-8">
-          <div className="flex items-center gap-3 mb-2">
-            <h1 className="text-4xl md:text-5xl font-bold leading-tight break-words" style={{ color: "var(--text-primary)" }}>{post.title}</h1>
-            {post.draft && (
-              <span className="px-2 py-0.5 rounded text-xs font-bold text-white" style={{ backgroundColor: "var(--accent)" }}>
-                {t("posts_draft")}
-              </span>
-            )}
-          </div>
-
-          <div className="flex items-center gap-3 text-sm flex-wrap" style={{ color: "var(--text-muted)" }}>
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
+    <div className="reading-page reading-article-page">
+      <Seo title={post.title} description={post.description} path={`/blog/${post.slug}`} image={post.heroImage}
+        type="article" noindex={post.status === "archived" || post.draft}
+        article={{ publishedTime: post.pubDatetime, modifiedTime: post.updatedDatetime }} />
+      <nav className="reading-topbar" aria-label={t("blog_breadcrumb", "Page navigation")}>
+        <Link to="/blog" className="reading-back"><FaArrowLeft aria-hidden="true" />{backLabel}</Link>
+      </nav>
+      <article key={post.slug} ref={articleRef}>
+        <header className="reading-article-header" data-reading-reveal="">
+          <div className="reading-eyebrow">
             <time dateTime={post.pubDatetime}>{formatDateShort(post.pubDatetime, locale)}</time>
-            <span style={{ color: "var(--border)" }}>·</span>
-            <span>{readTime} {t("posts_read")}</span>
-            {post.updatedDatetime && (
-              <>
-                <span style={{ color: "var(--border)" }}>·</span>
-                <time dateTime={post.updatedDatetime}>{t("posts_updated")} {formatDateShort(post.updatedDatetime, locale)}</time>
-              </>
-            )}
+            <span>{t("blog_read_time", "{{count}} min read", { count: readTime })}</span>
+            {post.draft && <span className="reading-status">{t("posts_draft")}</span>}
           </div>
+          <h1>{post.title}</h1>
+          <p className="reading-intro">{post.description}</p>
+          {(post.liveDemo || post.github) && <div className="reading-links">
+            {post.liveDemo && <a href={post.liveDemo} target="_blank" rel="noopener noreferrer">{t("blog_visit_site", "Website")}<FaArrowUpRightFromSquare aria-hidden="true" /></a>}
+            {post.github && <a href={post.github} target="_blank" rel="noopener noreferrer">{t("blog_source", "Source code")}<FaArrowUpRightFromSquare aria-hidden="true" /></a>}
+          </div>}
         </header>
-
-        {post.status === "archived" && (
-          <aside className="rounded-lg px-4 py-3 mb-8 text-sm" style={{ backgroundColor: "var(--bg-tertiary)", color: "var(--text-secondary)", border: "1px solid var(--border)" }}>
-            {t("posts_archived_notice")}
-          </aside>
-        )}
-
-        {post.heroImage && (
-          <div className="aspect-video rounded-lg mb-8 overflow-hidden select-none" style={{ backgroundColor: "var(--bg-tertiary)" }}>
-            <img
-              src={post.heroImage}
-              alt={post.title}
-              className="w-full h-full object-cover"
-              loading="eager"
-              fetchPriority="high"
-              decoding="async"
-              draggable="false"
-            />
-          </div>
-        )}
-
-        <div className="prose prose-lg max-w-none font-serif
-          prose-headings:font-bold prose-headings:tracking-tight
-          prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl prose-h4:text-lg
-          prose-p:text-[17px]
-          prose-a:no-underline hover:prose-a:underline
-          prose-img:rounded-lg prose-img:shadow-lg prose-img:my-8 prose-img:w-full
-          prose-blockquote:border-l-4 prose-blockquote:not-italic prose-blockquote:font-semibold
-          prose-pre:m-0 prose-pre:p-0 prose-pre:bg-transparent prose-pre:rounded-lg
-          prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono
-          prose-ul:list-disc prose-ol:list-decimal
-          prose-strong:font-semibold
-          prose-table:table prose-table:border-collapse prose-table:w-full
-          prose-th:border prose-th:px-4 prose-th:py-2 prose-th:text-left prose-th:font-semibold
-          prose-td:border prose-td:px-4 prose-td:py-2
-          prose-headings:text-[var(--text-primary)]
-          prose-p:text-[var(--text-primary)]
-          prose-li:text-[var(--text-primary)]
-          prose-a:text-[var(--accent)]
-          prose-blockquote:text-[var(--text-secondary)] prose-blockquote:border-[var(--accent)]
-          prose-code:text-[var(--text-primary)] prose-code:bg-[var(--bg-tertiary)]
-          prose-pre:text-[var(--text-primary)]
-          prose-th:text-[var(--text-primary)] prose-th:border-[var(--border)] prose-th:bg-[var(--bg-secondary)]
-          prose-td:text-[var(--text-primary)] prose-td:border-[var(--border)]
-          prose-strong:text-[var(--text-primary)]
-          prose-em:text-[var(--text-primary)]
-        ">
-          <ReactMarkdown remarkPlugins={[remarkGfm]} components={{ code: MarkdownCodeBlock }}>
-            {post.content}
-          </ReactMarkdown>
+        {post.status === "archived" && <aside className="reading-archive-note">{t("posts_archived_notice")}</aside>}
+        {post.heroImage && <figure className="reading-cover" data-reading-reveal="">
+          <img src={post.heroImage} alt={post.title} width="1600" height="1000" loading="eager" fetchPriority="high" decoding="async" draggable="false" />
+        </figure>}
+        <div className="reading-body">
+          <ReactMarkdown remarkPlugins={[remarkGfm, remarkReadingSections]} components={{
+            code: MarkdownCodeBlock,
+            pre: MarkdownPre,
+            img: ({ src, alt, title }) => <img src={src} alt={alt || ""} title={title} loading="lazy" decoding="async" />,
+            table: ({ children }) => <div className="reading-table"><table>{children}</table></div>,
+          }}>{post.content}</ReactMarkdown>
         </div>
+
       </article>
-
-      <footer className="border-t py-8 mt-auto" style={{ borderColor: "var(--border)" }}>
-        <div className="max-w-3xl mx-auto">
-          {post.tags && post.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2 mb-6">
-              {post.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="px-3 py-1 rounded-full text-xs font-mono"
-                  style={{ backgroundColor: "var(--bg-tertiary)", color: "var(--text-secondary)" }}
-                >
-                  #{tag}
-                </span>
-              ))}
-            </div>
-          )}
-          <div className="flex items-center justify-between text-sm">
-            <Link
-              to="/blog"
-              className="flex items-center gap-2 transition-colors"
-              style={{ color: "var(--text-secondary)" }}
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-              {t("posts_back", "Back")}
-            </Link>
-
-            <button
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              className="flex items-center gap-2 transition-colors cursor-pointer"
-              style={{ color: "var(--text-secondary)" }}
-            >
-              {t("posts_back_to_top", "Back to top")}
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-              </svg>
-            </button>
-          </div>
-        </div>
-      </footer>
+      {more.length > 0 && <section className="reading-more" aria-labelledby="more-writing">
+        <div className="reading-more-heading"><h2 id="more-writing">{t("blog_more_notes", "More notes")}</h2><Link to="/blog">{t("blog_view_all", "View all")}</Link></div>
+        <PostList posts={more} label={t("blog_more_notes", "More notes")} />
+      </section>}
+      <span ref={endRef} className="reading-end-sentinel" aria-hidden="true" />
+      <div ref={fadeRef} className="reading-bottom-fade" aria-hidden="true" />
     </div>
   );
 }

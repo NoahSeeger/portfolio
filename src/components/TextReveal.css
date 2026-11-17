@@ -1,0 +1,66 @@
+/* Perspective unfolds back into the page, with the reference's masked lines. */
+.text-reveal {
+  --reveal-easing: cubic-bezier(0.73, 0, 0, 1);
+}
+
+/* The accessible copy must not be copied again when selecting across blocks. */
+.text-reveal > .sr-only {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.text-reveal-perspective {
+  display: block;
+  perspective: 1000px;
+}
+
+.text-reveal-block {
+  display: block;
+  transform-origin: 50% 100%;
+}
+
+.text-reveal-word {
+  display: inline-block;
+  overflow: clip;
+  vertical-align: top;
+  /* Keep descenders visible without changing the line height or wrapping. */
+  padding-bottom: 0.16em;
+  margin-bottom: -0.16em;
+}
+
+.text-reveal-word > span {
+  display: inline-block;
+}
+
+.text-reveal-interactive { overflow: visible; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .text-reveal[data-reveal="pending"] .text-reveal-perspective {
+    opacity: 0;
+  }
+
+  .text-reveal[data-reveal="ready"] .text-reveal-block {
+    animation: text-reveal-unfold 2000ms var(--reveal-easing) var(--reveal-delay) both;
+  }
+
+  .text-reveal[data-reveal="ready"] .text-reveal-word > span {
+    animation: text-reveal-line 2000ms var(--reveal-easing) both;
+    animation-delay: calc(var(--reveal-delay) + var(--reveal-line, 0) * 100ms);
+  }
+}
+
+@keyframes text-reveal-unfold {
+  from { transform: rotateY(-50deg) rotateX(-60deg); }
+  to { transform: none; }
+}
+
+@keyframes text-reveal-line {
+  from { transform: translateY(1.2em); }
+  to { transform: translateY(0); }
+}
+
+@media (max-width: 767.98px) and (prefers-reduced-motion: no-preference) {
+  .text-reveal[data-reveal="ready"] .text-reveal-word > span {
+    animation-delay: calc(var(--reveal-delay) + var(--reveal-line, 0) * 50ms);
+  }
+}

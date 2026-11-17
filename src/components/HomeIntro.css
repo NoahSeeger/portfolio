@@ -1,0 +1,130 @@
+.home-intro {
+  --intro-ease: cubic-bezier(0.73, 0, 0, 1);
+  --intro-fast-ease: cubic-bezier(0.17, 0.67, 0.1, 0.99);
+  --intro-signature-scale: 10;
+  --intro-header-height: clamp(60px, calc(60px + 20 * ((100vw - 375px) / 1535)), 80px);
+}
+.home-intro[data-intro-flat] { --intro-signature-scale: 1; }
+
+.intro-curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--bg-primary);
+  pointer-events: none;
+  opacity: 0;
+}
+
+/* The reference's small SVG canvas, overflowing name and difference compositing
+   are essential: black rectangles occlude on either black or white backgrounds. */
+.intro-brand-position {
+  position: fixed;
+  top: env(safe-area-inset-top, 0px);
+  left: 0;
+  width: 100%;
+  height: var(--intro-header-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 110;
+  mix-blend-mode: difference;
+  pointer-events: none;
+  perspective: 1000px;
+  transform: translateY(calc(50svh - var(--intro-header-height) / 2));
+  opacity: 1;
+  transition: transform 1750ms var(--intro-ease), opacity 240ms ease-out;
+}
+.home-intro[data-intro-brand="hiding"] .intro-brand-position { opacity: 0; }
+.home-intro[data-intro-static] .intro-brand-position {
+  mix-blend-mode: normal;
+  overflow: hidden;
+}
+.home-intro[data-intro-static] .intro-wordmark path { fill: var(--text-primary); }
+.intro-brand {
+  display: block;
+  padding: 10px;
+  color: #fff;
+  pointer-events: none;
+  transform: scale(var(--intro-signature-scale)) rotate(10deg);
+  transition: transform 1500ms var(--intro-fast-ease);
+}
+.intro-wordmark {
+  display: block;
+  width: 12.5px;
+  height: 10px;
+  overflow: visible;
+  shape-rendering: geometricPrecision;
+}
+.intro-wordmark * { pointer-events: none; }
+.intro-wordmark path { fill: #fff; }
+.intro-wordmark rect { fill: #000; }
+
+.intro-letter-center, .intro-letter-left, .intro-letter-right {
+  transform: translateX(0);
+  transition: transform 1500ms var(--intro-fast-ease);
+}
+.intro-correction { transform: translateX(0); transition: transform 1500ms var(--intro-fast-ease); }
+/* The original's moving vertical stem is separate from the name. Reveal the
+   entire 'er' from the center group; do not carry a detached r on the cover. */
+.intro-wordmark .intro-terminal { fill: #fff; opacity: 0; }
+.intro-cap-initial { opacity: 1; transition: opacity 300ms var(--intro-fast-ease); }
+
+.home-intro:is([data-intro-phase="reveal"], [data-intro-phase="settled"], [data-intro-phase="done"]) .intro-brand-position { transform: none; }
+.home-intro:is([data-intro-phase="reveal"], [data-intro-phase="settled"], [data-intro-phase="done"]) .intro-brand { transform: none; }
+.home-intro:is([data-intro-phase="reveal"], [data-intro-phase="settled"], [data-intro-phase="done"]) :is(.intro-letter-center, .intro-letter-left) {
+  transform: translateX(calc(0px - var(--intro-travel)));
+}
+.home-intro:is([data-intro-phase="reveal"], [data-intro-phase="settled"], [data-intro-phase="done"]) .intro-letter-right {
+  transform: translateX(var(--intro-travel));
+}
+.home-intro:is([data-intro-phase="reveal"], [data-intro-phase="settled"], [data-intro-phase="done"]) .intro-correction {
+  transform: translateX(var(--intro-mask-correction));
+}
+.home-intro:is([data-intro-phase="reveal"], [data-intro-phase="settled"], [data-intro-phase="done"]) .intro-cap-initial { opacity: 0; }
+.home-intro:is([data-intro-phase="reveal"], [data-intro-phase="settled"]) .intro-terminal {
+  animation: intro-terminal-visible 1660ms linear both;
+}
+
+.home-intro:is([data-intro-phase="signature"], [data-intro-phase="setup"]) .intro-curtain { opacity: 1; pointer-events: auto; }
+.home-intro:is([data-intro-phase="signature"], [data-intro-phase="setup"]) .intro-page { visibility: hidden; }
+.home-intro[data-intro-content="hidden"] .intro-curtain { opacity: 1; pointer-events: auto; }
+.home-intro[data-intro-content="hidden"] .intro-page { visibility: hidden; }
+.home-intro:is([data-intro-phase="signature"], [data-intro-phase="setup"]) .text-reveal-block,
+.home-intro:is([data-intro-phase="signature"], [data-intro-phase="setup"]) .text-reveal-word > span { animation-play-state: paused; }
+.home-intro[data-intro-phase="done"] .text-reveal-block,
+.home-intro[data-intro-phase="done"] .text-reveal-word > span { animation: none; }
+.home-intro[data-intro-phase="done"] :is(.intro-brand, .intro-letter-center, .intro-letter-left, .intro-letter-right, .intro-correction, .intro-cap-initial) { transition: none; }
+
+.home-intro:is([data-intro-phase="reveal"], [data-intro-phase="settled"]) .portfolio-hero {
+  transform-origin: 50% 100%;
+  animation: intro-hero-in 1750ms var(--intro-ease) both;
+}
+.home-intro:is([data-intro-phase="reveal"], [data-intro-phase="settled"]) .portfolio-portrait {
+  animation: intro-image-in 1750ms var(--intro-ease) both;
+}
+.home-intro:is([data-intro-phase="reveal"], [data-intro-phase="settled"]) .portfolio-content {
+  animation: intro-content-in 1750ms var(--intro-ease) both;
+}
+.home-intro:is([data-intro-phase="reveal"], [data-intro-phase="settled"]) :is(.portfolio-top-nav, .portfolio-contact-dock, .portfolio-site-footer) {
+  animation: intro-controls-in 1750ms var(--intro-ease) both;
+}
+@keyframes intro-hero-in { from { transform: scale(0.5); } to { transform: none; } }
+@keyframes intro-terminal-visible {
+  0% { opacity: 0; }
+  6%, 90.36% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes intro-image-in { from { opacity: 0; transform: translate3d(0, 20px, 0); } to { opacity: 1; transform: none; } }
+@keyframes intro-content-in { from { opacity: 0; transform: translate3d(0, 50px, 0); } to { opacity: 1; transform: none; } }
+@keyframes intro-controls-in { from { opacity: 0; } to { opacity: 1; } }
+
+@media (min-width: 768px) { .intro-wordmark { width: 15px; height: 12px; } }
+@media (max-width: 359.98px) {
+  .intro-brand-position { top: calc(3rem + env(safe-area-inset-top)); }
+  .home-intro .portfolio-hero { padding-top: 7rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-intro .intro-curtain { display: none; }
+  .home-intro .intro-page { visibility: visible !important; }
+  .home-intro *, .home-intro *::before, .home-intro *::after { animation: none !important; transition: none !important; }
+}

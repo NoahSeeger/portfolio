@@ -4,7 +4,7 @@ description: "SwiftUI iOS app for tracking body transformation with progress pho
 pubDatetime: 2026-03-10T10:00:00+01:00
 category: "project"
 tags: ["Swift", "SwiftUI", "SwiftData"]
-heroImage: "/img/projects/bruno.png"
+heroImage: "/img/projects/bruno.webp"
 draft: false
 featured: true
 status: "archived"

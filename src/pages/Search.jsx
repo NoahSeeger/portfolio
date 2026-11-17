@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { FaMagnifyingGlass, FaArrowRight, FaXmark } from "react-icons/fa6";
-import { getAllPosts, calculateReadTime } from "../lib/blog";
+import searchPosts from "virtual:blog/search";
 import { useTranslation } from "react-i18next";
 import Seo from "../components/Seo";
 
@@ -72,7 +72,7 @@ export function SearchPage() {
 
   useEffect(() => () => clearTimeout(debounceRef.current), []);
 
-  const posts = useMemo(() => getAllPosts().filter((post) => post.status !== "archived"), []);
+  const posts = useMemo(() => searchPosts, []);
 
   // Live filter using inputValue (instant, no Enter needed)
   const results = useMemo(() => {
@@ -105,6 +105,7 @@ export function SearchPage() {
   };
 
   const clearSearch = () => {
+    clearTimeout(debounceRef.current);
     setInputValue("");
     setSearchParams({});
   };
@@ -172,7 +173,7 @@ export function SearchPage() {
                     <div className="mt-1 flex items-center gap-3 text-sm" style={{ color: "var(--text-muted)" }}>
                       <time dateTime={post.pubDatetime}>{formatDate(post.pubDatetime, locale)}</time>
                       <span>·</span>
-                      <span>{calculateReadTime(post.content)} min {t("posts_read", "read")}</span>
+                      <span>{post.readTime} min {t("posts_read", "read")}</span>
                     </div>
                   </div>
                   <div className="flex-shrink-0">

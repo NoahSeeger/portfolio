@@ -6,7 +6,7 @@ category: "project"
 tags: ["Swift", "SwiftUI", "PhotosUI"]
 github: "https://github.com/NoahSeeger/PicSwipe"
 liveDemo: "https://picswipe.noahseeger.de"
-heroImage: "/img/projects/picswipe.png"
+heroImage: "/img/projects/picswipe.webp"
 draft: false
 featured: true
 ---

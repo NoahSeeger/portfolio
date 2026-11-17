@@ -1,0 +1,23 @@
+@media (hover: hover) and (pointer: fine) {
+  html[data-custom-cursor],
+  html[data-custom-cursor] :where(*) {
+    cursor: var(--portfolio-cursor), auto;
+  }
+
+  html[data-custom-cursor] :where(a, button, [role="button"], select, label[for]) {
+    cursor: var(--portfolio-cursor), pointer;
+  }
+
+  /* Keep native editing and disabled-control feedback. Selection still works
+     normally with the arrow on the rest of the page. */
+  html[data-custom-cursor] :where(textarea, input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="file"]), [contenteditable="true"], [contenteditable="true"] *) {
+    cursor: text;
+  }
+
+  html[data-custom-cursor] :where(:disabled, [aria-disabled="true"]) { cursor: not-allowed; }
+}
+
+@media (forced-colors: active) {
+  html[data-custom-cursor],
+  html[data-custom-cursor] :where(*) { cursor: revert; }
+}

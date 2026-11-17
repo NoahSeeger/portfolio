@@ -6,7 +6,7 @@ category: "project"
 tags: ["Next.js", "React", "Supabase", "TailwindCSS", "react-simple-maps"]
 github: "https://github.com/NoahSeeger/livo"
 liveDemo: "https://livoapp.netlify.app"
-heroImage: "/img/projects/livo.png"
+heroImage: "/img/projects/livo.webp"
 draft: false
 featured: true
 status: "archived"
