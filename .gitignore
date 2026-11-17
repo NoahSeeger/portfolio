@@ -12,6 +12,11 @@ dist
 dist-ssr
 *.local
 
+# Local agent workspaces and browser inspection output
+/.agtx/
+/.rambler/
+/.playwright-mcp/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
