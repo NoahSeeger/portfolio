@@ -4,18 +4,17 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "prebuild": "npm run strip-exif",
     "dev": "vite",
-    "build": "vite build && node scripts/generate-rss.js",
+    "build": "vite build",
     "strip-exif": "node scripts/strip-exif.js",
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "node --test tests/*.test.js"
   },
   "overrides": {
     "brace-expansion": "1.1.18"
   },
   "dependencies": {
-    "@tailwindcss/typography": "^0.5.19",
     "i18next": "^26.2.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
@@ -35,8 +34,14 @@
     "eslint": "9.7.0",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.1.1",
+    "exiftool-vendored": "39.4.0",
     "postcss": "8.5.26",
+    "sharp": "0.35.5",
     "tailwindcss": "^3.4.19",
-    "vite": "8.2.1"
+    "vite": "8.2.1",
+    "yaml": "^2.9.1"
+  },
+  "engines": {
+    "node": ">=22.12.0"
   }
 }

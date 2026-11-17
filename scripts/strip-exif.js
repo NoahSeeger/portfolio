@@ -1,126 +1,78 @@
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
-import { execFileSync } from "child_process";
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { execFileSync } from "node:child_process";
+import { exiftoolPath } from "exiftool-vendored";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+export const imageExtensions = new Set([".jpg", ".jpeg", ".png", ".webp", ".gif", ".tif", ".tiff", ".avif", ".bmp", ".ico"]);
+const harmlessGroups = new Set(["System", "Composite", "JFIF", "ICC_Profile", "Adobe"]);
+const layoutTags = new Set([
+  ...["FileName", "Directory", "FileSize", "FileModifyDate", "FileAccessDate", "FileInodeChangeDate", "FileCreateDate", "FilePermissions", "FileAttributes", "FileType", "FileTypeExtension", "MIMEType", "ExifByteOrder", "ImageWidth", "ImageHeight", "EncodingProcess", "BitsPerSample", "ColorComponents", "YCbCrSubSampling", "ImageCount", "NumColors", "ColorPlanes", "BitsPerPixel", "ImageLength"].map((tag) => `File:${tag}`),
+  "ExifTool:ExifToolVersion", "EXIF:Orientation", "EXIF:YCbCrPositioning", "EXIF:XResolution", "EXIF:YResolution", "EXIF:ResolutionUnit",
+  ...["ImageWidth", "ImageHeight", "BitDepth", "ColorType", "Compression", "Filter", "Interlace", "PixelsPerUnitX", "PixelsPerUnitY", "PixelUnits", "SRGBRendering", "Gamma", "WhitePointX", "WhitePointY", "RedX", "RedY", "GreenX", "GreenY", "BlueX", "BlueY", "Palette", "Transparency"].map((tag) => `PNG:${tag}`),
+  ...["ImageWidth", "ImageHeight", "AlphaIsUsed", "VP8Version", "HorizontalScale", "VerticalScale", "AnimationBackgroundColor", "AnimationLoopCount", "Duration", "FrameCount"].map((tag) => `RIFF:${tag}`),
+  ...["GIFVersion", "ImageWidth", "ImageHeight", "HasColorMap", "ColorResolutionDepth", "BitsPerPixel", "BackgroundColor", "PixelAspectRatio", "AnimationIterations", "TransparentColor", "Duration", "FrameCount"].map((tag) => `GIF:${tag}`),
+]);
 
-const dirs = [
-  path.join(__dirname, "../src/assets"),
-  path.join(__dirname, "../public"),
-];
+export function mediaFiles(directory) {
+  if (!fs.existsSync(directory)) return [];
+  return fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+    const file = path.join(directory, entry.name);
+    if (entry.isSymbolicLink()) throw new Error(`Media directories must not contain symlinks: ${file}`);
+    return entry.isDirectory() ? mediaFiles(file) : entry.isFile() && imageExtensions.has(path.extname(file).toLowerCase()) ? [file] : [];
+  });
+}
 
-const mediaExtensions = {
-  images: [".jpg", ".jpeg", ".png", ".webp", ".gif", ".tiff", ".tif", ".bmp"],
-  videos: [".mp4", ".mov", ".avi", ".mkv", ".webm", ".m4v"],
-  audio: [".mp3", ".wav", ".flac", ".aac", ".m4a", ".ogg"],
-  all: function () {
-    return [...this.images, ...this.videos, ...this.audio];
-  },
-};
-
-function findMedia(dir) {
-  const media = [];
-  const exts = mediaExtensions.all();
-
-  function walk(d) {
-    try {
-      const entries = fs.readdirSync(d, { withFileTypes: true });
-      for (const entry of entries) {
-        const full = path.join(d, entry.name);
-        if (entry.isDirectory()) {
-          walk(full);
-        } else if (exts.includes(path.extname(entry.name).toLowerCase())) {
-          media.push(full);
-        }
+export async function createMetadataTool({ executable } = {}) {
+  const binary = executable ?? await exiftoolPath();
+  if (!binary) throw new Error("Required bundled ExifTool is missing. Run npm ci including development and optional dependencies.");
+  const run = (args) => {
+    try { return execFileSync(binary, args, { encoding: "utf8", maxBuffer: 32 * 1024 * 1024, stdio: ["ignore", "pipe", "pipe"] }); }
+    catch (error) { throw new Error(`Required ExifTool failed: ${error.stderr?.trim() || error.message}`, { cause: error }); }
+  };
+  const version = run(["-ver"]).trim();
+  function inspect(files) {
+    const results = [];
+    for (let offset = 0; offset < files.length; offset += 128) {
+      const batch = files.slice(offset, offset + 128).map((file) => path.resolve(file));
+      const records = JSON.parse(run(["-json", "-G0", "-all", ...batch]));
+      const byFile = new Map(records.map((record) => [path.resolve(record.SourceFile), record]));
+      for (const file of batch) {
+        const record = byFile.get(file);
+        if (!record) throw new Error(`No metadata result for ${file}`);
+        const issue = Object.entries(record).find(([tag]) => /(?:^|:)(?:Error|Warning)$/.test(tag));
+        if (issue) throw new Error(`${file}: ${issue[1]}`);
+        const tags = Object.keys(record).filter((tag) => tag !== "SourceFile" && !harmlessGroups.has(tag.split(":")[0]) && !layoutTags.has(tag) && !(tag === "PNG:ProfileName" && record[tag] === "icc"));
+        results.push({ file, tags });
       }
-    } catch {
-      // skip inaccessible dirs
     }
+    return results;
   }
-
-  walk(dir);
-  return media;
-}
-
-function hasMetadata(file) {
-  try {
-    // Ask only for metadata fields that can contain personal information. The
-    // old shell command used `-has<`, where `<` was interpreted as redirection
-    // by the shell and the check was therefore unreliable for paths with
-    // spaces and for most image formats.
-    const output = execFileSync(
-      "exiftool",
-      [
-        "-s3",
-        "-EXIF:all",
-        "-GPS:all",
-        "-XMP:all",
-        "-IPTC:all",
-        "-MakerNotes:all",
-        file,
-      ],
-      { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }
-    );
-    return output.trim().length > 0;
-  } catch {
-    return false;
+  function assertClean(files) {
+    const dirty = inspect(files).filter((result) => result.tags.length);
+    if (dirty.length) throw new Error(`Unapproved embedded metadata: ${dirty.map(({ file, tags }) => `${file} (${tags.join(", ")})`).join("; ")}`);
   }
-}
-
-function stripExif(file) {
-  const ext = path.extname(file).toLowerCase();
-  const isVideo = mediaExtensions.videos.includes(ext);
-
-  // Skip if no metadata
-  if (!hasMetadata(file)) {
-    return null; // indicates skipped
-  }
-
-  try {
-    if (isVideo) {
-      // Preserve video container information while removing location and
-      // camera metadata that can identify where or how it was recorded.
-      execFileSync(
-        "exiftool",
-        [
-          "-GPS:all=",
-          "-EXIF:all=",
-          "-XMP:all=",
-          "-IPTC:all=",
-          "-MakerNotes:all=",
-          "-overwrite_original",
-          file,
-        ],
-        { stdio: "ignore" }
-      );
-    } else {
-      execFileSync("exiftool", ["-all=", "-overwrite_original", file], { stdio: "ignore" });
+  function clean(files) {
+    const dirty = inspect(files).filter((result) => result.tags.length).map((result) => result.file);
+    for (let offset = 0; offset < dirty.length; offset += 128) {
+      run(["-all=", "-tagsFromFile", "@", "-ICC_Profile", "-EXIF:Orientation", "-overwrite_original", ...dirty.slice(offset, offset + 128)]);
     }
-    return true;
-  } catch (error) {
-    console.warn(`Could not strip metadata from ${path.relative(process.cwd(), file)}: ${error.message}`);
-    return false;
+    assertClean(dirty);
+    return dirty.length;
   }
+  return { version, inspect, clean, assertClean };
 }
 
-let total = 0;
-let success = 0;
-let skipped = 0;
-
-for (const dir of dirs) {
-  if (!fs.existsSync(dir)) continue;
-
-  const media = findMedia(dir);
-  for (const item of media) {
-    total++;
-    const result = stripExif(item);
-    if (result === true) {
-      success++;
-    } else if (result === null) {
-      skipped++;
-    }
-  }
+// Explicit maintenance command only. Production builds sanitize copies instead.
+export async function stripMetadata(projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")) {
+  const tool = await createMetadataTool();
+  const files = ["src/assets", "public"].flatMap((folder) => mediaFiles(path.join(projectRoot, folder)));
+  const cleaned = tool.clean(files);
+  console.log(`Checked ${files.length} images: ${cleaned} cleaned, ${files.length - cleaned} already clean.`);
+  return { total: files.length, cleaned, alreadyClean: files.length - cleaned };
 }
 
-console.log(`Stripped EXIF from ${success}/${total} media files (${skipped} already clean)`);
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  try { await stripMetadata(); }
+  catch (error) { console.error(`Metadata check failed: ${error.message}`); process.exitCode = 1; }
+}

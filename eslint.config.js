@@ -39,7 +39,7 @@ export default [
     languageOptions: {
       ecmaVersion: "latest",
       sourceType: "module",
-      globals: { console: "readonly", process: "readonly" },
+      globals: { console: "readonly", process: "readonly", performance: "readonly" },
     },
     rules: {
       "no-undef": "error",

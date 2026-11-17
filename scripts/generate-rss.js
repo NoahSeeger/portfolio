@@ -1,71 +1,14 @@
 import fs from "fs";
 import path from "path";
-import { fileURLToPath } from "url";
+import { fileURLToPath, URL } from "node:url";
 import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { readPosts, currentPosts } from "./lib/blog-content.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const BLOG_DIR = path.join(__dirname, "../src/content/blog");
 const DIST_DIR = path.join(__dirname, "../dist");
-const BASE_URL = (process.env.SITE_URL || "https://noahseeger.de").replace(/\/$/, "");
-
-function parseFrontmatter(raw) {
-  const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---/);
-  if (!match) return { data: {}, content: raw };
-
-  const data = {};
-  for (const line of match[1].split(/\r?\n/)) {
-    const separator = line.indexOf(":");
-    if (separator === -1) continue;
-
-    const key = line.slice(0, separator).trim();
-    let value = line.slice(separator + 1).trim();
-    if (value.startsWith("[") && value.endsWith("]")) {
-      value = value
-        .slice(1, -1)
-        .split(",")
-        .map((item) => item.trim().replace(/^['"]|['"]$/g, ""))
-        .filter(Boolean);
-    } else if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
-      value = value.slice(1, -1);
-    } else if (value === "true") {
-      value = true;
-    } else if (value === "false") {
-      value = false;
-    } else if (value !== "" && !Number.isNaN(Number(value))) {
-      value = Number(value);
-    }
-    data[key] = value;
-  }
-
-  return { data, content: raw.slice(match[0].length).trim() };
-}
-
-function findMarkdownFiles(directory) {
-  const files = [];
-  for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
-    const fullPath = path.join(directory, entry.name);
-    if (entry.isDirectory()) files.push(...findMarkdownFiles(fullPath));
-    else if (entry.isFile() && entry.name.endsWith(".md")) files.push(fullPath);
-  }
-  return files;
-}
-
-function readPosts() {
-  return findMarkdownFiles(BLOG_DIR)
-    .map((filePath) => {
-      const { data, content } = parseFrontmatter(fs.readFileSync(filePath, "utf8"));
-      return { slug: path.basename(filePath, ".md"), ...data, content };
-    })
-    .filter((post) => {
-      if (post.draft || post.status === "archived") return false;
-      const publishedAt = new Date(post.pubDatetime).getTime();
-      return Number.isNaN(publishedAt) || publishedAt <= Date.now();
-    })
-    .sort((a, b) => new Date(b.pubDatetime) - new Date(a.pubDatetime));
-}
 
 function escapeXml(value = "") {
   return String(value).replace(/[<>&'\"]/g, (character) => ({
@@ -81,22 +24,25 @@ function cdata(value = "") {
   return `<![CDATA[${String(value).replaceAll("]]>", "]]]]><![CDATA[>")}]]>`;
 }
 
-function absolutizeMediaUrls(html) {
-  return html.replace(/(src|href)=(['"])\/(?!\/)/g, `$1=$2${BASE_URL}/`);
+function absolutizeMediaUrls(html, documentUrl) {
+  return html.replace(/(src|href)=(['"])(.*?)\2/g, (attribute, name, quote, value) => {
+    if (!value || /^[a-z][a-z0-9+.-]*:/i.test(value)) return attribute;
+    return `${name}=${quote}${escapeXml(new URL(value.replaceAll("&amp;", "&"), documentUrl).href)}${quote}`;
+  });
 }
 
-function markdownToHtml(content) {
+function markdownToHtml(content, documentUrl) {
   const html = renderToStaticMarkup(
     React.createElement(ReactMarkdown, { remarkPlugins: [remarkGfm] }, content)
   );
-  return absolutizeMediaUrls(html);
+  return absolutizeMediaUrls(html, documentUrl);
 }
 
-function generateRSS(posts) {
+function generateRSS(posts, BASE_URL, now) {
   const items = posts.map((post) => {
     const link = `${BASE_URL}/blog/${encodeURIComponent(post.slug)}`;
     const description = post.description ? `    <description>${cdata(post.description)}</description>` : "";
-    const content = `    <content:encoded>${cdata(markdownToHtml(post.content))}</content:encoded>`;
+    const content = `    <content:encoded>${cdata(markdownToHtml(post.content, link))}</content:encoded>`;
     const categories = (Array.isArray(post.tags) ? post.tags : [])
       .map((tag) => `    <category>${escapeXml(tag)}</category>`)
       .join("\n");
@@ -121,17 +67,17 @@ ${categories}
     <link>${BASE_URL}</link>
     <atom:link href="${BASE_URL}/rss.xml" rel="self" type="application/rss+xml" />
     <language>en</language>
-    <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
+    <lastBuildDate>${new Date(now).toUTCString()}</lastBuildDate>
 ${items}
   </channel>
 </rss>
 `;
 }
 
-function generateSitemap(posts) {
+function generateSitemap(posts, BASE_URL) {
   const urls = [
-    { loc: `${BASE_URL}/`, lastmod: new Date().toISOString() },
-    { loc: `${BASE_URL}/blog`, lastmod: posts[0]?.updatedDatetime || posts[0]?.pubDatetime },
+    { loc: `${BASE_URL}/` },
+    { loc: `${BASE_URL}/blog`, lastmod: posts.length ? new Date(Math.max(...posts.map((post) => Date.parse(post.updatedDatetime || post.pubDatetime)))).toISOString() : undefined },
     ...posts.map((post) => ({
       loc: `${BASE_URL}/blog/${encodeURIComponent(post.slug)}`,
       lastmod: post.updatedDatetime || post.pubDatetime,
@@ -146,8 +92,18 @@ ${entries}
 `;
 }
 
-const posts = readPosts();
-fs.mkdirSync(DIST_DIR, { recursive: true });
-fs.writeFileSync(path.join(DIST_DIR, "rss.xml"), generateRSS(posts));
-fs.writeFileSync(path.join(DIST_DIR, "sitemap.xml"), generateSitemap(posts));
-console.log(`Generated rss.xml and sitemap.xml with ${posts.length} published posts`);
+export function generateDocuments(allPosts, { siteUrl = process.env.SITE_URL || "https://noahseeger.de", now = Date.now() } = {}) {
+  const url = new URL(siteUrl);
+  if (!["http:", "https:"].includes(url.protocol) || url.username || url.password || url.pathname !== "/" || url.search || url.hash) throw new Error("SITE_URL must be an HTTP(S) origin without a path or credentials.");
+  const baseUrl = url.origin;
+  const posts = currentPosts(allPosts).filter((post) => Date.parse(post.pubDatetime) <= now);
+  return { "rss.xml": generateRSS(posts, baseUrl, now), "sitemap.xml": generateSitemap(posts, baseUrl) };
+}
+
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  const now = Date.now();
+  const documents = generateDocuments(readPosts(path.join(__dirname, ".."), { now }), { now });
+  fs.mkdirSync(DIST_DIR, { recursive: true });
+  for (const [name, content] of Object.entries(documents)) fs.writeFileSync(path.join(DIST_DIR, name), content);
+  console.log("Generated rss.xml and sitemap.xml");
+}
