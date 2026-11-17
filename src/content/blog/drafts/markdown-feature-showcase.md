@@ -2,8 +2,6 @@
 title: "Markdown features showcase"
 description: "A comprehensive test post demonstrating all available Markdown features, styling options, and blog system capabilities including headings, code blocks, images, tables, and more."
 pubDatetime: 2026-05-20T10:00:00+02:00
-tags: ["markdown", "test", "showcase", "features"]
-category: "note"
 draft: true
 ---
 

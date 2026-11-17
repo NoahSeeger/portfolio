@@ -2,8 +2,6 @@
 title: "CC1101 und ein kleines Funk-Gadget"
 description: "Entwurf: Mein Einstieg in Funk-Hardware und erlaubte eigene Tests."
 pubDatetime: 2026-08-05T10:00:00+02:00
-category: "note"
-tags: ["CC1101", "Hardware", "Security"]
 draft: true
 ---
 

@@ -2,8 +2,6 @@
 title: "Birthday Tracker: Projekt-Notizen"
 description: "Entwurf: Eine Erinnerung an Idee, Umsetzung und offene Fragen des Birthday Trackers."
 pubDatetime: 2026-08-05T10:00:00+02:00
-category: "project"
-tags: ["iOS", "Projekt"]
 draft: true
 ---
 

@@ -2,8 +2,6 @@
 title: "Quanta: Projekt-Notizen"
 description: "Entwurf: Ausgangspunkt, Verlauf und Learnings aus Quanta."
 pubDatetime: 2026-08-05T10:00:00+02:00
-category: "project"
-tags: ["iOS", "Projekt"]
 draft: true
 ---
 

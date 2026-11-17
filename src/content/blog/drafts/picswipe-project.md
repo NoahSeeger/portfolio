@@ -2,8 +2,6 @@
 title: "PicSwipe: Fotos sortieren durch Swipen"
 description: "Entwurf: Notizen zum Aufbau, den Entscheidungen und dem aktuellen Stand von PicSwipe."
 pubDatetime: 2026-08-05T10:00:00+02:00
-category: "project"
-tags: ["iOS", "SwiftUI", "Photos"]
 draft: true
 ---
 

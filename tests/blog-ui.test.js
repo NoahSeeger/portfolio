@@ -58,11 +58,11 @@ test("unified notes show the latest three entries and keep article navigation an
     assert.match(textPreview, /Preview description/);
     const { getPostBySlug } = await server.ssrLoadModule("/src/lib/blog.js");
     const { BlogPost } = await server.ssrLoadModule("/src/pages/Blog.jsx");
-    const post = { ...getPostBySlug("picswipe"), content: "## Test section\n\nSome **strong** and *italic* text.\n\n```unknown\nplain code\n```\n\n| Column | Value |\n| --- | --- |\n| a | b |" };
+    const post = { ...getPostBySlug("picswipe"), content: "## Test section\n\n[Website](https://picswipe.noahseeger.de) and [Source](https://github.com/NoahSeeger/PicSwipe)\n\nSome **strong** and *italic* text.\n\n```unknown\nplain code\n```\n\n| Column | Value |\n| --- | --- |\n| a | b |" };
     const article = renderToString(shell(React.createElement(BlogPost, { post }), "/blog/picswipe"));
     assert.match(article, /PicSwipe - iOS Gallery Sorter/);
     assert.match(article, /href="\/blog"/);
-    assert.match(article, /href="https:\/\/picswipe.noahseeger.de"[^>]*rel="noopener noreferrer"/);
+    assert.match(article, /href="https:\/\/picswipe.noahseeger.de"/);
     assert.match(article, /<h2>Test section<\/h2>/);
     assert.match(article, /<strong>strong<\/strong>/);
     assert.match(article, /<em>italic<\/em>/);
@@ -70,6 +70,8 @@ test("unified notes show the latest three entries and keep article navigation an
     assert.match(article, /plain code/);
     assert.ok(!/<pre[^>]*>\s*<pre/.test(article));
     assert.match(article, /More notes/);
+    assert.match(article, /href="https:\/\/github.com\/NoahSeeger\/PicSwipe"/);
+    assert.ok(!article.includes("reading-links"), "links belong in Markdown, without a special header block");
     assert.ok(!article.includes("reading-topics"), "article tags are not rendered");
     assert.ok(!article.includes("reading-progress"), "the decorative progress bar is removed");
     assert.ok(!article.includes("category=project"), "articles share one notes navigation");

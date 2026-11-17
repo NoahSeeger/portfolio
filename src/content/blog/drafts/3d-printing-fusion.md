@@ -2,8 +2,6 @@
 title: "Mein erster eigener 3D-Druck mit Fusion"
 description: "Entwurf: Vom ersten Modell in Fusion bis zum fertigen Druck."
 pubDatetime: 2026-08-05T10:00:00+02:00
-category: "note"
-tags: ["3D-Druck", "Fusion", "A1 Mini"]
 draft: true
 ---
 

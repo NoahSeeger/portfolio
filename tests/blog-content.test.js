@@ -4,13 +4,13 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { build, createServer } from "vite";
-import { parsePost, readPosts } from "../scripts/lib/blog-content.js";
+import { parsePost, readPosts, metadataOnly } from "../scripts/lib/blog-content.js";
 import { generateDocuments } from "../scripts/generate-rss.js";
 import { blogPlugin } from "../scripts/blog-plugin.js";
 
 const now = Date.parse("2026-11-17T12:00:00Z");
 function post(body = "VISIBLE_BODY_SENTINEL", extra = "") {
-  return `---\ntitle: "Example: one, two"\ndescription: Description\npubDatetime: 2026-01-01T10:00:00Z\ntags: ["one, two", three]\n${extra}---\n${body}`;
+  return `---\ntitle: "Example: one, two"\ndescription: Description\npubDatetime: 2026-01-01T10:00:00Z\n${extra}---\n${body}`;
 }
 function fixture(t) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), "portfolio-blog-"));
@@ -27,9 +27,8 @@ function fixture(t) {
 }
 
 test("YAML parsing supports quoted commas, comments and multiline values", () => {
-  const parsed = parsePost(post("200 words", "featured: true # comment\ncategory: project\n"), "example.md");
-  assert.deepEqual(parsed.tags, ["one, two", "three"]);
-  assert.equal(parsed.featured, true);
+  const parsed = parsePost(post("200 words", "draft: true # comment\n"), "example.md");
+  assert.equal(parsed.draft, true);
   assert.equal(parsed.readTime, 1);
   assert.equal(parsePost(post().replace("description: Description", "description: >\n  first line\n  second line"), "example.md").description, "first line second line");
 });
@@ -103,4 +102,25 @@ test("local dev exposes draft previews and lazy article/search content", async (
     assert.ok(search.default.some((p) => p.content === "DRAFT_SECRET_SENTINEL"));
     assert.ok(search.default.some((p) => p.slug === "archived"), "search includes archived notes that are visible in the listing");
   } finally { await server.close(); }
+});
+
+test("content fields fail closed on typos and invalid cover paths", () => {
+  for (const extra of ["drfat: true", "heroImage: javascript:alert(1)", "heroImage: relative.png", "heroImage: https:example.test", "heroImage: https://user:pass@example.test/image.png", "heroImage: //other.example/image.png", "updatedDatetime: 2025-01-01T00:00:00Z"]) {
+    assert.throws(() => parsePost(post("body", `${extra}\n`), "example.md"), /example.md:/, extra);
+  }
+  const valid = parsePost(post("body", "heroImage: /img/project.webp\n"), "example.md");
+  assert.equal(valid.heroImage, "/img/project.webp");
+});
+
+test("removed taxonomy and special link fields are rejected; regular Markdown links work in RSS", () => {
+  for (const extra of ["tags: [one]", "category: project", "featured: true", "github: https://github.com/example/project", "liveDemo: https://example.test"]) {
+    assert.throws(() => parsePost(post("body", `${extra}\n`), "example.md"), /Unknown frontmatter field/);
+  }
+  const parsed = parsePost(post("[Website](https://example.test) and [Source](https://github.com/example/project)"), "example.md");
+  const browser = metadataOnly(parsed);
+  assert.ok(!("content" in browser));
+  const rss = generateDocuments([parsed], { now })["rss.xml"];
+  assert.match(rss, /href="https:\/\/example.test"/);
+  assert.match(rss, /href="https:\/\/github.com\/example\/project"/);
+  assert.ok(!rss.includes("<category>"));
 });

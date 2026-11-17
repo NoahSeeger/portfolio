@@ -2,13 +2,8 @@
 title: "PicSwipe - iOS Gallery Sorter"
 description: "Tinder-style gallery sorter that helps you clean up your photo library by swiping left to delete and right to keep."
 pubDatetime: 2026-01-15T10:00:00+01:00
-category: "project"
-tags: ["Swift", "SwiftUI", "PhotosUI"]
-github: "https://github.com/NoahSeeger/PicSwipe"
-liveDemo: "https://picswipe.noahseeger.de"
 heroImage: "/img/projects/picswipe.webp"
 draft: false
-featured: true
 ---
 
 ## What is PicSwipe?

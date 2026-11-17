@@ -25,11 +25,6 @@
   text-wrap: balance;
   overflow-wrap: anywhere;
 }
-.reading-links { display: flex; flex-wrap: wrap; gap: 0.65rem; margin-top: 1.5rem; }
-.reading-links a { display: inline-flex; align-items: center; gap: 0.45rem; padding-block: 0.2rem; color: var(--text-secondary); font-size: 0.8rem; text-decoration: underline; text-decoration-color: var(--border); text-underline-offset: 3px; transition: color 200ms ease, text-decoration-color 200ms ease; }
-.reading-links a:hover { color: var(--text-primary); text-decoration-color: var(--text-secondary); }
-.reading-links a:focus-visible { outline: 2px solid #368cff; outline-offset: 3px; }
-.reading-links svg { width: 0.65rem; height: 0.65rem; }
 .reading-archive-note { margin: 0 0 2rem; padding: 0.25rem 0 0.25rem 1rem; border-left: 2px solid var(--border-strong); font-size: 0.8rem; line-height: 1.7; color: var(--text-secondary); }
 .reading-cover { margin: 0 0 3rem; overflow: hidden; border: 1px solid color-mix(in srgb, var(--border) 60%, transparent); border-radius: 0.85rem; background: var(--bg-secondary); aspect-ratio: 16 / 10; }
 .reading-cover img { width: 100%; height: 100%; object-fit: cover; }
@@ -82,5 +77,5 @@
 [data-reading-reveal="visible"] { animation: reading-section-in 550ms cubic-bezier(0.21, 0.47, 0.32, 0.98) both; }
 @keyframes reading-section-in { from { opacity: 0; filter: blur(5px); transform: translateY(18px); } to { opacity: 1; filter: none; transform: none; } }
 @media (max-width: 540px) { .reading-bottom-fade { height: calc(5rem + env(safe-area-inset-bottom)); } .reading-cover { margin-bottom: 2rem; } }
-@media (prefers-reduced-motion: reduce) { [data-reading-reveal] { opacity: 1; animation: none; } .reading-bottom-fade, .reading-links a, .reading-body a { transition: none; } }
+@media (prefers-reduced-motion: reduce) { [data-reading-reveal] { opacity: 1; animation: none; } .reading-bottom-fade, .reading-body a { transition: none; } }
 @media (prefers-reduced-transparency: reduce) { .reading-bottom-fade::after { backdrop-filter: none; -webkit-backdrop-filter: none; } }

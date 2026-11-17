@@ -138,10 +138,8 @@
   "blog_read_time": "{{count}} min read",
   "blog_intro": "Notes on software, projects, and things I'm learning.",
   "blog_breadcrumb": "Page navigation",
-  "blog_source": "Source code",
   "blog_notes": "Notes",
   "blog_view_all": "View all",
   "blog_all_notes": "All notes",
-  "blog_more_notes": "More notes",
-  "blog_visit_site": "Website"
+  "blog_more_notes": "More notes"
 }

@@ -1,7 +1,7 @@
 import { Children, isValidElement, lazy, Suspense, useState, useEffect, useLayoutEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { FaCopy, FaCheck, FaArrowLeft, FaArrowUpRightFromSquare } from "react-icons/fa6";
+import { FaCopy, FaCheck, FaArrowLeft } from "react-icons/fa6";
 import { formatDateShort, getAllPosts } from "../lib/blog";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -13,6 +13,14 @@ import "./BlogUI.css";
 import "./BlogPost.css";
 
 const HighlightedCode = lazy(() => import("../components/HighlightedCode"));
+
+function MarkdownLink({ href, children, title }) {
+  const path = href?.split(/[?#]/)[0];
+  // Use client navigation for pages, but keep asset downloads and fragment
+  // links native. Returning home through a note should not reload its intro.
+  const internal = path === "/" || path === "/blog" || path?.startsWith("/blog/") || path === "/search";
+  return internal ? <Link to={href} title={title}>{children}</Link> : <a href={href} title={title}>{children}</a>;
+}
 
 function PlainCode({ children }) {
   return <pre style={{ margin: 0, padding: "1rem", overflow: "auto", fontSize: "0.875rem", lineHeight: "1.5", color: "#d4d4d4", fontFamily: 'Menlo, Monaco, Consolas, "Andale Mono", "Ubuntu Mono", "Courier New", monospace' }}><code style={{ font: "inherit", tabSize: 4 }}>{children}</code></pre>;
@@ -133,10 +141,7 @@ export function BlogPost({ post }) {
           </div>
           <h1>{post.title}</h1>
           <p className="reading-intro">{post.description}</p>
-          {(post.liveDemo || post.github) && <div className="reading-links">
-            {post.liveDemo && <a href={post.liveDemo} target="_blank" rel="noopener noreferrer">{t("blog_visit_site", "Website")}<FaArrowUpRightFromSquare aria-hidden="true" /></a>}
-            {post.github && <a href={post.github} target="_blank" rel="noopener noreferrer">{t("blog_source", "Source code")}<FaArrowUpRightFromSquare aria-hidden="true" /></a>}
-          </div>}
+
         </header>
         {post.status === "archived" && <aside className="reading-archive-note">{t("posts_archived_notice")}</aside>}
         {post.heroImage && <figure className="reading-cover" data-reading-reveal="">
@@ -144,6 +149,7 @@ export function BlogPost({ post }) {
         </figure>}
         <div className="reading-body">
           <ReactMarkdown remarkPlugins={[remarkGfm, remarkReadingSections]} components={{
+            a: MarkdownLink,
             code: MarkdownCodeBlock,
             pre: MarkdownPre,
             img: ({ src, alt, title }) => <img src={src} alt={alt || ""} title={title} loading="lazy" decoding="async" />,

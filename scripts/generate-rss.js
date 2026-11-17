@@ -43,9 +43,7 @@ function generateRSS(posts, BASE_URL, now) {
     const link = `${BASE_URL}/blog/${encodeURIComponent(post.slug)}`;
     const description = post.description ? `    <description>${cdata(post.description)}</description>` : "";
     const content = `    <content:encoded>${cdata(markdownToHtml(post.content, link))}</content:encoded>`;
-    const categories = (Array.isArray(post.tags) ? post.tags : [])
-      .map((tag) => `    <category>${escapeXml(tag)}</category>`)
-      .join("\n");
+
 
     return `  <item>
     <title>${cdata(post.title)}</title>
@@ -53,7 +51,6 @@ function generateRSS(posts, BASE_URL, now) {
     <guid isPermaLink="true">${escapeXml(link)}</guid>
 ${description}
 ${content}
-${categories}
     <author>noahseeger@outlook.de (Noah Seeger)</author>
     <pubDate>${new Date(post.pubDatetime).toUTCString()}</pubDate>
   </item>`;

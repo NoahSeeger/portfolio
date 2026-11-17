@@ -2,8 +2,6 @@
 title: "Hermes Agent und OpenClaw: erste Notizen"
 description: "Entwurf: Ein persönlicher Vergleich zweier Agenten-Setups aus der Praxis."
 pubDatetime: 2026-08-05T10:00:00+02:00
-category: "note"
-tags: ["Agenten", "OpenClaw", "AI"]
 draft: true
 ---
 

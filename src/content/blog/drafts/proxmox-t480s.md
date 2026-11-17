@@ -2,8 +2,6 @@
 title: "Proxmox auf einem ThinkPad T480s"
 description: "Entwurf: Mein Homelab-Setup auf einem gebrauchten Laptop."
 pubDatetime: 2026-08-05T10:00:00+02:00
-category: "note"
-tags: ["Proxmox", "Homelab", "ThinkPad", "Linux"]
 draft: true
 ---
 
