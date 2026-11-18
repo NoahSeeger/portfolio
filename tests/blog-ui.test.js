@@ -20,6 +20,8 @@ test("unified notes show the latest three entries and keep article navigation an
     assert.ok(!listing.includes("reading-topbar"), "notes have no duplicate sticky back bar");
     assert.match(listing, /href="\/blog\/picswipe"/);
     assert.match(listing, /href="\/rss.xml"/);
+    assert.equal((listing.match(/class="note-preview-paper note-preview-paper-image"/g) || []).length, 3, "notes with local covers show thumbnails in the index");
+    assert.ok(listing.includes('loading="lazy"'), "closed cover thumbnails load lazily");
     assert.ok(listing.includes("CC1101 und ein kleines Funk-Gadget"), "legacy category URLs must show the unified notes index");
     const { default: Hero } = await server.ssrLoadModule("/src/components/Hero.jsx");
     const home = renderToString(shell(React.createElement(Hero), "/"));
@@ -75,7 +77,7 @@ test("unified notes show the latest three entries and keep article navigation an
     assert.match(textPreview, /Preview description/);
     const { getPostBySlug } = await server.ssrLoadModule("/src/lib/blog.js");
     const { BlogPost } = await server.ssrLoadModule("/src/pages/Blog.jsx");
-    const post = { ...getPostBySlug("picswipe"), content: "## Test section\n\n[Website](https://picswipe.noahseeger.de) and [Source](https://github.com/NoahSeeger/PicSwipe)\n\nSome **strong** and *italic* text.\n\n```unknown\nplain code\n```\n\n| Column | Value |\n| --- | --- |\n| a | b |" };
+    const post = { ...getPostBySlug("picswipe"), content: "## Test section\n\n[Website](https://picswipe.noahseeger.de) and [Source](https://github.com/NoahSeeger/PicSwipe)\n\nSome **strong** and *italic* text.\n\n```unknown\nplain code\n```\n\n| Column | Value |\n| --- | --- |\n| a | b |\n\n- [x] Checked task\n- [ ] Open task\n\n> A quote\n\n~~Removed~~\n\n1. First item\n2. Second item\n\n![Diagram](/img/projects/picswipe.webp)\n\n---\n\n### Subsection\n\nInline `value`" };
     const article = renderToString(shell(React.createElement(BlogPost, { post }), "/blog/picswipe"));
     assert.match(article, /PicSwipe - iOS Gallery Sorter/);
     assert.match(article, /href="\/blog"/);
@@ -85,6 +87,13 @@ test("unified notes show the latest three entries and keep article navigation an
     assert.match(article, /<strong>strong<\/strong>/);
     assert.match(article, /<em>italic<\/em>/);
     assert.match(article, /<table>/);
+    assert.match(article, /<blockquote>/);
+    assert.match(article, /<del>Removed<\/del>/);
+    assert.match(article, /<ol>/);
+    assert.match(article, /alt="Diagram"/);
+    const checkboxes = article.match(/<input[^>]*type="checkbox"[^>]*>/g) || [];
+    assert.equal(checkboxes.length, 2);
+    assert.ok(checkboxes.every((checkbox) => checkbox.includes("disabled")), "Markdown tasks are read-only");
     assert.match(article, /plain code/);
     assert.ok(!/<pre[^>]*>\s*<pre/.test(article));
     assert.match(article, /More notes/);

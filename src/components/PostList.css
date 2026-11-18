@@ -17,6 +17,8 @@
 .post-row-date { flex-shrink: 0; color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6; font-variant-numeric: tabular-nums; transition: color 200ms ease; }
 .note-preview { position: relative; display: inline-flex; flex-shrink: 0; align-items: center; justify-content: center; padding: 4px; border: 1px solid var(--border); border-radius: 9px; background: var(--bg-secondary); box-shadow: 0 1px 2px #00000008; transform: rotate(0deg); transition: transform 300ms ease-out; }
 .note-preview-paper { display: flex; flex-direction: column; justify-content: center; gap: 3px; width: 48px; height: 48px; padding: 7px; overflow: hidden; border: 1px solid var(--border); border-radius: 6px; background: var(--bg-primary); transition: opacity 150ms ease; }
+.note-preview-paper.note-preview-paper-image { padding: 0; }
+.note-preview-paper-image img { width: 100%; height: 100%; object-fit: cover; }
 .note-preview-heading, .note-preview-line { display: block; flex-shrink: 0; height: 3px; border-radius: 999px; }
 .note-preview-heading { background: color-mix(in srgb, var(--text-secondary) 70%, var(--bg-primary)); }
 .note-preview-line { background: color-mix(in srgb, var(--border) 80%, var(--bg-primary)); }

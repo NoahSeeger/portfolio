@@ -28,7 +28,7 @@ export function BlogIndex() {
           const entries = posts.filter((post) => new Date(post.pubDatetime).getFullYear() === year);
           return <section className="reading-year" key={year} aria-labelledby={`writing-${year}`}>
             <h2 id={`writing-${year}`}>{year}</h2>
-            <PostList posts={entries} label={`${title} ${year}`} />
+            <PostList showCovers posts={entries} label={`${title} ${year}`} />
           </section>;
         })}
         {!posts.length && <p className="reading-intro">{t("posts_no_posts", "No posts yet.")}</p>}

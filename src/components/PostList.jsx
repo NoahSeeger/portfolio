@@ -26,7 +26,9 @@ export function NotePreview({ post, expanded }) {
   );
 }
 
-function NoteThumb({ title, description }) {
+function NoteThumb({ title, description, thumbnail }) {
+  const [failedImage, setFailedImage] = useState(null);
+  const showImage = thumbnail && failedImage !== thumbnail;
   const words = description.split(/\s+/);
   const lines = [];
   let length = 0;
@@ -37,14 +39,16 @@ function NoteThumb({ title, description }) {
   }
   if (lines.length < 5 && length) lines.push(length);
   return <span className="note-preview" aria-hidden="true">
-    <span className="note-preview-paper">
+    <span className={`note-preview-paper${showImage ? " note-preview-paper-image" : ""}`}>
+      {showImage ? <img src={thumbnail} alt="" width="48" height="48" loading="lazy" decoding="async" fetchPriority="low" onError={() => setFailedImage(thumbnail)} /> : <>
       <span className="note-preview-heading" style={{ width: `${Math.min(90, Math.max(40, title.length * 2))}%` }} />
       {lines.slice(0, 5).map((size, index) => <span key={index} className="note-preview-line" style={{ width: `${Math.min(100, Math.max(30, size / 28 * 100))}%` }} />)}
+      </>}
     </span>
   </span>;
 }
 
-export function PostList({ posts, label }) {
+export function PostList({ posts, label, showCovers = false }) {
   const ref = useRef(null);
   const [activeSlug, setActiveSlug] = useState(null);
   const intent = useRef(null);
@@ -90,7 +94,7 @@ export function PostList({ posts, label }) {
             >
               <span className="post-row-title">{post.title}</span>
               <time className="post-row-date" dateTime={post.pubDatetime}>{new Date(post.pubDatetime).toLocaleDateString(i18n.language, { month: "short", day: "numeric", year: "numeric" })}</time>
-              <NoteThumb title={post.title} description={post.description} />
+              <NoteThumb title={post.title} description={post.description} thumbnail={showCovers ? post.thumbnail : null} />
             </Link>
           </div>
           <NotePreview post={post} expanded={activeSlug === post.slug} />
