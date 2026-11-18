@@ -56,7 +56,7 @@ export function PortfolioDock() {
     <>
       <nav
         aria-label="Site navigation"
-        className={`portfolio-top-nav portfolio-top-nav-enter fixed right-5 top-5 z-[70] flex items-center gap-1 sm:right-7 sm:top-7${isBlogPost || isBlogIndex || isSearch ? " portfolio-reading-nav" : ""}`}
+        className="portfolio-top-nav portfolio-top-nav-enter fixed right-5 top-5 z-[70] flex items-center gap-1 sm:right-7 sm:top-7"
       >
         <Link to={navLink} className="top-nav-control" aria-label={navLabel} title={navLabel}>
           {navIcon}

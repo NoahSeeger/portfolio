@@ -1,7 +1,7 @@
 import { Children, isValidElement, lazy, Suspense, useState, useEffect, useLayoutEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { FaCopy, FaCheck, FaArrowLeft } from "react-icons/fa6";
+import { FaCopy, FaCheck } from "react-icons/fa6";
 import { formatDateShort, getAllPosts } from "../lib/blog";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -121,7 +121,6 @@ export function BlogPost({ post }) {
     );
   }
 
-  const backLabel = t("blog_all_notes", "All notes");
   const more = getAllPosts().filter((entry) => entry.slug !== post.slug && !entry.draft && Date.parse(entry.pubDatetime) <= Date.now()).slice(0, 2);
 
   return (
@@ -129,9 +128,6 @@ export function BlogPost({ post }) {
       <Seo title={post.title} description={post.description} path={`/blog/${post.slug}`} image={post.heroImage}
         type="article" noindex={post.status === "archived" || post.draft}
         article={{ publishedTime: post.pubDatetime, modifiedTime: post.updatedDatetime }} />
-      <nav className="reading-topbar" aria-label={t("blog_breadcrumb", "Page navigation")}>
-        <Link to="/blog" className="reading-back"><FaArrowLeft aria-hidden="true" />{backLabel}</Link>
-      </nav>
       <article key={post.slug} ref={articleRef}>
         <header className="reading-article-header" data-reading-reveal="">
           <div className="reading-eyebrow">

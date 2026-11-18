@@ -217,7 +217,8 @@ html { scroll-behavior: smooth; }
   user-select: none;
   pointer-events: none;
 }
-.portfolio-footer-wordmark > span { display: block; flex-shrink: 0; }
+/* Restore the space removed after the final glyph by negative tracking. */
+.portfolio-footer-wordmark > span { display: block; flex-shrink: 0; padding-inline-end: 0.075em; }
 .portfolio-main.portfolio-main-home { padding-bottom: 0; }
 
 

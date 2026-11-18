@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
-import { FaMagnifyingGlass, FaArrowLeft, FaArrowRight, FaXmark } from "react-icons/fa6";
+import { FaMagnifyingGlass, FaArrowRight, FaXmark } from "react-icons/fa6";
 import searchPosts from "virtual:blog/search";
 import { useTranslation } from "react-i18next";
 import Seo from "../components/Seo";
@@ -58,9 +58,6 @@ export function SearchPage() {
   return (
     <div className="reading-page search-page">
       <Seo title={t("search_title", "Search")} description={t("search_description")} path="/search" noindex />
-      <nav className="reading-topbar" aria-label={t("blog_breadcrumb", "Page navigation")}>
-        <Link to="/blog" className="reading-back"><FaArrowLeft aria-hidden="true" />{t("blog_notes", "Notes")}</Link>
-      </nav>
       <header className="reading-index-header">
         <div className="reading-index-title-row"><h1>{t("search_title", "Search")}</h1></div>
       </header>

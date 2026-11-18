@@ -1,8 +1,7 @@
 import { useLayoutEffect } from "react";
-import { FaArrowLeft, FaRss } from "react-icons/fa6";
+import { FaRss } from "react-icons/fa6";
 import { getAllPosts } from "../lib/blog";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
 import { PostList } from "../components/PostList";
 import Seo from "../components/Seo";
 import "./BlogUI.css";
@@ -17,9 +16,6 @@ export function BlogIndex() {
   return (
     <div className="reading-page">
       <Seo title={title} description={description} path="/blog" />
-      <nav className="reading-topbar" aria-label={t("blog_breadcrumb", "Page navigation")}>
-        <Link to="/" className="reading-back"><FaArrowLeft aria-hidden="true" />{t("nav_home", "Home")}</Link>
-      </nav>
       <div>
         <header className="reading-index-header">
           <div className="reading-index-title-row">

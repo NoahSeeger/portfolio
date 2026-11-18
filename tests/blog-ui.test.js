@@ -17,6 +17,7 @@ test("unified notes show the latest three entries and keep article navigation an
     const { BlogIndex } = await server.ssrLoadModule("/src/pages/BlogIndex.jsx");
     const listing = renderToString(shell(React.createElement(BlogIndex), "/blog?category=project"));
     assert.match(listing, /<h1>Notes<\/h1>/);
+    assert.ok(!listing.includes("reading-topbar"), "notes have no duplicate sticky back bar");
     assert.match(listing, /href="\/blog\/picswipe"/);
     assert.match(listing, /href="\/rss.xml"/);
     assert.ok(listing.includes("CC1101 und ein kleines Funk-Gadget"), "legacy category URLs must show the unified notes index");
@@ -48,7 +49,18 @@ test("unified notes show the latest three entries and keep article navigation an
     assert.match(search, /href="\/blog\/bruno"/);
     assert.match(search, /<mark>Bruno<\/mark>/);
     assert.equal((search.match(/class="search-clear"/g) || []).length, 1);
+    assert.ok(!search.includes("reading-topbar"), "search uses the shared corner navigation");
     assert.ok(!search.includes("background-color:var(--accent)"), "search marks inherit readable theme colors");
+    const { PortfolioDock } = await server.ssrLoadModule("/src/components/PortfolioDock.jsx");
+    for (const [route, destination] of [["/blog", "/"], ["/blog/picswipe", "/blog"], ["/search", "/blog"]]) {
+      const dock = renderToString(shell(React.createElement(PortfolioDock), route));
+      const navigation = dock.slice(0, dock.indexOf("</nav>") + 6);
+      assert.match(navigation, /right-5 top-5/);
+      assert.ok(!navigation.includes("portfolio-reading-nav"));
+      assert.ok(navigation.includes(`href="${destination}"`));
+      assert.equal((navigation.match(/<button/g) || []).length, 2);
+      assert.equal((navigation.match(/<a /g) || []).length, 1);
+    }
     const { NotePreview } = await server.ssrLoadModule("/src/components/PostList.jsx");
     const previewPost = { title: "Preview title", description: "Preview description", heroImage: "/img/projects/picswipe.webp" };
     const closedPreview = renderToString(React.createElement(NotePreview, { post: previewPost, expanded: false }));
@@ -67,6 +79,7 @@ test("unified notes show the latest three entries and keep article navigation an
     const article = renderToString(shell(React.createElement(BlogPost, { post }), "/blog/picswipe"));
     assert.match(article, /PicSwipe - iOS Gallery Sorter/);
     assert.match(article, /href="\/blog"/);
+    assert.ok(!article.includes("reading-topbar"), "articles have no duplicate sticky back bar");
     assert.match(article, /href="https:\/\/picswipe.noahseeger.de"/);
     assert.match(article, /<h2>Test section<\/h2>/);
     assert.match(article, /<strong>strong<\/strong>/);
