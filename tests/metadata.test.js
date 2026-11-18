@@ -4,11 +4,10 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
-import { fileURLToPath } from "node:url";
+import sharp from "sharp";
 import { exiftoolPath } from "exiftool-vendored";
 import { createMetadataTool } from "../scripts/strip-exif.js";
 
-const repository = fileURLToPath(new URL("../", import.meta.url));
 export const binary = await exiftoolPath();
 function fixture(t) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), "portfolio-metadata-test-"));
@@ -36,7 +35,7 @@ test("metadata scan rejects errors, warnings and unknown embedded fields", async
 test("real bundled ExifTool removes GPS, author and comment; keeps orientation", async (t) => {
   const root = fixture(t);
   const image = path.join(root, "photo with spaces.jpg");
-  fs.copyFileSync(path.join(repository, "src/assets/personal/about.jpg"), image);
+  await sharp({ create: { width: 32, height: 24, channels: 3, background: "#368cff" } }).jpeg().toFile(image);
   execFileSync(binary, ["-Artist=Private Person", "-Comment=Private note", "-GPSLatitude=48.7", "-GPSLongitude=9.1", "-Orientation#=6", "-overwrite_original", image]);
   const tool = await createMetadataTool();
   assert.throws(() => tool.assertClean([image]), /Unapproved embedded metadata/);
@@ -53,7 +52,7 @@ test("real bundled ExifTool removes GPS, author and comment; keeps orientation",
 test("a JPEG comment alone is embedded metadata, not filesystem information", async (t) => {
   const root = fixture(t);
   const image = path.join(root, "comment.jpg");
-  fs.copyFileSync(path.join(repository, "src/assets/personal/about.jpg"), image);
+  await sharp({ create: { width: 32, height: 24, channels: 3, background: "#368cff" } }).jpeg().toFile(image);
   execFileSync(binary, ["-all=", "-Comment=Private comment", "-overwrite_original", image]);
   const tool = await createMetadataTool();
   assert.throws(() => tool.assertClean([image]), /Comment/);
@@ -62,7 +61,6 @@ test("a JPEG comment alone is embedded metadata, not filesystem information", as
 });
 
 test("PNG cleanup preserves decoded pixels and ICC profile", async (t) => {
-  const { default: sharp } = await import("sharp");
   const root = fixture(t);
   const image = path.join(root, "profile.png");
   await sharp({ create: { width: 12, height: 12, channels: 3, background: "#368cff" } }).withIccProfile("p3").png().toFile(image);
