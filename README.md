@@ -5,17 +5,21 @@ Personal portfolio, apps and notes. Built as a static site and hosted on Netlify
 ## Stack & highlights
 
 - **React 19, Vite 8, Tailwind CSS 3 and React Router**.
-- **Markdown + YAML frontmatter**, rendered with React Markdown and GFM. Articles,
-  search and syntax highlighting load on demand. Lightweight note previews use
-  metadata and cover images; opening one never downloads the full article.
-- **Custom SVG wordmark intro**, CSS text reveals and scroll-triggered reading
-  effects using IntersectionObserver. The intro is skipped on internal return visits.
+- **Markdown + YAML frontmatter**, rendered with React Markdown and GFM. The index
+  loads metadata; article bodies, search and syntax highlighting load on demand.
+- **Lightweight note previews:** local covers get automatic, cached 144px WebP
+  thumbnails for All Notes. Images load lazily; notes without a cover use a text miniature.
+- **Custom SVG wordmark intro:** the collapsed name unfolds through masks and
+  transforms, synchronized with text reveals. Internal return visits skip it;
+  article scroll effects use IntersectionObserver instead of per-scroll React updates.
 - **Native SVG cursors** pick up app gradients on hover. Theme switching uses
-  View Transitions where supported; reduced motion and direct-switch fallbacks are respected.
+  a native circular View Transition. Reduced motion and unsupported browsers switch directly.
 - **Light/dark themes**, following the system until a choice is saved. Self-hosted
   **Inter Variable** and **Source Serif 4**, with versioned asset filenames.
-- **Sharp + ExifTool** for automatic image optimization, metadata cleanup and
-  cached build copies. Lossless WebP is used when smaller; failed image checks stop the build.
+- **Sharp + ExifTool privacy pipeline:** build copies lose GPS, camera and author
+  metadata while retaining needed image information. Sources stay untouched;
+  content hashes reuse cached results. Images are audited before publication,
+  and failed cleanup/checks stop the build. Lossless WebP is used when smaller.
 
 ## Local development
 
@@ -57,6 +61,13 @@ and use a publication date that has arrived. Dates require a timezone.
   future posts need another build after their publication date.
 - Archived notes remain readable and searchable, but are marked noindex and omitted from RSS/sitemap.
 - Invalid frontmatter stops the build. App links and colors live in `src/content/apps.js`.
+
+## Markdown features
+
+Headings, **bold**, *italic*, strikethrough, links, images, blockquotes, numbered
+and bulleted lists, task lists (`- [x]`), tables, horizontal rules and inline code.
+Supported fenced code languages get syntax highlighting and a copy button;
+task checkboxes are read-only. Raw HTML is not executed. See the [Markdown showcase](src/content/blog/drafts/markdown-feature-showcase.md) for examples.
 
 ## Deployment
 

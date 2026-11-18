@@ -140,7 +140,7 @@ LIMIT 10;
 | Images | ✅ Working | With lazy loading |
 | Tables | ✅ Working | Grid alignment |
 | Blockquotes | ✅ Working | Left border style |
-| Links | ✅ Working | Blue underline on hover |
+| Links | ✅ Working | Underlined, theme-aware styling |
 | Lists | ✅ Working | Ordered & unordered |
 
 ---
@@ -159,7 +159,7 @@ Below is an image embedded using standard Markdown syntax:
 
 ![Project screenshot](/img/projects/bruno.webp)
 
-Images are automatically styled with rounded corners and shadow. The prose container handles proper sizing and margins.
+Images are responsive, use rounded corners, and load lazily within the reading column.
 
 ---
 
