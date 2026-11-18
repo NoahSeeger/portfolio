@@ -273,3 +273,23 @@ keeping their titles and resting thumbnails aligned with the shared content
 column. View all and RSS use the same right edge. Reading-page navigation aligns
 the visible icons with that edge while preserving the larger button hit area.
 Homepage navigation stays in the upper-right viewport corner.
+
+## Theme behavior
+
+Light mode keeps its existing palette. Dark mode uses neutral charcoal surfaces
+(`#101010`, `#191919`, `#242424`), soft primary text and distinct secondary/muted
+text roles. App chips use darker brand-colored backgrounds with light text;
+their palette tests check a minimum 4.5:1 text contrast across gradient samples.
+
+The head bootstrap and React both validate the saved `theme` value. Without a
+manual choice they follow the OS; a manual choice remains active in memory even
+if localStorage is blocked. Storage changes from other tabs are synchronized,
+and removing the saved value resumes the system preference. Color scheme and
+theme-color metadata update together with the document class before paint.
+
+The button uses a native 520ms view transition, revealing from its actual center
+to the farthest viewport corner. It blocks overlapping actions while retaining
+keyboard focus. Reduced motion, hidden tabs, an already running homepage intro and browsers
+without the API switch directly. Errors, resize, motion changes and a 1.2s deadline release animation
+state; late callbacks cannot commit twice or unlock newer transitions. There
+are no fallback blank-page overlays or duplicated page trees.

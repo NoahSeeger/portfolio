@@ -84,3 +84,21 @@ test("unified notes show the latest three entries and keep article navigation an
     assert.ok(!article.includes('href="/blog/picswipe"'), "related articles must not link to the current article");
   } finally { await server.close(); }
 });
+
+test("app palettes keep text contrast across their light and dark gradients", async () => {
+  const luminance = (hex) => hex.slice(1).match(/../g).map((part) => parseInt(part, 16) / 255)
+    .map((v) => v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4)
+    .reduce((sum, value, i) => sum + value * [0.2126, 0.7152, 0.0722][i], 0);
+  const contrast = (a, b) => { const values = [luminance(a), luminance(b)].sort((x, y) => x - y); return (values[1] + 0.05) / (values[0] + 0.05); };
+  const server = await createServer({ root, logLevel: "silent", server: { middlewareMode: true } });
+  try {
+    const { featuredApps } = await server.ssrLoadModule("/src/content/apps.js");
+    for (const app of featuredApps) for (const [mode, palette] of Object.entries(app.palette)) {
+      for (let step = 0; step <= 20; step += 1) {
+        const channels = [1, 3, 5].map((i) => Math.round(parseInt(palette.start.slice(i, i + 2), 16) * (1 - step / 20) + parseInt(palette.end.slice(i, i + 2), 16) * step / 20));
+        const color = "#" + channels.map((value) => value.toString(16).padStart(2, "0")).join("");
+        assert.ok(contrast(palette.ink, color) >= 4.5, `${app.id} ${mode}: insufficient text contrast`);
+      }
+    }
+  } finally { await server.close(); }
+});

@@ -7,26 +7,24 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="preload" href="/src/assets/fonts/Inter-Variable.woff2" as="font" type="font/woff2" crossorigin />
-    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#ffffff" />
     <meta name="color-scheme" content="light dark" />
     <link rel="alternate" type="application/rss+xml" title="Noah Seeger — notes and projects" href="https://noahseeger.de/rss.xml" />
     <title>Noah Seeger</title>
     <style>
-      html { background: #fff; }
-      html.dark { background: #000; }
+      html { background: var(--bg-primary, #fff); color-scheme: light; }
+      html.dark { background: var(--bg-primary, #101010); color-scheme: dark; }
     </style>
     <script>
       (() => {
-        try {
-          const storedTheme = localStorage.getItem("theme");
-          const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-          if (storedTheme === "dark" || (!storedTheme && prefersDark)) {
-            document.documentElement.classList.add("dark");
-          }
-        } catch {
-          // Storage can be unavailable in private browsing; CSS keeps the safe default.
-        }
+        let stored = null;
+        try { stored = window.localStorage.getItem("theme"); } catch {}
+        const preference = stored === "light" || stored === "dark" ? stored : null;
+        const dark = preference ? preference === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+        const root = document.documentElement;
+        root.classList.toggle("dark", dark);
+        root.style.colorScheme = dark ? "dark" : "light";
+        document.querySelector('meta[name="theme-color"]').content = getComputedStyle(root).backgroundColor;
       })();
     </script>
   </head>
