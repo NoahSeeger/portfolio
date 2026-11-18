@@ -5,9 +5,9 @@
   display: flex;
   align-items: center;
   gap: 1.25rem;
-  width: 100%;
-  margin-inline: -1rem;
-  padding: 0.5rem 1rem;
+  width: calc(100% + var(--post-row-padding) * 2);
+  margin-inline: calc(0px - var(--post-row-padding));
+  padding: 0.5rem var(--post-row-padding);
   border-radius: 0.75rem;
   color: var(--text-secondary);
   text-decoration: none;
@@ -24,7 +24,7 @@
 .post-row:is(:hover,:focus-visible) :is(.post-row-title,.post-row-date) { color: var(--text-primary); }
 .post-row:is(:hover,:focus-visible) .note-preview { transform: rotate(var(--note-tilt)) scale(1.05); }
 .post-row:focus-visible { outline: 2px solid #368cff; outline-offset: 2px; }
-.note-row-mask { margin-inline: -1rem; padding-inline: 1rem; }
+.note-row-mask { margin-inline: calc(0px - var(--post-row-padding)); padding-inline: var(--post-row-padding); }
 .note-preview-expanded {
   position: absolute;
   top: 50%;

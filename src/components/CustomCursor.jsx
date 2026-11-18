@@ -5,11 +5,12 @@ import "./CustomCursor.css";
 
 export function CustomCursor({ color = DEFAULT_CURSOR_COLOR }) {
   const { theme } = useTheme();
+  const outline = theme === "dark" ? "#ffffff" : "#111111";
   useLayoutEffect(() => {
     const root = document.documentElement;
     const previousValue = root.style.getPropertyValue("--portfolio-cursor");
     const previousFlag = root.getAttribute("data-custom-cursor");
-    root.style.setProperty("--portfolio-cursor", createCursorValue(color, theme === "dark" ? "#ffffff" : "#111111"));
+    root.style.setProperty("--portfolio-cursor", createCursorValue(color, outline));
     root.setAttribute("data-custom-cursor", "");
     return () => {
       if (previousValue) root.style.setProperty("--portfolio-cursor", previousValue);
@@ -17,6 +18,7 @@ export function CustomCursor({ color = DEFAULT_CURSOR_COLOR }) {
       if (previousFlag === null) root.removeAttribute("data-custom-cursor");
       else root.setAttribute("data-custom-cursor", previousFlag);
     };
-  }, [color, theme]);
+  }, [color, outline]);
+
   return null;
 }

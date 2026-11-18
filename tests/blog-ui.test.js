@@ -22,6 +22,11 @@ test("unified notes show the latest three entries and keep article navigation an
     assert.ok(listing.includes("CC1101 und ein kleines Funk-Gadget"), "legacy category URLs must show the unified notes index");
     const { default: Hero } = await server.ssrLoadModule("/src/components/Hero.jsx");
     const home = renderToString(shell(React.createElement(Hero), "/"));
+    assert.match(home, /href="https:\/\/picswipe.noahseeger.de"/);
+    assert.match(home, /href="https:\/\/apps.apple.com\/app\/id6753695596"/);
+    assert.match(home, /href="https:\/\/apps.apple.com\/app\/id6753290752"/);
+    assert.equal((home.match(/class="inline-app-chip /g) || []).length, 3);
+    assert.ok(!home.includes("<iframe") && !home.includes('aria-haspopup="dialog"'), "app links navigate directly without live-preview controls");
     const notes = home.slice(home.indexOf('id="notes"'), home.indexOf('</section>', home.indexOf('id="notes"')));
     assert.match(notes, /Notes/);
     assert.match(notes, /View all/);

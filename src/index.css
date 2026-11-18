@@ -8,6 +8,9 @@
 
 :root {
   --content-width: 38rem;
+  --post-row-padding: 1rem;
+  --top-nav-control-size: 2.25rem;
+  --top-nav-icon-size: 1rem;
   --page-gutter: 1.5rem;
   --footer-wordmark-size: min(11rem, calc((100vw - var(--page-gutter) * 2) * 0.29));
   /* 60% - Background Colors */
@@ -182,8 +185,7 @@ html { scroll-behavior: smooth; }
 .portfolio-section-link svg { font-size: 0.7rem; }
 .portfolio-notes { width: 100%; }
 .portfolio-notes .portfolio-section-heading { align-items: baseline; margin-bottom: 1.25rem; }
-/* Match the resting thumbnail edge: row offset plus its inner padding. */
-.portfolio-notes .portfolio-section-link { margin-inline-end: 2rem; font-size: 0.8125rem; color: var(--text-secondary); }
+.portfolio-notes .portfolio-section-link { font-size: 0.8125rem; color: var(--text-secondary); }
 
 .portfolio-content {
   width: min(100%, var(--content-width));
@@ -251,8 +253,8 @@ html { scroll-behavior: smooth; }
 .portfolio-top-nav .dock-control {
   position: relative;
   display: inline-flex;
-  width: 2.25rem;
-  height: 2.25rem;
+  width: var(--top-nav-control-size);
+  height: var(--top-nav-control-size);
   align-items: center;
   justify-content: center;
   color: var(--text-primary);
@@ -260,6 +262,8 @@ html { scroll-behavior: smooth; }
   border-radius: 9999px;
   transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
 }
+
+.portfolio-top-nav svg { width: var(--top-nav-icon-size); height: var(--top-nav-icon-size); }
 
 .portfolio-top-nav .top-nav-control:hover,
 .portfolio-top-nav .dock-control:hover {

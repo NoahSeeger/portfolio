@@ -5,7 +5,7 @@
 .reading-back:hover { color: var(--text-primary); }
 .reading-back:hover svg { transform: translateX(-3px); }
 .reading-back:focus-visible { outline: 2px solid #368cff; outline-offset: 5px; border-radius: 3px; }
-.portfolio-top-nav.portfolio-reading-nav { top: 1.5rem; right: max(var(--page-gutter), calc((100% - var(--content-width)) / 2)); }
+.portfolio-top-nav.portfolio-reading-nav { top: 1.5rem; right: calc(max(var(--page-gutter), calc((100% - var(--content-width)) / 2)) - (var(--top-nav-control-size) - var(--top-nav-icon-size)) / 2); }
 .reading-eyebrow { display: flex; align-items: center; flex-wrap: wrap; gap: 0.65rem; color: var(--text-muted); font-size: 0.75rem; line-height: 1.7; }
 .reading-eyebrow > * + *::before { content: "·"; margin-right: 0.65rem; opacity: 0.6; }
 .reading-status { color: var(--text-secondary); }

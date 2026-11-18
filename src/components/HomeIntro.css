@@ -105,7 +105,9 @@
 .home-intro:is([data-intro-phase="reveal"], [data-intro-phase="settled"]) .portfolio-content {
   animation: intro-content-in 1750ms var(--intro-ease) both;
 }
-.home-intro:is([data-intro-phase="reveal"], [data-intro-phase="settled"]) :is(.portfolio-top-nav, .portfolio-contact-dock, .portfolio-site-footer) {
+/* Keep this animation attached after finishing. Dropping it at "done" would
+   reactivate the navigation/dock's default entry animations and replay them. */
+.home-intro:is([data-intro-phase="reveal"], [data-intro-phase="settled"], [data-intro-phase="done"]) :is(.portfolio-top-nav, .portfolio-contact-dock, .portfolio-site-footer) {
   animation: intro-controls-in 1750ms var(--intro-ease) both;
 }
 @keyframes intro-hero-in { from { transform: scale(0.5); } to { transform: none; } }

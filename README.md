@@ -251,3 +251,25 @@ Links belong directly in the Markdown body, wherever they make sense:
 
 There are no special GitHub or website fields, automatic link buttons or RSS
 categories. Existing project links remain in the articles' Links sections.
+
+## Inline app links
+
+The intro contains three direct links: PicSwipe opens its website; Quanta and
+Birthday Calendar open their own App Store listings. Each uses the original full-color app icon with its background, stored as a
+compact local 80px WebP, and a distinct CSS gradient with light/dark variants.
+
+The gradients are static: blue/navy for PicSwipe, turquoise/deep blue for Quanta,
+and yellow/orange for Birthday Calendar. The cursor uses the same two
+colors as a static native SVG when hovering a chip, inherited through a scoped
+CSS custom property. Outside the chips it returns to blue. Shape and hotspot
+stay fixed. There is no animated cursor overlay, pointer tracking, frame loop,
+timer or native/DOM handoff. Text inputs keep their native editing cursor;
+forced colors use the system cursor. There are no iframed previews or background
+requests to app websites. Touch taps navigate
+directly. Colors and destinations live together in `src/content/apps.js`.
+
+Notes rows extend their hover background symmetrically into the gutters while
+keeping their titles and resting thumbnails aligned with the shared content
+column. View all and RSS use the same right edge. Reading-page navigation aligns
+the visible icons with that edge while preserving the larger button hit area.
+Homepage navigation stays in the upper-right viewport corner.
